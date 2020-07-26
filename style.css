@@ -1,0 +1,156 @@
+#my_video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%);
+  }
+
+  html {
+    align-items: center;
+    background-color: #f7eee4;
+    color: #c5c8c6;
+    display: flex;
+    font: 22px/1 "Inconsolata", monospace;
+    height: 100%;
+    justify-content: center;
+  }
+
+  body {
+    background: #1d1f21;
+    border-radius: 2px;
+    box-shadow: 1px 1px 6px #1d1f2187;
+    color: #c5c8c6;
+    display: flex;
+    flex-direction: column;
+    min-height: 30ch;
+    min-width: 50vw;
+    padding: 2em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  p span {
+    color: #b5bd68;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:focus,
+  a:hover {
+    font-weight: bold;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav {
+    column-gap: 2em;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 1em 0;
+  }
+
+  ul:nth-child(5n + 1) li:first-child {
+    color: #5050f2;
+  }
+
+  ul:nth-child(5n + 2) li:first-child {
+    color: #5050f2;
+  }
+  
+  ul:nth-child(5n + 3) li:first-child {
+    color: #5050f2;
+  }
+  
+  ul:nth-child(5n + 4) li:first-child {
+    color: #5050f2;
+  }
+
+  ul:nth-child(5n + 5) li:first-child {
+    color: #5050f2;
+  }
+
+  li:first-child {
+    font-weight: bold;
+  }
+
+  li:last-child {
+    margin: 0 0 1em;
+  }
+
+  p #cursor {
+    background-color: #b5bd68;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  body {
+    background: #141414;
+  }
+
+  .terminal {
+    font-family: 'Ubuntu Mono', monospace;
+    color: rgb(187,187,187);
+    font-size: 16px;
+    font-weight: 100;
+  }
+
+  .terminal-input {
+    background: rgba(0, 0, 0, 0);
+    font-family: monospace;
+    color: transparent;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    -webkit-text-fill-color: rgb(187,187,187);
+  }
+
+  .terminal-purple {
+  color: #5050f2;
+  }
+
+  .console-line {
+  color: rgb(0,178,0);
+  }
+
+  .login-line {
+  color: #fff;
+  }
+
+  .console-carrot {
+  vertical-align: middle;
+  background: #00ff00;
+  height: 15px;
+  width: 8px;
+  margin-left: -7px;
+  display: inline-block;
+  animation: blink 1s step-start 0s infinite;
+  }
+
+  ::selection {
+  background-color: #fff;
+  color: #000;
+  }
+
+  @keyframes blink {
+  50% {
+      opacity: 0.0;
+  }
+  }
