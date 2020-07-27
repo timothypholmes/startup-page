@@ -2,4 +2,4 @@
 
 A custom startup page for your browser. 
 
-[alt text](https://github.com/timothypholmes/startup-page/blob/master/preview.png)
+[alt tag](https://github.com/timothypholmes/startup-page/blob/master/preview.png)
