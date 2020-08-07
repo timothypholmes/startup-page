@@ -15,7 +15,7 @@
     background-color: #f7eee4;
     color: #c5c8c6;
     display: flex;
-    font: 22px/1 "Inconsolata", monospace;
+    font: 12px/1 "Inconsolata", monospace;
     height: 100%;
     justify-content: center;
   }
@@ -105,52 +105,7 @@
     background: #141414;
   }
 
-  .terminal {
-    font-family: 'Ubuntu Mono', monospace;
-    color: rgb(187,187,187);
-    font-size: 16px;
-    font-weight: 100;
-  }
-
-  .terminal-input {
-    background: rgba(0, 0, 0, 0);
-    font-family: monospace;
-    color: transparent;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    -webkit-text-fill-color: rgb(187,187,187);
-  }
-
-  .terminal-purple {
-  color: #5050f2;
-  }
-
-  .console-line {
-  color: rgb(0,178,0);
-  }
-
-  .login-line {
-  color: #fff;
-  }
-
-  .console-carrot {
-  vertical-align: middle;
-  background: #00ff00;
-  height: 15px;
-  width: 8px;
-  margin-left: -7px;
-  display: inline-block;
-  animation: blink 1s step-start 0s infinite;
-  }
-
   ::selection {
   background-color: #fff;
   color: #000;
-  }
-
-  @keyframes blink {
-  50% {
-      opacity: 0.0;
-  }
   }
