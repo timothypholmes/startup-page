@@ -1,4 +1,4 @@
-const key = '0b167504726008609315f09e5b4bd531';
+const key = '';
 const zip = '60605'
 if(key=='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
