@@ -1,2 +1,2 @@
 *.mp4
-/vid
+.DS_Store
