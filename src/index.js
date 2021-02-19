@@ -99,6 +99,20 @@ function WorkBox() {
 ReactDOM.render(<WorkBox />, document.getElementById('box4'));
 
 
+function TDBox() {
+    return (
+        <div class="block">
+        <ul>
+            <li>work</li>
+            <li><a href="https://stackoverflow.com">stackoverflow</a></li>
+            <li><a href="https://github.com">github</a></li>
+        </ul>
+    </div>
+      );
+    };
+ReactDOM.render(<TDBox />, document.getElementById('long-box2'));
+
+
 function FinanceBox() {
     return (
         <div class="block">
