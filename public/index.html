@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
-      name="description"
+      name="Start-Page"
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
@@ -27,15 +28,32 @@
     <title>USER START -></title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div>
+      <div class="background">
+          <video autoplay muted loop id="my_video">
+              <source src="vid/chicago3.mp4" type="video/mp4"></source>
+          </video> 
+          <!--<img src="./img/summer.jpg"/>-->
+      </div>
+      <div class="container">
+          <div id="box1"></div>
+          <div id="box2"></div>
+          <div id="long-box1"></div>
+          <div id="box3"></div>
+          <div id="box4"></div>
+          <div id="box5"></div>
+          <div id="box6"></div>
+          <div id="box7"></div>
+          <div id="box8"></div>
+          <div id="box9"></div>
+          <div id="box10"></div>
+          <!--
+          <div id="box11"></div>
+          <div id="box12"></div>
+          -->
+      </div>
+    </div>
     <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->

@@ -1,0 +1,360 @@
+/************** GLOBAL STYLES **************/
+
+/* @font-face {
+  font-family: IBMPlexMono-Regular-Latin1;
+  src: url('../assets/fonts/IBMPlexMono-Regular-Latin1.woff2') format('woff2');
+  font-display: swap;
+} */
+
+:root {
+    --main: hsl(220, 21%, 17%);
+    --orange: hsl(31, 77%, 60%);
+    --red: hsl(4, 100%, 74%);
+    --green: hsl(118, 18%, 66%);
+    --blue: hsl(235, 17%, 63%);
+    --white: hsl(0, 0%, 100%);
+  
+    /**
+     * Modular scale
+     * Applied as font-size
+     */
+    --scale-000: 0.75rem; /* 12px */
+    --scale-00: 0.875rem; /* 14px */
+    --scale-0: 1rem; /* 16px */
+    --scale-1: 1.125rem; /* 18px */
+    --scale-2: 1.25rem; /* 20px */
+    --scale-3: 1.5rem; /* 24px */
+    --scale-4: 1.875rem; /* 30px */
+    --scale-5: 2.25rem; /* 36px */
+    --scale-6: 3rem; /* 48px */
+    --scale-7: 4rem; /* 64px */
+    --scale-8: 4.5rem; /* 72px */
+    --scale-9: 5.5rem; /* 96px */
+    --scale-10: 9rem; /* 144px */
+  
+    /**
+     * Fonts
+     * Applied as font-family
+     */
+    --font-family-sans: system-ui;
+    --font-family-serif: georgia, cambria, 'Times New Roman', times, serif;
+  
+    /* --font-family-mono: consolas, menlo, monaco, 'Liberation Mono', monospace; */
+  
+    /**
+     * Weights
+     * Applied as font-weight
+     */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-black: 900;
+  
+    /**
+     * Leading
+     * Applied as line-height
+     */
+    --leading-none: 1;
+    --leading-xsmall: 1.125;
+    --leading-small: 1.275;
+    --leading-normal: 1.5;
+    --leading-large: 1.625;
+    --leading-xlarge: 2;
+  
+    /**
+     * Tracking
+     * Applied as letter-spacing
+     */
+    --tracking-000: -0.05em;
+    --tracking-00: -0.025em;
+    --tracking-0: 0;
+    --tracking-1: 0.025em;
+    --tracking-2: 0.05em;
+    --tracking-3: 0.1em;
+    --tracking-4: 0.25em;
+    --tracking-5: 0.5em;
+  
+    /**
+     * Measures
+     * Applied as max-width
+     * Results in ~45/~66/~80 character measures
+     */
+    --measure-narrow: 20em;
+    --measure-normal: 30em;
+    --measure-wide: 34em;
+  
+    /**
+     * Size scale
+     * Applied to sizing property
+     * Eg: margin, padding, height
+     */
+    --spacing-000: 8px;
+    --spacing-00: 12px;
+    --spacing-0: 16px;
+    --spacing-1: 20px;
+    --spacing-2: 32px;
+    --spacing-3: 48px;
+    --spacing-4: 64px;
+    --spacing-5: 96px;
+    --spacing-6: 128px;
+    --spacing-7: 160px;
+    --spacing-8: 192px;
+    --spacing-9: 224px;
+    --spacing-10: 256px;
+    --spacing-11: 512px;
+    --spacing-12: 768px;
+  
+    /**
+      * Widths
+      * Applied as max-width
+      */
+    --width-000: 120px;
+    --width-00: 180px;
+    --width-0: 250px;
+    --width-1: 320px;
+    --width-2: 396px;
+    --width-3: 448px;
+    --width-4: 512px;
+    --width-5: 576px;
+    --width-6: 672px;
+    --width-7: 768px;
+    --width-8: 896px;
+    --width-9: 1024px;
+    --width-10: 1152px;
+    --width-11: 1280px;
+    --width-12: 1440px;
+  
+    /**
+      * Grid gaps
+      * Applied as padding (flex grid) or grid-gap (CSS Grid)
+      */
+    --gap-00: 12px;
+    --gap-0: 16px;
+    --gap-1: 24px;
+    --gap-2: 36px;
+    --gap-3: 48px;
+    --gap-4: 64px;
+    --gap-5: 96px;
+    --gap-6: 128px;
+  
+    /**
+      * Grid gap offsets
+      * Applied as negative margin in flex grids
+      */
+    --gap-offset-00: calc(0px - var(--gap-00));
+    --gap-offset-0: calc(0px - var(--gap-0));
+    --gap-offset-1: calc(0px - var(--gap-1));
+    --gap-offset-2: calc(0px - var(--gap-2));
+    --gap-offset-3: calc(0px - var(--gap-3));
+    --gap-offset-4: calc(0px - var(--gap-4));
+    --gap-offset-5: calc(0px - var(--gap-5));
+    --gap-offset-6: calc(0px - var(--gap-6));
+  }
+
+
+/************** Background **************/
+html {
+    align-items: center;
+    background-color: #f7eee4;
+    color: #c5c8c6;
+    display: flex;
+    font: 12px/1 "Inconsolata", monospace;
+    height: 100%;
+    justify-content: center;
+}
+
+.background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%);
+}
+
+#my_video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%);
+}
+
+
+/************** Boxes **************/
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 10px auto;
+    position: relative;
+    text-align:center;
+    }
+    
+[id^='box']  {
+    background: #1d1f21;
+    height: var(--width-1);
+    width: var(--width-1);
+    margin: 30px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 6px #1d1f2187;
+    float: left;
+    zoom: 50%;
+    opacity: 0.95;
+}
+
+    
+[id^='long-box']  {
+    background: #1d1f21;
+    height: var(--width-1);
+    width: 700px;
+    margin: 30px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 6px #1d1f2187;
+    float: left;
+    zoom: 50%;
+    opacity: 0.95;
+}
+
+/************** Image box **************/
+.block .image-container {
+    position: relative;
+}
+
+
+.block .image-container img {
+    position: relative;
+    height: var(--width-1);
+    width: var(--width-1);
+    border-radius: 25px;   
+}
+
+/************** Weather **************/
+
+#weather {
+    position: absolute;
+    background: #1d1f21;
+    height: var(--width-0);
+    width: var(--width-0);
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background:rgba(0,0,0,0.5);
+}
+
+#weather h1 {
+    font-size: 50px;
+    opacity: 1;
+}
+
+#weather h2 {
+    opacity: 1;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    column-gap: 2em;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 1em 0;
+}
+
+ul li:first-child {
+    color: #5050f2;
+    font-weight: bold;
+    font-size: 35px;
+    padding-bottom: 15px;
+    padding-top: 25px;
+}
+
+ul li {
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+li:last-child {
+    margin: 0 0 1em;
+}
+
+
+/************** Search **************/
+
+#search-input {
+    width: 500px;
+    color: var(--white);
+    font-size: var(--scale-5);
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    border-bottom: 1px solid var(--white);
+    box-shadow: none;
+    align-items: center;
+}
+  
+.search textarea:focus,
+  input:focus {
+    outline: none;
+}
+
+.search button[engine='google'] {
+    background: url(./img/google.svg);
+    background-repeat: no-repeat;
+    width: 125px;
+    height: 125px;
+    outline: inherit;
+    cursor: pointer;
+    border: none;
+    margin: 50px;
+}
+
+.search button[engine='duckduckgo'] {
+    background: url(./img/duck.svg);
+    background-repeat: no-repeat;
+    width: 125px;
+    height: 125px;
+    outline: inherit;
+    cursor: pointer;
+    border: none;
+    margin: 50px;
+}
+
+.search button[engine='wolfram'] {
+    background: url(./img/wolfram.svg);
+    background-repeat: no-repeat;
+    width: 125px;
+    height: 125px;
+    outline: inherit;
+    cursor: pointer;
+    border: none;
+    margin: 50px;
+}
+
+.search button:enabled {
+    opacity: 0.5;
+}
