@@ -175,8 +175,10 @@ html {
     height: auto;
     z-index: -100;
     transform: translate(-50%, -50%);
+    zoom: 80%;
 }
 
+/*
 #my_video {
     position: fixed;
     top: 50%;
@@ -188,7 +190,7 @@ html {
     z-index: -100;
     transform: translate(-50%, -50%);
 }
-
+*/
 
 /************** Boxes **************/
 .container {
@@ -226,40 +228,16 @@ html {
     opacity: 0.95;
 }
 
-/************** Image box **************/
-.block .image-container {
-    position: relative;
-}
-
-
-.block .image-container img {
-    position: relative;
-    height: var(--width-1);
-    width: var(--width-1);
-    border-radius: 25px;   
-}
-
-/************** Weather **************/
-
-#weather {
-    position: absolute;
+[id^='square-box']  {
     background: #1d1f21;
-    height: var(--width-0);
-    width: var(--width-0);
+    height: 700px;
+    width: 700px;
+    margin: 30px;
     border-radius: 25px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background:rgba(0,0,0,0.5);
-}
-
-#weather h1 {
-    font-size: 50px;
-    opacity: 1;
-}
-
-#weather h2 {
-    opacity: 1;
+    box-shadow: 10px 10px 6px #1d1f2187;
+    float: left;
+    zoom: 50%;
+    opacity: 0.95;
 }
 
 a {
@@ -300,6 +278,42 @@ ul li {
 
 li:last-child {
     margin: 0 0 1em;
+}
+
+/************** Image box **************/
+.block .image-container {
+    position: relative;
+}
+
+
+.block .image-container img {
+    position: relative;
+    height: var(--width-1);
+    width: var(--width-1);
+    border-radius: 25px;   
+}
+
+/************** Weather **************/
+
+#weather {
+    position: absolute;
+    background: #1d1f21;
+    height: var(--width-0);
+    width: var(--width-0);
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background:rgba(0,0,0,0.5);
+}
+
+#weather h1 {
+    font-size: 50px;
+    opacity: 1;
+}
+
+#weather h2 {
+    opacity: 1;
 }
 
 
