@@ -9,7 +9,7 @@ function sendSearch(e) {
         if (buttons[i].disabled === true) {
 
           const  address = buttons[i].getAttribute("address")
-          const input = document.getElementById('search-input').value
+          const input = encodeURIComponent(document.getElementById('search-input').value)
           const url = `${address}${input}`;
 
           window.open(url);
