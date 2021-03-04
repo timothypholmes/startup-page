@@ -12,6 +12,10 @@ in the root of the project directory. Then add this variable to the file with th
 ```
 REACT_APP_OPEN_WEATHER_MAP_API_KEY={YOUR_KEY}
 REACT_APP_OPEN_WEATHER_MAP_ZIP_CODE={YOUR_ZIP_CODE (US ONLY)}
+
+REACT_APP_TD_CONSUMER_KEY={YOUR_TD_AMERITRADE_API_KEY}
+
+BROWSER={PREF_BROWSER}
 ```
 
 This start page was built with the reactJS framework. To test the page run the command:

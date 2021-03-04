@@ -1,36 +1,46 @@
 import React, { Component } from "react";
 
 
-export default class Clock extends Component {
-  constructor(props) {
+export class Clock extends React.Component {
+    constructor(props) {
       super(props);
+      this.updateDate = this.updateDate.bind(this);
+      
+
       this.state = {
+        date: new Date().toLocaleTimeString(),
+        days: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+        date: new Date().toLocaleTimeString(),
+        time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})/, "$1$3"),
+        //h: new Date().toLocaleTimeString().replace(/([\d])/, "$1$3"),
+        //m: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
+        //s: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
+        period: new Date().toLocaleTimeString().replace(/(.*)/, "$1$3"),
       }
-
-      function displayClock() {
-        const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-        const date = new Date();
-        const h = date.getHours();
-        const m = date.getMinutes();
-        const s = date.getSeconds();
-      
-        const day = days[date.getDay()];
-        const hour = h < 10 ? `0${h}` : h;
-        const minute = m < 10 ? `0${m}` : m;
-        const second = s < 10 ? `0${s}` : s;
-      
-        document.querySelector('.time').innerHTML = `${day} : ${hour} : ${minute} : ${second}`;
-      
-        setTimeout(displayClock, 1000);
-      }
-  }
-  render() {
-    return (
-        <div className="app">
-        <div className="row">
-
+      this.interval = setInterval(this.updateDate, 1000);
+    }
+    
+    componentWillUnmount() {
+      clearInterval(this.interval);
+    }
+    
+    updateDate() {
+      this.setState({
+        date: new Date().toLocaleTimeString(),
+        time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})/, "$1$3"),
+        //h: new Date().toLocaleTimeString().replace(/([\d])/, "$1$3"),
+        //m: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
+        //s: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
+        period: new Date().toLocaleTimeString().replace(/(.*)/, "$1$3"),
+      });
+    }
+    
+    render() {
+      return(
+        <div class="clock-container">
+            <div class="time">{this.state.date}</div>
         </div>
-        </div>
-    );
+      );
+    }
   }
-}
+  

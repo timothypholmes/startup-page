@@ -9,149 +9,173 @@ export default class TDMarketData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            series: [{
-                name: 'candle',
-                data: []
-            }],
+            series: [
+                {
+                  name: "candle",
+                  data: []
+                }
+              ],
             options: {
-                tooltip: {
-                    enabled: true,
-                },
-                xaxis: {
-                    type: 'datetime'
-                  },
-                yaxis: {
-                    tooltip: {
-                        enabled: true
-                    },
+                chart: {
+                    type: 'candlestick',
+                    animations: {
+                        enabled: true,
+                        easing: "linear",
+                        dynamicAnimation: {
+                          enabled: true,
+                          speed: 300
+                        }
+                    }
                 },
                 noData: {
                     text: 'Loading...'
                   },
-                chart: {
-                    animations: {
-                        enabled: true,
-                        easing: 'easeinout',
-                        speed: 800,
-                        animateGradually: {
-                            enabled: false,
-                            delay: 150
-                        },
-                        dynamicAnimation: {
-                            enabled: true,
-                            speed: 500
-                        }
-                    }
-                }
             },
         };
     }
 
     
     componentDidMount() {
+        this.getChartData();
+    }
+
+    getChartData() {
         const consumerKey = process.env.REACT_APP_TD_CONSUMER_KEY; 
-        const symbol = 'GME';
+        const symbol = 'AAPL';
         const periodType = 'day';
         const period = '1';
         const frequencyType = 'minute';
-        const frequency = '10';
+        const frequency = '15';
         var candle_array = [];
         var i = 0;
-
+        var a = 0;
         axios.get(`https://api.tdameritrade.com/v1/marketdata/${symbol}/pricehistory?apikey=${consumerKey}` +
-                  `&periodType=${periodType}&period=${period}&frequencyType=${frequencyType}&frequency=${frequency}`)
+                `&periodType=${periodType}&period=${period}&frequencyType=${frequencyType}` +
+                `&frequency=${frequency}`)
         .then(res => {
             //1console.log(res)
             for (const dataObj of res.data.candles) {
                 candle_array[i] = ({
-                    'x': Date(dataObj.datetime),
+                    'x': dataObj.datetime,
                     'y': [dataObj.open, dataObj.high, dataObj.low, dataObj.close]
                 })
                 i += 1;
             }
-            //console.log(candle_array)
             this.setState({
                 series: [{
-                    name: 'candle',
+                    name: 'candlestick',
                     data: candle_array,
                 }],
-                options: {
-                    candlestick: {
-                        colors: {
-                          upward: '#3C90EB',
-                          downward: '#DF7D46'
-                        }
-                    },
-                    title: {
-                      text: symbol,
-                      align: 'center',
-                      fontSize: "140px",
-                    },
-                    tooltip: {
-                      enabled: true,
-                      //content: `Date: ${candle_array.x}<br /><strong>Price:</strong><br />Open: ${candle_array.y[0]}, Close: ${candle_array.y[3]}<br />High: ${candle_array.y[1]}, Low: ${candle_array.y[2]}`
-                    },
-                    xaxis: {
-                      type: 'category',
-                      labels: {
-                        formatter: function(val) {
-                          return dayjs(val).format('MMM DD HH:mm')
-                        }
-                      }
-                    },
-                    grid: {
-                        row: {
-                            colors: ['#e5e5e5', 'transparent'],
-                            opacity: 0.5
-                        }, 
-                        column: {
-                            colors: ['#f8f8f8', 'transparent'],
-                        }, 
-                        xaxis: {
-                          lines: {
-                            show: true
-                          }
-                        }
-                      },
-                      chart: {
-                        animations: {
-                            enabled: true,
-                            easing: 'linear',
-                            speed: 10000,
-                            animateGradually: {
-                                enabled: false,
-                                delay: 150
-                            },
-                            dynamicAnimation: {
-                                enabled: true,
-                                speed: 1
-                            }
-                        }
-                    }
-                    
-                  },
-            });
-    
-            //console.log(this.state.series)
+            })
         })
         .catch(err => {
             console.log(err);
         });
+        
+        this.setState({
+            series: [{
+                name: 'candlestick',
+                data: candle_array.x,
+                yValueFormatString: "$#,##0.00",
+                xValueFormatString: "MMMM",
+            }],
+            options: {
+                chart: {
+                    type: 'candlestick',
+                    foreColor: '#ffffff',
+                    animations: {
+                        enabled: true,
+                        easing: "easein",
+                        speed: 1000,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 10
+                        },
+                        dynamicAnimation: {
+                          enabled: true,
+                          speed: 1500
+                        }
+                    }
+                },
+                title: {
+                  text: symbol,
+                  align: 'center',
+                  floating: false,
+                  style: {
+                    fontSize:  '45px',
+                    fontWeight:  'bold',
+                    fontFamily:  undefined,
+                    color:  '#ffffff'
+                  },
+                },
+                tooltip: {
+                  enabled: false,
+                  //content: `Date: ${candle_array.x}<br /><strong>Price:</strong><br />Open: ${candle_array.y[0]}, Close: ${candle_array.y[3]}<br />High: ${candle_array.y[1]}, Low: ${candle_array.y[2]}`
+                },
+                xaxis: {
+                  type: 'category',
+                  labels: new Date(candle_array.datetime),
+                  labels: {
+                    show: true,
+                    rotate: -45,
+                    rotateAlways: false,
+                    hideOverlappingLabels: true,
+                    showDuplicates: false,
+                    trim: false,
+                    minHeight: undefined,
+                    maxHeight: 120,
+                    style: {
+                        fontSize: '20px',
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        fontWeight: 400,
+                    },
+                    format: undefined,
+                    formatter: undefined,
+                    datetimeUTC: true,
+                    datetimeFormatter: {
+                        year: 'yyyy',
+                        month: "MMM 'yy",
+                        day: 'dd MMM',
+                        hour: 'HH:mm',
+                    },
+                  },
+                },
+                yaxis: {
+                    type: 'category',
+                    //labels: candle_array.datetime,
+                    labels: {
+                      show: true,
+                      rotateAlways: false,
+                      hideOverlappingLabels: true,
+                      showDuplicates: false,
+                      trim: false,
+                      minHeight: undefined,
+                      maxHeight: 120,
+                      style: {
+                          fontSize: '20px',
+                          fontFamily: 'Helvetica, Arial, sans-serif',
+                          fontWeight: 400,
+                          cssClass: 'apexcharts-xaxis-label',
+                      },
+                    },
+                  },
+            }
+        });
     }
     
     render() {
-    return (
-        <div className="app">
-        <div className="row">
-        <Chart
-              options={this.state.options}
-              series={this.state.series}
-              type="candlestick"
-              width="1100"
-              height="700"
-            />
-        </div>
-        </div>
-    );
+        return (
+            <div className="app">
+                <div className="row">
+                    <Chart
+                        options={this.state.options}
+                        series={this.state.series}
+                        type="candlestick"
+                        width="1100"
+                        height="700"
+                        />
+                </div>
+            </div>
+        );
     }
 }
