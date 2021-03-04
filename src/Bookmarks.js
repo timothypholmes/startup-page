@@ -100,6 +100,7 @@ export function DevBox() {
                 <li>dev</li>
                 <li><a href="https://timothypholmes.github.io">personal site</a></li>
                 <li><a href="http://localhost:3000">test site</a></li>
+                <li><a href="file:///Applications/Visual Studio Code.app">vscode</a></li>
             </ul>
         </div>
     );
@@ -107,10 +108,14 @@ export function DevBox() {
 
 export function ImgBox() {
     return (
-        <div class="block">
-            <div class="image-container">
-                <img src="./img/minimal.jpg" alt="A image" />
-            </div>
+        <div class="image-container">
+            <img src="./img/minimal.jpg" alt="A image" />
         </div>
+    );
+};
+
+export function VidBox() {
+    return (
+        <video class="video" src="./vid/chicago3.mp4" type="video/mp4" autoplay></video>
     );
 };
