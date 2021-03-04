@@ -1,13 +1,7 @@
 /************** GLOBAL STYLES **************/
 
-/* @font-face {
-  font-family: IBMPlexMono-Regular-Latin1;
-  src: url('../assets/fonts/IBMPlexMono-Regular-Latin1.woff2') format('woff2');
-  font-display: swap;
-} */
-
 :root {
-    --main: hsl(220, 21%, 17%);
+    --main: #0d1a26;
     --orange: hsl(31, 77%, 60%);
     --red: hsl(4, 100%, 74%);
     --green: hsl(118, 18%, 66%);
@@ -157,87 +151,72 @@
 /************** Background **************/
 html {
     align-items: center;
-    background-color: #f7eee4;
+    /*background-color: #f7eee4;*/
+    background-color: var(--main); /*#1d1f21*/
     color: #c5c8c6;
     display: flex;
     font: 12px/1 "Inconsolata", monospace;
     height: 100%;
+    min-width: 1200px;
     justify-content: center;
 }
 
-.background {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: auto;
-    z-index: -100;
-    transform: translate(-50%, -50%);
-    zoom: 80%;
-}
 
-/*
-#my_video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: auto;
-    z-index: -100;
-    transform: translate(-50%, -50%);
-}
-*/
-
-/************** Boxes **************/
+/************** Grid **************/
 .container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 90%;
-    margin: 10px auto;
-    position: relative;
-    text-align:center;
-    }
-    
+    display: grid;
+    grid-template-columns: 16.66% 16.66% 16.66% 16.66% 16.66% 16.66%;
+    gap: 15px 15px;
+    grid-auto-flow: row dense;
+}
+
 [id^='box']  {
-    background: #1d1f21;
+    background: var(--main);
+    text-align:center;
     height: var(--width-1);
     width: var(--width-1);
-    margin: 30px;
     border-radius: 25px;
-    box-shadow: 10px 10px 6px #1d1f2187;
-    float: left;
+    /*box-shadow: 10px 10px 6px #1d1f2187;*/
+    border-style: solid;
+    border-color: whitesmoke;
+    border-width: 2.5px;
     zoom: 50%;
     opacity: 0.95;
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
 }
 
     
 [id^='long-box']  {
-    background: #1d1f21;
+    background: var(--main);
+    text-align:center;
     height: var(--width-1);
     width: 700px;
-    margin: 30px;
     border-radius: 25px;
-    box-shadow: 10px 10px 6px #1d1f2187;
-    float: left;
+    /*box-shadow: 10px 10px 6px #1d1f2187;*/
+    border-style: solid;
+    border-color: whitesmoke;
+    border-width: 2.5px;
     zoom: 50%;
-    opacity: 0.95;
+    opacity: 1;
+    grid-column: auto / span 2;
+    grid-row: auto / span 1;
 }
 
 [id^='square-box']  {
-    background: #1d1f21;
+    background: var(--main);
+    text-align:center;
     height: 700px;
-    width: 700px;
-    margin: 30px;
+    width: 1100px;
     border-radius: 25px;
-    box-shadow: 10px 10px 6px #1d1f2187;
-    float: left;
+    /*box-shadow: 10px 10px 6px #1d1f2187;*/
+    border-style: solid;
+    border-color: whitesmoke;
+    border-width: 2.5px;
     zoom: 50%;
     opacity: 0.95;
+    grid-column: auto / span 3;
+    grid-row: auto / span 2;
 }
 
 a {
@@ -248,6 +227,7 @@ a {
 a:focus,
 a:hover {
     font-weight: bold;
+    color: whitesmoke;
 }
 
 ul {
@@ -269,31 +249,169 @@ ul li:first-child {
     font-size: 35px;
     padding-bottom: 15px;
     padding-top: 25px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+li:first-child::before {
+    border-top: 0px solid whitesmoke;
+}
+
+li:first-child::after {
+	height: 0px;
+    border-left: 0px solid whitesmoke;
 }
 
 ul li {
     font-size: 25px;
     padding-bottom: 10px;
+    text-align: left;
+    padding-left: 70px;
 }
 
 li:last-child {
     margin: 0 0 1em;
 }
 
-/************** Image box **************/
-.block .image-container {
-    position: relative;
+li {
+	position: relative;
+}
+li::before, li::after {
+	content: "";
+	position: absolute;
+	left: 40px;
+}
+li::before {
+	border-top: 2px solid whitesmoke;
+	top: 0.45em;
+	width: 0.8rem;
+}
+li::after {
+	border-left: 2px solid whitesmoke;
+	height: 100%;
+	top: 0.2rem;
+}
+li:last-child::after {
+	height: 0.3rem;
 }
 
 
-.block .image-container img {
+/************** Image box **************/
+
+#box10 {
+    border: 0;
+}
+
+#box11 {
+    border: 0;
+}
+
+#box12 {
+    border: 0;
+}
+
+#box13 {
+    border: 0;
+}
+
+#box14 {
+    border: 0;
+}
+
+#box15 {
+    border: 0;
+}
+
+/************** UNSPLASH **************/
+
+.image-container {
     position: relative;
+    overflow: hidden;
     height: var(--width-1);
     width: var(--width-1);
-    border-radius: 25px;   
+    border-style: none; 
+    border-width: 0px;
+    border-radius: 25px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    animation: fadeIn ease 10s;
+    -webkit-animation: fadeIn ease 10s;
+    -moz-animation: fadeIn ease 10s;
+    -o-animation: fadeIn ease 10s;
+    -ms-animation: fadeIn ease 10s;
+}
+
+
+.image-container img {
+    min-height: 100%;
+    min-width: 100%;
+    zoom:1%;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
 
 /************** Weather **************/
+
+#box1 {
+    border: 0;
+}
+
+#box1 .image-container {
+    position: relative;
+    overflow: hidden;
+    height: var(--width-1);
+    width: var(--width-1);
+    border-style: none; 
+    border-width: 0px;
+    border-radius: 25px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
 
 #weather {
     position: absolute;
@@ -305,14 +423,16 @@ li:last-child {
     left: 50%;
     transform: translate(-50%, -50%);
     background:rgba(0,0,0,0.5);
+    border: 0;
 }
 
 #weather h1 {
-    font-size: 50px;
+    font-size: 65px;
     opacity: 1;
 }
 
-#weather h2 {
+#weather h3 {
+    font-size: 35px;
     opacity: 1;
 }
 
@@ -372,3 +492,61 @@ li:last-child {
 .search button:enabled {
     opacity: 0.5;
 }
+
+/************** CLOCK **************/
+
+#box16{
+    border: 0;
+}
+
+.clock-container {
+    background: var(--main);
+    text-align:center;
+    height: var(--width-1);
+    width: var(--width-1);
+    border-radius: 25px;
+    /*box-shadow: 10px 10px 6px #1d1f2187;*/
+    border: 0;
+    background-color: #33cc33;
+}
+  
+.time {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+    color: var(--main);
+    /*text-shadow: -5px 0 white, 0 5px white, 5px 0 white, 0 -5px white;*/
+    padding-top: 40%;
+}
+
+
+/************** TD **************/
+
+#square-box1 {
+    opacity: 1;
+    /*background-color: aliceblue;*/
+    background-color: var(--main);
+}
+
+
+/************** Search **************/
+
+.video {
+    background: var(--main);
+    text-align:center;
+    height: var(--width-1);
+    width: 800px;
+    border-radius: 25px;
+
+    opacity: 1;
+}
+
+/******* IMPORTS *******/
+/*
+@import './clock/clock.css';
+@import './search/search.css';
+@import './binance/binance.css';
+@import './openweather/openweather.css';
+@import './unsplash/unsplash.css';
+@import './stormglass/stormglass.css';
+*/
