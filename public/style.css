@@ -153,12 +153,14 @@ html {
     align-items: center;
     /*background-color: #f7eee4;*/
     background-color: var(--main); /*#1d1f21*/
+    /*background: url(./img/catbackground.png);*/
     color: #c5c8c6;
     display: flex;
     font: 12px/1 "Inconsolata", monospace;
     height: 100%;
     min-width: 1200px;
     justify-content: center;
+    opacity: 1;
 }
 
 
