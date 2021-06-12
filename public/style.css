@@ -1,12 +1,19 @@
 /************** GLOBAL STYLES **************/
 
 :root {
+    /*--main: #0d1a26; */
     --main: #0d1a26;
-    --orange: hsl(31, 77%, 60%);
+    --secondary: #b9b2aa;
+    --header: #eecbb3;
     --red: hsl(4, 100%, 74%);
     --green: hsl(118, 18%, 66%);
     --blue: hsl(235, 17%, 63%);
-    --white: hsl(0, 0%, 100%);
+    --orange: #f8440c;
+    /* --white: hsl(0, 0%, 100%); */ 
+    --white: #b9b2aa;
+
+    /* #484d60 main
+       #b9b2aa secondary */
   
     /**
      * Modular scale
@@ -153,12 +160,14 @@ html {
     align-items: center;
     /*background-color: #f7eee4;*/
     background-color: var(--main); /*#1d1f21*/
+    /*background: url(./img/catbackground.png);*/
     color: #c5c8c6;
     display: flex;
     font: 12px/1 "Inconsolata", monospace;
     height: 100%;
     min-width: 1200px;
     justify-content: center;
+    opacity: 1;
 }
 
 
@@ -178,7 +187,7 @@ html {
     border-radius: 25px;
     /*box-shadow: 10px 10px 6px #1d1f2187;*/
     border-style: solid;
-    border-color: whitesmoke;
+    border-color: var(--secondary);
     border-width: 2.5px;
     zoom: 50%;
     opacity: 0.95;
@@ -195,7 +204,7 @@ html {
     border-radius: 25px;
     /*box-shadow: 10px 10px 6px #1d1f2187;*/
     border-style: solid;
-    border-color: whitesmoke;
+    border-color: var(--secondary);
     border-width: 2.5px;
     zoom: 50%;
     opacity: 1;
@@ -211,7 +220,7 @@ html {
     border-radius: 25px;
     /*box-shadow: 10px 10px 6px #1d1f2187;*/
     border-style: solid;
-    border-color: whitesmoke;
+    border-color: var(--secondary);
     border-width: 2.5px;
     zoom: 50%;
     opacity: 0.95;
@@ -227,7 +236,7 @@ a {
 a:focus,
 a:hover {
     font-weight: bold;
-    color: whitesmoke;
+    color: var(--secondary);
 }
 
 ul {
@@ -244,7 +253,7 @@ nav {
 }
 
 ul li:first-child {
-    color: #5050f2;
+    color: var(--header);/*#5050f2;*/
     font-weight: bold;
     font-size: 35px;
     padding-bottom: 15px;
@@ -254,12 +263,12 @@ ul li:first-child {
 }
 
 li:first-child::before {
-    border-top: 0px solid whitesmoke;
+    border-top: 0px solid var(--secondary);
 }
 
 li:first-child::after {
 	height: 0px;
-    border-left: 0px solid whitesmoke;
+    border-left: 0px solid var(--secondary);
 }
 
 ul li {
@@ -282,12 +291,12 @@ li::before, li::after {
 	left: 40px;
 }
 li::before {
-	border-top: 2px solid whitesmoke;
+	border-top: 2px solid var(--secondary);
 	top: 0.45em;
 	width: 0.8rem;
 }
 li::after {
-	border-left: 2px solid whitesmoke;
+	border-left: 2px solid var(--secondary);
 	height: 100%;
 	top: 0.2rem;
 }

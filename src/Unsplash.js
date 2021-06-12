@@ -15,7 +15,7 @@ export default class Unsplash extends Component {
 
         const accessKey = process.env.REACT_APP_ACCESS_KEY; 
         //const category = 'chicago';//process.env.REACT_APP_UNSPLASH_PHOTO_CATEGORY;
-        var categoryArray = ['chicago', 'alaska', 'minimal']
+        var categoryArray = ['chicago', 'alaska', 'minimal', 'miami', 'ocean', 'sea', 'california', 'new york']
         var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
         var category = categoryArray[categoryIndex];
 
