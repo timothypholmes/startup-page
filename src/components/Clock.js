@@ -36,7 +36,7 @@ class Clock extends React.Component {
     
   render() {
     return(
-      <div class="border-dashed border-2 border-[#00000] text-white rounded-md col-span-1 shrink-0 h-36 w-36">{this.state.date}</div>
+      <div class="text-align-center">{this.state.date}</div>
     );
   }
 }

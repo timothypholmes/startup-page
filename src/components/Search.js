@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import React from "react";
 
 function sendSearch(e) {
   const input = document.querySelector('.search-input');
@@ -22,7 +21,7 @@ function sendSearch(e) {
   }
 }
 
-export class SearchBox extends Component {
+class SearchBox extends React.Component {
 
   constructor(props) {
       super(props);
@@ -38,7 +37,7 @@ export class SearchBox extends Component {
     this.refs.input.value = '';
   }
   render() {
-      return (
+    return (
       <div class="block">
           <div class="search">
               <div class="engine-buttons" onClick={this.buttonToggle.bind(this)}>
@@ -52,5 +51,8 @@ export class SearchBox extends Component {
               <input autoFocus id='search-input' type='text' ref="input" onKeyPress={sendSearch}/>
           </div>
       </div>
-      )};
+    )
   };
+};
+
+export default SearchBox
