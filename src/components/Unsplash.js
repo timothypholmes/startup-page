@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import axios from "axios";
 
 
-export default class Unsplash extends Component {
+class Unsplash extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,8 @@ export default class Unsplash extends Component {
 
         const accessKey = process.env.REACT_APP_ACCESS_KEY; 
         //const category = 'chicago';//process.env.REACT_APP_UNSPLASH_PHOTO_CATEGORY;
-        var categoryArray = ['chicago', 'alaska', 'minimal', 'miami', 'ocean', 'sea', 'california', 'new york']
+        var categoryArray = ['chicago', 'glacier', 'alaska', 'minimal', 'miami', 
+                             'ocean', 'sea', 'california', 'new york', 'seattle']
         var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
         var category = categoryArray[categoryIndex];
 
@@ -46,9 +47,9 @@ export default class Unsplash extends Component {
     render() {
         console.log(this.photos);
         return (
-            <div class="image-container">
-                <img src={this.state.photos}/>
-            </div>
+                <img class="rounded-md col-span-1 shrink-0 h-36 w-36" src={this.state.photos}/>
         );
     }
 }
+
+export default Unsplash
