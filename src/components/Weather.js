@@ -23,29 +23,29 @@ function drawWeather( d ) {
 	
   document.getElementById('location').innerHTML = d.name;
   
-  if       ( main_description === 'Clear' && day_time == true) {
+  if        ( main_description === 'Clear' && day_time == true) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ☀️';
   } else if ( main_description === 'Clear' && day_time == false) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌔';
-  } else if( main_description === 'Clouds' ) {
+  } else if ( main_description === 'Clouds' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ☁️';
-  } else if( main_description === 'Drizzle' ) {
+  } else if ( main_description === 'Drizzle' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌦️';
-  } else if( main_description === 'Rain' ) {
+  } else if ( main_description === 'Rain' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌧️';
-  } else if( main_description === 'Thunderstorm' ) {
+  } else if ( main_description === 'Thunderstorm' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ⛈️';
-  } else if( main_description === 'Snow' ) {
+  } else if ( main_description === 'Snow' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ❄️';
-  } else if( main_description === 'Fog' ) {
+  } else if ( main_description === 'Fog' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if( main_description === 'Mist' ) {
+  } else if ( main_description === 'Mist' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if( main_description === 'Haze' ) {
+  } else if ( main_description === 'Haze' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if( main_description === 'Tornado' ) {
+  } else if ( main_description === 'Tornado' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if( main_description === 'Dust' ) {
+  } else if ( main_description === 'Dust' ) {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
   } else {
     document.getElementById('temp').innerHTML = fahrenheit + '&deg;';
@@ -60,3 +60,21 @@ function isDay() {
 window.onload = function() {
 	weatherBallon( );
 }
+
+/*
+class WeatherBox extends React.Component {
+  render() {
+    return (
+        <div class="block">
+            <div class="image-container">
+                <img src="./img/snow.jpg"/>   
+                    <div id="weather">
+                    <h1 id="temp"></h1>
+                    <h3 id="location"></h3>
+                </div>
+            </div>
+        </div>
+    );
+  }
+}
+*/
