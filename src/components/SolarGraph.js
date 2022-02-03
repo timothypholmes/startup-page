@@ -581,4 +581,8 @@ export default function SolarGraph() {
             this.refresh(this.drawing_constructs, this.current_state, this.animate);
         };
     }
+
+    return (
+        <h1>Hello World</h1>
+    );
 }

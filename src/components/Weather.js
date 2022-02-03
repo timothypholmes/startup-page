@@ -1,80 +1,78 @@
+import React, {useState, useEffect} from "react";
+
 const key = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
 const zip = process.env.REACT_APP_OPEN_WEATHER_MAP_ZIP_CODE;
 
-if(key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
+if (key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
-function weatherBallon( ) {
-	fetch('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + key)  
-	.then(function(resp) { return resp.json() }) 
-	.then(function(data) {
-		drawWeather(data);
-	})
-	.catch(function() {
-		// catch any errors
-	});
-}
-function drawWeather( d ) {
-  var celcius = Math.round(parseFloat(d.main.temp)-273.15);
-  var fahrenheit = Math.round(((parseFloat(d.main.temp)-273.15)*1.8)+32);
-  var main_description = d.weather[0].main; 
-  var description = d.weather[0].description; 
-
-  var day_time = isDay()
-	
-  document.getElementById('location').innerHTML = d.name;
-  
-  if        ( main_description === 'Clear' && day_time == true) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ☀️';
-  } else if ( main_description === 'Clear' && day_time == false) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌔';
-  } else if ( main_description === 'Clouds' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ☁️';
-  } else if ( main_description === 'Drizzle' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌦️';
-  } else if ( main_description === 'Rain' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌧️';
-  } else if ( main_description === 'Thunderstorm' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ⛈️';
-  } else if ( main_description === 'Snow' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' ❄️';
-  } else if ( main_description === 'Fog' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if ( main_description === 'Mist' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if ( main_description === 'Haze' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if ( main_description === 'Tornado' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else if ( main_description === 'Dust' ) {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;' + ' 🌫️';
-  } else {
-    document.getElementById('temp').innerHTML = fahrenheit + '&deg;';
-  }
-}
-
-function isDay() {
-    const hours = (new Date()).getHours();
-    return (hours >= 6 && hours < 18);
-}
-
-window.onload = function() {
-	weatherBallon( );
-}
-
-/*
 class WeatherBox extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      temperature: this.props.temperature,
+      location: this.props.location
+    }
+  }
+
+  fetchData() {
+    return fetch('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + key)  
+      .then(response => response.json())
+      .then(data => {
+        this.getWeather(data)
+    });
+  }
+
+  getWeather(data) {
+    var fahrenheit = Math.round(((parseFloat(data.main.temp)-273.15)*1.8)+32);
+    this.setState({ location: data.name})
+    
+    if        ( data.weather[0].main === 'Clear' && this.isDay() === true) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' ☀️'})
+    } else if ( data.weather[0].main === 'Clear' && this.isDay() === false) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌔'})
+    } else if ( data.weather[0].main === 'Clouds' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' ☁️'})
+    } else if ( data.weather[0].main === 'Drizzle' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌦️'})
+    } else if ( data.weather[0].main === 'Rain' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌧️'})
+    } else if ( data.weather[0].main === 'Thunderstorm' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' ⛈️'})
+    } else if ( data.weather[0].main === 'Snow' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' ❄️'})
+    } else if ( data.weather[0].main === 'Fog' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
+    } else if ( data.weather[0].main === 'Mist' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
+    } else if ( data.weather[0].main === 'Haze' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
+    } else if ( data.weather[0].main === 'Tornado' ) {
+      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
+    } else if ( data.weather[0].main === 'Dust' ) {
+      this.setState({ temperature: (fahrenheit + '\xB0' + ' 🌫️')})
+    } else {
+      this.setState({ temperature: fahrenheit + '\xB0'})
+    }
+  }
+
+  isDay() {
+    return ((new Date()).getHours() >= 6 && (new Date()).getHours() < 18);
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+	render() {
     return (
-        <div class="block">
-            <div class="image-container">
-                <img src="./img/snow.jpg"/>   
-                    <div id="weather">
-                    <h1 id="temp"></h1>
-                    <h3 id="location"></h3>
-                </div>
-            </div>
-        </div>
+      <>
+      <div class="text-center align-middle translate-x-0 translate-y-0">
+        <h1 class="text-3xl m-5 text-off-white1">{this.state.temperature}</h1>
+        <p class="text-xl text-off-white1">{this.state.location}</p>
+      </div>
+      </>
     );
   }
 }
-*/
+
+export default WeatherBox

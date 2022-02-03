@@ -47,7 +47,9 @@ class Unsplash extends Component {
     render() {
         console.log(this.photos);
         return (
-                <img class="rounded-md col-span-1 shrink-0 h-36 w-36" src={this.state.photos}/>
+            <div class="relative rounded-md relative overflow-hidden h-36 w-36 bg-center bg-no-repeat">
+                <img class="min-w-full min-h-full" src={this.state.photos}/>
+            </div>
         );
     }
 }
