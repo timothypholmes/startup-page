@@ -4,8 +4,7 @@ import Chart from "react-apexcharts";
 import axios from "axios";
 import dayjs from "dayjs";
 
-
-export default class TDMarketData extends Component {
+class TDMarketData extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +33,6 @@ export default class TDMarketData extends Component {
         };
     }
 
-    
     componentDidMount() {
         this.getChartData();
     }
@@ -56,7 +54,7 @@ export default class TDMarketData extends Component {
             //1console.log(res)
             for (const dataObj of res.data.candles) {
                 candle_array[i] = ({
-                    'x': dataObj.datetime,
+                    'x': new Date(dataObj.datetime).toLocaleString(),
                     'y': [dataObj.open, dataObj.high, dataObj.low, dataObj.close]
                 })
                 i += 1;
@@ -102,7 +100,7 @@ export default class TDMarketData extends Component {
                   align: 'center',
                   floating: false,
                   style: {
-                    fontSize:  '45px',
+                    fontSize:  '20px',
                     fontWeight:  'bold',
                     fontFamily:  undefined,
                     color:  '#ffffff'
@@ -114,7 +112,7 @@ export default class TDMarketData extends Component {
                 },
                 xaxis: {
                   type: 'category',
-                  labels: new Date(candle_array.datetime),
+                  labels: candle_array.datetime,
                   labels: {
                     show: true,
                     rotate: -45,
@@ -125,7 +123,7 @@ export default class TDMarketData extends Component {
                     minHeight: undefined,
                     maxHeight: 120,
                     style: {
-                        fontSize: '20px',
+                        fontSize: '10px',
                         fontFamily: 'Helvetica, Arial, sans-serif',
                         fontWeight: 400,
                     },
@@ -148,11 +146,12 @@ export default class TDMarketData extends Component {
                       rotateAlways: false,
                       hideOverlappingLabels: true,
                       showDuplicates: false,
+                      floating: false,
                       trim: false,
                       minHeight: undefined,
                       maxHeight: 120,
                       style: {
-                          fontSize: '20px',
+                          fontSize: '10px',
                           fontFamily: 'Helvetica, Arial, sans-serif',
                           fontWeight: 400,
                           cssClass: 'apexcharts-xaxis-label',
@@ -163,19 +162,17 @@ export default class TDMarketData extends Component {
         });
     }
     
-    render() {
-        return (
-            <div className="app">
-                <div className="row">
-                    <Chart
-                        options={this.state.options}
-                        series={this.state.series}
-                        type="candlestick"
-                        width="1100"
-                        height="700"
-                        />
-                </div>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <Chart
+        options={this.state.options}
+        series={this.state.series}
+        type="candlestick"
+        width="500"
+        height="315"
+      />
+    );
+  }
 }
+
+export default TDMarketData
