@@ -25,36 +25,32 @@ class WeatherBox extends React.Component {
   getWeather(data) {
     var fahrenheit = Math.round(((parseFloat(data.main.temp)-273.15)*1.8)+32);
     this.setState({ location: data.name})
-    
-    if        ( data.weather[0].main === 'Clear' && this.isDay() === true) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' ☀️'})
-    } else if ( data.weather[0].main === 'Clear' && this.isDay() === false) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌔'})
-    } else if ( data.weather[0].main === 'Clouds' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' ☁️'})
-    } else if ( data.weather[0].main === 'Drizzle' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌦️'})
-    } else if ( data.weather[0].main === 'Rain' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌧️'})
-    } else if ( data.weather[0].main === 'Thunderstorm' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' ⛈️'})
-    } else if ( data.weather[0].main === 'Snow' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' ❄️'})
-    } else if ( data.weather[0].main === 'Fog' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
-    } else if ( data.weather[0].main === 'Mist' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
-    } else if ( data.weather[0].main === 'Haze' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
-    } else if ( data.weather[0].main === 'Tornado' ) {
-      this.setState({ temperature: fahrenheit + '\xB0' + ' 🌫️'})
-    } else if ( data.weather[0].main === 'Dust' ) {
-      this.setState({ temperature: (fahrenheit + '\xB0' + ' 🌫️')})
-    } else {
-      this.setState({ temperature: fahrenheit + '\xB0'})
-    }
-  }
 
+    let weather = [
+      { weather: 'Clear', icon_day: '☀️', icon_night: '🌔' },
+      { weather: 'Clouds', icon: '☁️' },
+      { weather: 'Drizzle', icon: '🌦️' },
+      { weather: 'Rain', icon: '🌧️' },
+      { weather: 'Thunderstorm', icon: '⛈️' },
+      { weather: 'Snow', icon: '❄️' },
+      { weather: 'Fog', icon: '🌫️' },
+      { weather: 'Mist', icon: '🌫️' },
+      { weather: 'Haze', icon: '🌫️' },
+      { weather: 'Tornado', icon: '🌫️' },
+      { weather: 'Dust', icon: '🌫️' }
+    ]
+  
+    let icon = '';
+    weather.forEach(element => {
+      if (data.weather[0].main === 'Clear') {
+          icon = this.isDay() ? element.icon_day : element.icon_night
+      } else if (data.weather[0].main === element.weather) {
+          icon = element.icon;
+      }
+    });
+    this.setState({ temperature: fahrenheit + '\xB0 ' + icon})
+  }
+  
   isDay() {
     return ((new Date()).getHours() >= 6 && (new Date()).getHours() < 18);
   }
