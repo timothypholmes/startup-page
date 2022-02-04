@@ -40,7 +40,8 @@ module.exports = {
       },
       backgroundImage: {
         'google-icon': "url('/src/assets/img/google.svg')",
-        'footer-texture': "url('/img/footer-texture.png')",
+        'duck-icon': "url('/src/assets/img/duck.svg')",
+        'wolfram-icon': "url('/src/assets/img/wolfram.svg')",
       }
     },
   },
