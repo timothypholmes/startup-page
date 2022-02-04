@@ -36,6 +36,7 @@ class SearchBox extends React.Component {
     this.setState({ disabled: id })
     this.refs.input.value = '';
   }
+  
   render() {
     return (
       <div class="search">
