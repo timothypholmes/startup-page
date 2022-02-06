@@ -59,6 +59,11 @@ npm run build
 and link the static index.html local file to your browser preferences (open on new tab and 
 open on new window)
 
+Or run it using:
+
+```
+serve -s build
+```
 
 ## API features
 
