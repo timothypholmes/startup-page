@@ -39,18 +39,19 @@ class SearchBox extends React.Component {
   
   render() {
     return (
-      <div class="block">
-        <div class="pl-10 pt-5">
-          <div class="engine-buttons" onClick={this.buttonToggle.bind(this)}>
-              <button class="bg-google-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none m-5" 
+      <div class="flex justify-center ">
+        <div>
+          <div class="flex space-x-16 justify-center pt-8 pb-8" onClick={this.buttonToggle.bind(this)}>
+              <button class="bg-google-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none" 
                       id='search-button' disabled={this.state.disabled === "1"} id="1" 
-                      engine='google' address='http://www.google.com/search?q=' ><img/></button>
-              <button class="bg-duck-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none m-5" 
+                      engine='google' address='http://www.google.com/search?q=' >
+              </button>
+              <button class="bg-duck-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none" 
                       id='search-button' disabled={this.state.disabled === "2"} id="2" 
-                      engine='duckduckgo' address='https://www.duckduckgo.com/?q=' ><img/></button>
-              <button class="bg-wolfram-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none m-5" 
+                      engine='duckduckgo' address='https://www.duckduckgo.com/?q=' ></button>
+              <button class="bg-wolfram-icon bg-no-repeat w-8 h-8 outline-inherit cursor-pointer border-none" 
                       id='search-button' disabled={this.state.disabled === "3"} id="3"
-                      engine='wolfram' address='https://www.wolframalpha.com/input/?i='><img/></button>
+                      engine='wolfram' address='https://www.wolframalpha.com/input/?i='></button>
           </div>
           <input class="items-center w-60 h-5 boarder-none bg-off-white1 border-white border border-solid border-gray-300 rounded-xl focus:border-red2 focus:outline-none"
            autoFocus id='search-input' type='text' ref="input" onKeyPress={sendSearch}/>

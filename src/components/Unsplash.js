@@ -16,7 +16,8 @@ class Unsplash extends Component {
         const accessKey = process.env.REACT_APP_ACCESS_KEY; 
         //const category = 'chicago';//process.env.REACT_APP_UNSPLASH_PHOTO_CATEGORY;
         var categoryArray = ['chicago', 'glacier', 'alaska', 'minimal', 'miami', 
-                             'ocean', 'sea', 'california', 'new york', 'seattle']
+                             'ocean', 'sea', 'california', 'new york', 'seattle',
+                             'olympic national park', 'mt. rainier national park']
         var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
         var category = categoryArray[categoryIndex];
 
@@ -31,6 +32,8 @@ class Unsplash extends Component {
             },
         })
         .then(res => {
+
+            console.log(res);
 
             var totalFound = res.data.results.length;
             var randNum = Math.floor(Math.random() * totalFound)
