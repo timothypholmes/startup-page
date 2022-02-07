@@ -478,8 +478,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .relative {
   position: relative;
+}
+
+.right-6 {
+  right: 1.5rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-20 {
+  top: 5rem;
 }
 
 .-left-12 {
@@ -534,10 +550,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-row: span 2 / span 2;
 }
 
-.m-10 {
-  margin: 2.5rem;
-}
-
 .m-5 {
   margin: 1.25rem;
 }
@@ -554,12 +566,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: grid;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .h-5 {
   height: 1.25rem;
 }
 
 .h-full {
   height: 100%;
+}
+
+.h-36 {
+  height: 9rem;
 }
 
 .h-screen {
@@ -570,10 +590,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 20rem;
 }
 
-.h-36 {
-  height: 9rem;
-}
-
 .min-h-full {
   min-height: 100%;
 }
@@ -582,12 +598,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 100vh;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
 .w-60 {
   width: 15rem;
 }
 
 .w-36 {
   width: 9rem;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .w-80 {
@@ -698,6 +722,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-image: url('/src/assets/img/wolfram.svg');
 }
 
+.bg-sun-icon {
+  background-image: url('/src/assets/img/sun.svg');
+}
+
+.bg-wind-icon {
+  background-image: url('/src/assets/img/wind.svg');
+}
+
+.bg-humidity-icon {
+  background-image: url('/src/assets/img/humidity.svg');
+}
+
 .bg-center {
   background-position: center;
 }
@@ -716,6 +752,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pt-12 {
   padding-top: 3rem;
+}
+
+.pl-10 {
+  padding-left: 2.5rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
 }
 
 .pt-20 {
