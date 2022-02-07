@@ -1,21 +1,61 @@
-import React from "react";
+import { render } from "@testing-library/react";
+import React, {useEffect} from "react";
 
-export default function SolarGraph() {
-
-    var vert_source = `
-        attribute vec2 a_Position;
-        attribute vec3 a_Colour;
-        uniform vec2 sun_position;
-        varying vec4 vert_colour;
-        varying vec2 vert_position;
-        void main(void){
-            gl_Position = vec4(a_Position, 0.0, 1.0);
-            vert_colour = vec4(a_Colour, 1.0);
-            vert_position = a_Position;
+class SolarGraph extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            photos: [],
         }
+        this.DEBUG = false;
+        this.animate = true;
+        this.XENhtml = false;
+        this.altitude_scale = 0.8;
+    
+        // location
+        this.longitude = 0;
+        this.latitude = 0;
+    
+        // current state of the system
+        this.current_state = {
+            now: null,
+            current_position: [0, 0], // sun's current position
+            longitude: 0,
+            latitude: 0,
+            prev_latitude: 0,
+            day_of_year: 0,
+            prev_day_of_year: 0,
+            animation_in_progress: false
+        }
+    
+        // everything required to draw the scene
+        this.drawing_constructs = {
+            gl: null,
+            program: null,
+            frame: null,
+            colours: null,
+            sun_altitude_curve: null,
+            altitude_curve_colours: null,
+            horison: null,
+            horison_colours: null,
+            width: 0,
+            height: 0
+        }
+
+        this.vert_source = `
+            attribute vec2 a_Position;
+            attribute vec3 a_Colour;
+            uniform vec2 sun_position;
+            varying vec4 vert_colour;
+            varying vec2 vert_position;
+            void main(void){
+                gl_Position = vec4(a_Position, 0.0, 1.0);
+                vert_colour = vec4(a_Colour, 1.0);
+                vert_position = a_Position;
+            }
     `;
 
-    var frag_source = `
+    this.frag_source = `
         precision mediump int;
         precision highp float;
         uniform float altitude_scale;
@@ -163,43 +203,11 @@ export default function SolarGraph() {
         }
     `;
 
-    var DEBUG = false;
-    var animate = true;
-    var XENhtml = false;
-    var altitude_scale = 0.8;
-
-    // location
-    var longitude = 0;
-    var latitude = 0;
-
-    // current state of the system
-    var current_state = {
-        now: null,
-        current_position: [0, 0], // sun's current position
-        longitude: 0,
-        latitude: 0,
-        prev_latitude: 0,
-        day_of_year: 0,
-        prev_day_of_year: 0,
-        animation_in_progress: false
     }
 
-    // everything required to draw the scene
-    var drawing_constructs = {
-        gl: null,
-        program: null,
-        frame: null,
-        colours: null,
-        sun_altitude_curve: null,
-        altitude_curve_colours: null,
-        horison: null,
-        horison_colours: null,
-        width: 0,
-        height: 0
-    }
 
     // useful Datetime functions
-    Date.prototype.stdTimezoneOffset = function () {
+    stdTimezoneOffset() {
         // from https://stackoverflow.com/questions/11887934/how-to-check-if-the-dst-daylight-saving-time-is-in-effect-and-if-it-is-whats
         
         var jan = new Date(this.getFullYear(), 0, 1);
@@ -207,17 +215,17 @@ export default function SolarGraph() {
         return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
     }
 
-    Date.prototype.isDstObserved = function () {
+    isDstObserved(){
         // from https://stackoverflow.com/questions/11887934/how-to-check-if-the-dst-daylight-saving-time-is-in-effect-and-if-it-is-whats
         return this.getTimezoneOffset() < this.stdTimezoneOffset();
     }
 
-    Date.prototype.isLeap = function (){
+    isLeap(){
         // check whether or not given year is leap
         return ((this.year % 4 == 0) && !(this.year % 100 == 0)) || (this.year % 400 == 0);
     }
 
-    Date.prototype.dayOfYear = function (){
+    dayOfYear(){
         // get current day of year
         
         var days_per_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -239,14 +247,14 @@ export default function SolarGraph() {
         return current_day;
     }
 
-    function create_shaders(gl) {
+    create_shaders(gl) {
         // create shaders
         var vert = gl.createShader(gl.VERTEX_SHADER);
         var frag = gl.createShader(gl.FRAGMENT_SHADER);
         var program = gl.createProgram();
 
-        gl.shaderSource(vert, vert_source);
-        gl.shaderSource(frag, frag_source);
+        gl.shaderSource(vert, this.vert_source);
+        gl.shaderSource(frag, this.frag_source);
 
         // compile shaders
         gl.compileShader(vert);
@@ -272,7 +280,7 @@ export default function SolarGraph() {
         return program;
     }
 
-    function create_buffer(gl, data){
+    create_buffer(gl, data){
         // initialise buffer for drawing
         var buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -280,46 +288,46 @@ export default function SolarGraph() {
         return buffer;
     }
 
-    function to_degrees(radians){
+    to_degrees(radians){
         // convert radians to degrees
 
         return radians * 180 / Math.PI;
     }
 
-    function to_radians(degrees){
+    to_radians(degrees){
         // convert degrees to radians
 
         return degrees * Math.PI / 180;
     }
 
-    function get_declination(day_of_year){
+    get_declination(day_of_year){
         // get sun's declination given current day of year
         // calculation is from http://mypages.iit.edu/~maslanka/SolarGeo.pdf
 
-        return Math.asin(0.39795 * Math.cos(to_radians(0.98563 * (day_of_year - 173))));
+        return Math.asin(0.39795 * Math.cos(this.to_radians(0.98563 * (day_of_year - 173))));
     }
 
-    function altitude_curve(day_of_year, latitude, hour_angle){
+    altitude_curve(day_of_year, latitude, hour_angle){
         // sin of sun's altitude given day, latitude, and hour angle, scaled by a factor to decrease displayed amplitude
 
-        var declination = get_declination(day_of_year);
-        return altitude_scale * (Math.sin(declination) * Math.sin(latitude) + Math.cos(declination) * Math.cos(latitude) * Math.cos(hour_angle));
+        var declination = this.get_declination(day_of_year);
+        return this.altitude_scale * (Math.sin(declination) * Math.sin(latitude) + Math.cos(declination) * Math.cos(latitude) * Math.cos(hour_angle));
     }
 
-    function equation_of_time(day_of_year){
+    equation_of_time(day_of_year){
         // solar noon offset in minutes given day of year using analemma
         // we use alternative calculation from https://en.wikipedia.org/wiki/Equation_of_time
 
         var deg_per_day = 360 / 365.24;
         var orbital_angle = deg_per_day * (day_of_year + 10);
         
-        var corrected_orbital_angle = orbital_angle + 1.914 * Math.sin(to_radians(deg_per_day) * (day_of_year - 2));
-        var C = (orbital_angle - to_degrees(Math.atan(Math.tan(to_radians(corrected_orbital_angle)) / Math.cos(to_radians(23.44))))) / 180;
+        var corrected_orbital_angle = orbital_angle + 1.914 * Math.sin(this.to_radians(deg_per_day) * (day_of_year - 2));
+        var C = (orbital_angle - this.to_degrees(Math.atan(Math.tan(this.to_radians(corrected_orbital_angle)) / Math.cos(this.to_radians(23.44))))) / 180;
 
         return 720 * (C - Math.floor(C + 0.5));
     }
 
-    function get_altitude_curve(day_of_year, latitude){
+    get_altitude_curve(day_of_year, latitude){
         // compute altitude curve for given day at given latitude
         
         let arr = [];
@@ -328,7 +336,7 @@ export default function SolarGraph() {
         for(var i = -1; i <= 1 + 0.01; i = i + 0.01){
             arr.push(i);
             //arr.push(amplitude * Math.cos(i * Math.PI) + shift);
-            arr.push(altitude_curve(day_of_year, latitude, i * Math.PI))
+            arr.push(this.altitude_curve(day_of_year, latitude, i * Math.PI))
 
             // give each point gray colour (half way through each colour channel)
             colours.push(0.5);
@@ -339,10 +347,10 @@ export default function SolarGraph() {
         return {sun_altitude_curve:arr, altitude_curve_colours:colours};
     }
 
-    function get_hour_angle(date, longitude){
+    get_hour_angle(date, longitude){
         // get our angle in degrees for given datetime including longitude offset
 
-        var eot = equation_of_time(date.dayOfYear()); // offset in minutes using analemma
+        var eot = this.equation_of_time(date.dayOfYear()); // offset in minutes using analemma
         var longitude_offset = (longitude / 180) * 720; // offset in minutes due to longitude
         //var solar_noon_offset = 0 - (eot + longitude_offset + date.getTimezoneOffset()); // offset has to be negative
         
@@ -359,13 +367,13 @@ export default function SolarGraph() {
         return 180 * (diff / (720 * 60));
     }
 
-    function initialise(drawing_constructs, state, animate){
+    initialise(drawing_constructs, state, animate){
         // obtain webgl context
         var canvas = document.getElementById("canvas");
         
         // set size of canvas to be the size of viewport
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
+        canvas.height = 80;//window.innerHeight;
+        canvas.width = 80;//window.innerWidth;
 
         drawing_constructs.width = canvas.offsetWidth;
         drawing_constructs.height = canvas.offsetHeight;
@@ -377,15 +385,15 @@ export default function SolarGraph() {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // compile shaders
-        var program = create_shaders(gl)
+        var program = this.create_shaders(gl)
         gl.useProgram(program);
 
         drawing_constructs.program = program;
         drawing_constructs.gl = gl;
 
         // location
-        state.longitude = longitude;
-        state.latitude = latitude;
+        state.longitude = this.longitude;
+        state.latitude = this.latitude;
 
         state.now = new Date();
         state.day_of_year = state.now.dayOfYear();
@@ -393,17 +401,17 @@ export default function SolarGraph() {
         var hour_angle = -180;
 
         // set system up for animation and debug
-        if(!DEBUG){
+        if(!this.DEBUG){
             if(animate){
                 // start animation at the left side of the screen
                 hour_angle = -180;
             } else {
-                hour_angle = ((get_hour_angle(state.now, state.longitude) + 540) % 360) - 180;
+                hour_angle = ((this.get_hour_angle(state.now, state.longitude) + 540) % 360) - 180;
             }
         }
 
         // set sun's starting position position: left edge if animating, otherwise put it in its current position using time of day
-        this.current_state.current_position = [hour_angle / 180, altitude_curve(state.day_of_year, to_radians(state.latitude), to_radians(hour_angle))];
+        this.current_state.current_position = [hour_angle / 180, this.altitude_curve(state.day_of_year, this.to_radians(state.latitude), this.to_radians(hour_angle))];
         
         // creates a black backgroung for the scene to render on
         // consists of two black triangles
@@ -413,7 +421,7 @@ export default function SolarGraph() {
                                         0, 0, 0,   0, 0, 0,   0, 0, 0];
 
         // calculate sun's altitude curve (path in the sky) using day of year and longitude
-        var {sun_altitude_curve, altitude_curve_colours} = get_altitude_curve(this.current_state.day_of_year, to_radians(this.current_state.latitude));
+        var {sun_altitude_curve, altitude_curve_colours} = this.get_altitude_curve(this.current_state.day_of_year, this.to_radians(this.current_state.latitude));
         this.drawing_constructs.sun_altitude_curve = sun_altitude_curve;
         this.drawing_constructs.altitude_curve_colours = altitude_curve_colours;
 
@@ -422,12 +430,12 @@ export default function SolarGraph() {
         this.drawing_constructs.horison_colours = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
     }
 
-    function draw(drawing_constructs, state, animate, target_hour_angle){
+    draw(drawing_constructs, state, animate, target_hour_angle){
         // draw to canvas using current sun's location, user coordinates, and target position for the sun to move to
         
         // skip animation and put the sun in the final position
         if(!animate){
-            state.current_position = [target_hour_angle / 180, altitude_curve(state.day_of_year, to_radians(state.latitude), to_radians(target_hour_angle))];
+            state.current_position = [target_hour_angle / 180, this.altitude_curve(state.day_of_year, this.to_radians(state.latitude), this.to_radians(target_hour_angle))];
 
             state.animation_in_progress = false;
         }
@@ -444,11 +452,11 @@ export default function SolarGraph() {
         let sun_altitude_scale = gl.getUniformLocation(drawing_constructs.program, "altitude_scale");
         
         // define buffers for blask background
-        let vertex_buffer = create_buffer(gl, drawing_constructs.frame);
-        let colour_buffer = create_buffer(gl, drawing_constructs.colours);
+        let vertex_buffer = this.create_buffer(gl, drawing_constructs.frame);
+        let colour_buffer = this.create_buffer(gl, drawing_constructs.colours);
         
         // set altitude scale
-        gl.uniform1f(sun_altitude_scale, altitude_scale);
+        gl.uniform1f(sun_altitude_scale, this.altitude_scale);
 
         //set aspect ratio
         gl.uniform2f(aspect_ratio, drawing_constructs.width / drawing_constructs.height, 1.0);
@@ -468,12 +476,12 @@ export default function SolarGraph() {
         gl.drawArrays(gl.TRIANGLES, 0, 6);
 
         // draw altitude curve
-        var altitude_curve_buffer = create_buffer(gl, drawing_constructs.sun_altitude_curve);
-        gl.bindBuffer(gl.ARRAY_BUFFER, altitude_curve_buffer);
+        var altitude_curve_buffer = this.create_buffer(gl, drawing_constructs.sun_altitude_curve);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.altitude_curve_buffer);
         gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(a_Position);
 
-        var altitude_curve_colour_buffer = create_buffer(gl, drawing_constructs.altitude_curve_colours)
+        var altitude_curve_colour_buffer = this.create_buffer(gl, drawing_constructs.altitude_curve_colours)
         gl.bindBuffer(gl.ARRAY_BUFFER, altitude_curve_colour_buffer);
         gl.vertexAttribPointer(a_Colour, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(a_Colour);
@@ -481,12 +489,12 @@ export default function SolarGraph() {
         gl.drawArrays(gl.LINE_STRIP, 0, drawing_constructs.sun_altitude_curve.length / 2);
 
         // draw horison
-        var horison_buffer = create_buffer(gl, drawing_constructs.horison);
+        var horison_buffer = this.create_buffer(gl, drawing_constructs.horison);
         gl.bindBuffer(gl.ARRAY_BUFFER, horison_buffer);
         gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(a_Position);
 
-        var horison_colour_buffer = create_buffer(gl, drawing_constructs.horison_colours)
+        var horison_colour_buffer = this.create_buffer(gl, drawing_constructs.horison_colours)
         gl.bindBuffer(gl.ARRAY_BUFFER, horison_colour_buffer);
         gl.vertexAttribPointer(a_Colour, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(a_Colour);
@@ -508,9 +516,9 @@ export default function SolarGraph() {
                 if (Math.abs(current_angle - limit) <= 0.1){
                     //if (current_angle > limit){
                     // begin countdown to screen refresh
-                    if(!XENhtml){
+                    if(!this.XENhtml){
                         // don't refresh automatically if running within XENhtml
-                        setTimeout(refresh, 2000, drawing_constructs, state, animate);
+                        setTimeout(this.refresh, 2000, drawing_constructs, state, animate);
                     }
                     
                     // stop animation from continuing
@@ -528,15 +536,15 @@ export default function SolarGraph() {
                 current_angle = (current_angle + Math.pow(Math.cos(Math.abs(current_angle / limit) * Math.PI) + 1, 0.25)) % 360;
                 
                 // update current position
-                state.current_position = [(current_angle - 180) / 180, altitude_curve(state.day_of_year, to_radians(state.latitude), to_radians(current_angle - 180))];
+                state.current_position = [(current_angle - 180) / 180, this.altitude_curve(state.day_of_year, this.to_radians(state.latitude), this.to_radians(current_angle - 180))];
                 
                 // draw next frame
-                draw(drawing_constructs, state, animate, target_hour_angle);
+                this.draw(drawing_constructs, state, animate, target_hour_angle);
             });
         }
     }
 
-    function refresh(drawing_constructs, state, animate) {
+    refresh(drawing_constructs, state, animate) {
         // refresh canvas
 
         if(state.animation_in_progress){
@@ -549,12 +557,12 @@ export default function SolarGraph() {
         // update state
         state.now = new Date();
         state.day_of_year = state.now.dayOfYear();
-        state.latitude = latitude;
-        state.longitude = longitude;
+        state.latitude = this.latitude;
+        state.longitude = this.longitude;
 
         // check whether or not we need to redraw altitude curve
         if(state.day_of_year != state.prev_day_of_year || state.latitude != state.prev_latitude){
-            let {sun_altitude_curve, altitude_curve_colours} = get_altitude_curve(state.day_of_year, to_radians(state.latitude));
+            let {sun_altitude_curve, altitude_curve_colours} = this.get_altitude_curve(state.day_of_year, this.to_radians(state.latitude));
             drawing_constructs.sun_altitude_curve = sun_altitude_curve;
             drawing_constructs.altitude_curve_colours = altitude_curve_colours;
 
@@ -563,10 +571,11 @@ export default function SolarGraph() {
         }
 
         // compute target hour angle and draw
-        let target_hour_angle = ((get_hour_angle(state.now, state.longitude) + 540) % 360) - 180;
-        draw(drawing_constructs, state, animate, target_hour_angle);
+        let target_hour_angle = ((this.get_hour_angle(state.now, state.longitude) + 540) % 360) - 180;
+        this.draw(drawing_constructs, state, animate, target_hour_angle);
     }
 
+    /*
     window.onload = function(){
         // initialise current state and drawing constructs
         this.initialise(this.drawing_constructs, this.current_state, this.animate);
@@ -581,8 +590,30 @@ export default function SolarGraph() {
             this.refresh(this.drawing_constructs, this.current_state, this.animate);
         };
     }
+    */
 
-    return (
-        <h1> </h1>
-    );
+    componentDidMount() {
+        //this.initialise(this.drawing_constructs, this.current_state, this.animate)
+        //this.refresh(this.drawing_constructs, this.current_state, this.animate)
+    }
+    //useEffect(() => {
+    //    this.initialise(this.drawing_constructs, this.current_state, this.animate);
+    //  })
+
+
+    //componentDidMount() {
+    //    a=1;
+    //}
+
+	render() {
+        return (
+          <>
+            <body class="m-0 h-fill w-full">
+                <canvas id="canvas"/>
+            </body>
+          </>
+        );
+      }
 }
+
+export default SolarGraph

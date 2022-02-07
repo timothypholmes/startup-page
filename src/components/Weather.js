@@ -66,6 +66,7 @@ class WeatherBox extends React.Component {
         <h1 class="text-3xl m-5 text-off-white1">{this.state.temperature}</h1>
         <p class="text-xl text-off-white1">{this.state.location}</p>
       </div>
+      {/*
       <div class="absolute top-20 right-4 pt-5 h-36 w-12">
         <button class=" w-8 h-8">
           <svg width="30" height="30" fill="black">
@@ -76,6 +77,7 @@ class WeatherBox extends React.Component {
         <button class=" top-10 bg-wind-icon bg-no-repeat w-8 h-8"/>
         <button class=" top-20 bg-humidity-icon bg-no-repeat w-8 h-8"/>
       </div>
+      */}
       </>
     );
   }
