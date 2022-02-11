@@ -53,6 +53,7 @@ export default function Index() {
               <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">work</li>
               <li><a href="https://stackoverflow.com">stackoverflow</a></li>
               <li><a href="https://github.com">github</a></li>
+              <li><a href="https://gist.github.com/timothypholmes">gists</a></li>
             </ul>
           </div>
           <div class="bg-blue3 text-black rounded-xl col-span-3 row-span-2 h-80 w-auto shadow-4xl"><TDMarketData /></div>

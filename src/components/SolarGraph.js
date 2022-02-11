@@ -9,11 +9,11 @@ class SolarGraph extends React.Component {
         super(props);
 
         var now = new Date();
-        
+
         // current state of the system
         this.state = {
-            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)),             // d
-            latitude: 41.1,//this.deg2rad(41.881832),                    
+            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day #
+            latitude: 41.881832,//this.deg2rad(41.881832),                    
             lst: (((now.getHours() * 60) + now.getMinutes()) / 60),
             lstArray: this.linspace(0, 24, 1440),
             declinationAngle: 0,
@@ -63,7 +63,9 @@ class SolarGraph extends React.Component {
           arr.push(start + (step * i));
         }
         return arr;
-      }
+    }
+
+    
   
     componentDidMount() {
         this.calcCurrentSolarPosition() // get sun position
