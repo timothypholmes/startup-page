@@ -474,10 +474,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   visibility: hidden;
 }
 
-.fixed {
-  position: fixed;
-}
-
 .absolute {
   position: absolute;
 }
@@ -486,16 +482,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: relative;
 }
 
-.right-6 {
-  right: 1.5rem;
-}
-
-.top-10 {
-  top: 2.5rem;
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .top-20 {
   top: 5rem;
+}
+
+.right-4 {
+  right: 1rem;
+}
+
+.top-10 {
+  top: 2.5rem;
 }
 
 .-left-12 {
@@ -518,36 +519,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 3 / span 3;
 }
 
-.col-start-1 {
-  grid-column-start: 1;
-}
-
-.col-start-2 {
-  grid-column-start: 2;
-}
-
-.col-start-3 {
-  grid-column-start: 3;
-}
-
-.col-start-5 {
-  grid-column-start: 5;
-}
-
-.col-start-6 {
-  grid-column-start: 6;
-}
-
-.col-start-7 {
-  grid-column-start: 7;
-}
-
-.col-start-4 {
-  grid-column-start: 4;
-}
-
 .row-span-2 {
   grid-row: span 2 / span 2;
+}
+
+.m-0 {
+  margin: 0px;
 }
 
 .m-5 {
@@ -606,6 +583,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 15rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .w-36 {
   width: 9rem;
 }
@@ -650,12 +631,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   cursor: pointer;
 }
 
-.grid-rows-4 {
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-}
-
-.flex-col {
-  flex-direction: column;
+.grid-flow-row-dense {
+  grid-auto-flow: row dense;
 }
 
 .content-center {
@@ -666,6 +643,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .gap-y-6 {
   row-gap: 1.5rem;
 }
@@ -673,6 +654,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .gap-x-6 {
   -webkit-column-gap: 1.5rem;
           column-gap: 1.5rem;
+}
+
+.space-x-16 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(4rem * var(--tw-space-x-reverse));
+  margin-left: calc(4rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-hidden {
@@ -722,10 +709,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-image: url('/src/assets/img/wolfram.svg');
 }
 
-.bg-sun-icon {
-  background-image: url('/src/assets/img/sun.svg');
-}
-
 .bg-wind-icon {
   background-image: url('/src/assets/img/wind.svg');
 }
@@ -754,16 +737,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 3rem;
 }
 
-.pl-10 {
-  padding-left: 2.5rem;
+.pt-8 {
+  padding-top: 2rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pt-5 {
   padding-top: 1.25rem;
 }
 
-.pt-20 {
-  padding-top: 5rem;
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-center {
@@ -784,6 +779,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-black {
   font-weight: 900;
 }
@@ -791,6 +791,24 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-off-white1 {
   --tw-text-opacity: 1;
   color: rgb(240 235 216 / var(--tw-text-opacity));
+}
+
+.underline {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+
+.decoration-off-white1 {
+  -webkit-text-decoration-color: #f0ebd8;
+          text-decoration-color: #f0ebd8;
+}
+
+.decoration-2 {
+  text-decoration-thickness: 2px;
+}
+
+.underline-offset-4 {
+  text-underline-offset: 4px;
 }
 
 .antialiased {
@@ -816,4 +834,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
 }

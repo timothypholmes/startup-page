@@ -5,16 +5,13 @@ class Clock extends React.Component {
     super(props);
     this.updateDate = this.updateDate.bind(this);
       
+    this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    this.months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
     this.state = {
       date: new Date().toLocaleTimeString(),
-      days: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-      date: new Date().toLocaleTimeString(),
-      time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})/, "$1$3"),
-      //h: new Date().toLocaleTimeString().replace(/([\d])/, "$1$3"),
-      //m: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
-      //s: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
-      period: new Date().toLocaleTimeString().replace(/(.*)/, "$1$3"),
+      day: this.days[new Date().getDay()],
+      month: this.months[new Date().getMonth()]
     }
     this.interval = setInterval(this.updateDate, 1000);
   }
@@ -26,17 +23,17 @@ class Clock extends React.Component {
   updateDate() {
     this.setState({
       date: new Date().toLocaleTimeString(),
-      time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})/, "$1$3"),
-      //h: new Date().toLocaleTimeString().replace(/([\d])/, "$1$3"),
-      //m: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
-      //s: new Date().toLocaleTimeString().replace(/(:[\d]{2})/, "$1$3"),
-      period: new Date().toLocaleTimeString().replace(/(.*)/, "$1$3"),
+      day: this.days[new Date().getDay()],
+      month: this.months[new Date().getMonth()]
     });
   }
     
   render() {
     return(
-      <div class="text-center pt-12 font-black text-off-white1">{this.state.date}</div>
+      <>
+        <div class="text-center pt-14 font-black text-off-white1">{this.state.date}</div>
+        <div class="text-center font-black text-off-white1">{this.state.day}</div>
+      </>
     );
   }
 }
