@@ -33,7 +33,7 @@ class Unsplash extends Component {
         })
         .then(res => {
 
-            console.log(res);
+            //console.log(res);
 
             var totalFound = res.data.results.length;
             var randNum = Math.floor(Math.random() * totalFound)
@@ -48,7 +48,6 @@ class Unsplash extends Component {
         }
 
     render() {
-        console.log(this.photos);
         return (
             <div class="relative rounded-xl overflow-hidden h-full w-36 bg-center bg-no-repeat">
                 <img class="min-w-full min-h-full" src={this.state.photos}/>
