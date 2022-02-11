@@ -21,17 +21,17 @@ export default function Index() {
   return (
     <>
       {/*<section className="bg-off-white1 flex h-screen v-min-860-px h-min-200-px p-20"> */}
-      <section className="bg-off-white1 min-h-screen flex flex-col items-center pt-20">
-        <div class="grid grid-rows-4 gap-y-6 gap-x-6 content-center">
+      <section className="bg-off-white1 min-h-screen flex items-center justify-center">
+        <div class="grid grid-rows-4 md:grid-rows-5 sm:grid-row-6 gap-y-6 gap-x-6 content-center">
 
           {/* row 1 */}
           <div class="overflow-hidden rounded-xl col-start-1 col-span-1 row-span-2 h-80 w-36 shadow-4xl">
-            <div class="fixed rounded-xl overflow-hidden h-80 w-36 "> 
+            <div class="sticky rounded-xl overflow-hidden h-80 w-36 "> 
               <video class="relative object-cover min-h-full max-w-xl -left-12" src={desert} type="video/mp4" autoPlay muted loop/>
             </div>
           </div>
           <div class="rounded-xl col-start-2 col-span-1 h-36 w-36 shadow-4xl">
-            <div class="fixed rounded-xl overflow-hidden h-36 w-36"> 
+            <div class="sticky rounded-xl overflow-hidden h-36 w-36"> 
               <video class="relative object-cover min-h-full max-w-sm right-48" src={desert} type="video/mp4" autoPlay muted loop/>
             </div>
           </div>
