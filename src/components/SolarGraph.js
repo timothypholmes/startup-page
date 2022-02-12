@@ -13,15 +13,17 @@ class SolarGraph extends React.Component {
         // current state of the system
         this.state = {
             daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day #
-            latitude: 41.881832,//this.deg2rad(41.881832),                    
-            lst: (((now.getHours() * 60) + now.getMinutes()) / 60),
-            lstArray: this.linspace(0, 24, 1440),//1440),
+            latitude: 0.73097,//41.881832,//this.deg2rad(41.881832),                    
+            lst: (((now.getHours() * 60) + now.getMinutes() - 120) / 60),
+            lstArray: this.linspace(0, 24, 10000),//1440),
             declinationAngle: 0,
             hourAngle: 0,
             hourAngleArray: [],
             solarElevationAngle: 0,
             solarElevationAngleArray: [],
-            temp: []
+            sunRise: 0,
+            sunSet: 0,
+            xyValues: []
         }
         
         // everything required to draw the scene
@@ -29,7 +31,7 @@ class SolarGraph extends React.Component {
             gl: null,
             program: null,
             frame: null,
-            colours: [],
+            colors: [],
             altitudeCurveColors: [],
             horison: null,
             horisonColors: null,
@@ -193,30 +195,42 @@ class SolarGraph extends React.Component {
                 vec3 sky = 1.0 * sky_colour.rgb * sunlight_scale(distance, radius, vert_position * aspectRatio);
                 // main sun
                 vec3 sun = sunlight_colour.rgb * sun_scale(distance, vert_position * aspectRatio);
-                // combine all colours to get final colour for this fragment
+                // combine all colors to get final colour for this fragment
                 gl_FragColor = vec4(background + 0.8 * sky + 0.4 * sun + horison_scale(vert_position, solarPosition, radius) * horison_colour.rgb * 0.3, 1.0);
             }
         `;
     }
     
     calcCurrentSolarPosition() {
-        this.state.declinationAngle = -0.4091 * Math.cos((360/365 * (this.state.daysInYear + 10)))
+
+        this.state.declinationAngle = -0.4091 * Math.cos(360/365 * (this.state.daysInYear + 10))
         this.state.hourAngle = 0.26 * (this.state.lst - 12)
-        this.state.solarElevationAngle  = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+
+        var sunRiseTime = 12 - 1/0.26 * Math.acos((-Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
+        var sunSetTime = 12 + 1/0.26 * Math.acos((-Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
+        
+        var hourAngleSunRise = 0.26 * (sunRiseTime - 12)
+        var hourAngleSunSet = 0.26 * (sunSetTime - 12)
+
+        this.state.sunRise = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunRise))
+        this.state.sunSet = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
+
+        this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
     }
 
     calcSolarAngleArray() {        
-        this.state.declinationAngle = -0.4091 * Math.cos((360/365 * (this.state.daysInYear + 10)))
+
+        this.state.declinationAngle = -0.4091 * Math.cos(360/365 * (this.state.daysInYear + 10))
         for (var i = 0; i < this.state.lstArray.length; i++) {
             this.state.hourAngleArray.push(0.26 * (this.state.lstArray[i] - 12))
         }
-        for (var i = 0; i < this.state.lstArray.length; i++) {
+        for (var j = 0; j < this.state.lstArray.length; j++) {
             this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[i])) * -1)
+                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])))
         }
-        
-        console.log(this.state.solarElevationAngleArray)
     }
     
     getLocation() {
@@ -268,6 +282,28 @@ class SolarGraph extends React.Component {
         return program;
     }
 
+    // init with the default canvas size
+    
+
+
+    resizeCanvasToDisplaySize(canvas) {
+        const canvasToDisplaySizeMap = new Map([[canvas, [318, 325]]]);
+        // Get the size the browser is displaying the canvas in device pixels.
+        const [displayWidth, displayHeight] = canvasToDisplaySizeMap.get(canvas);
+        
+        // Check if the canvas is not the same size.
+        const needResize = canvas.width  !== displayWidth || 
+                            canvas.height !== displayHeight;
+        
+        if (needResize) {
+            // Make the canvas the same size
+            canvas.width  = displayWidth;
+            canvas.height = displayHeight;
+        }
+        
+        return needResize;
+    }
+
     setup() {
 
         var canvas = document.getElementById("canvas");
@@ -276,10 +312,14 @@ class SolarGraph extends React.Component {
         canvas.height = 318//window.innerHeight;
         canvas.width = 325//window.innerWidth;
 
-        this.drawingConstructs.width = canvas.offsetWidth;
-        this.drawingConstructs.height = canvas.offsetHeight;
+        this.drawingConstructs.width = 10000//canvas.offsetWidth;
+        this.drawingConstructs.height = 10000//canvas.offsetHeight;
 
         let gl = canvas.getContext("webgl");
+        //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+        //this.resizeCanvasToDisplaySize(gl.canvas);
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         
         // clear canvas
         gl.clearColor(0, 0, 0, 1);
@@ -294,25 +334,34 @@ class SolarGraph extends React.Component {
 
         // creates a black background for the scene to render on
         // consists of two black triangles
-        this.drawingConstructs.frame = [-1, -1,    1, -1,    1, 1,
-                                         -1, -1,   -1,  1,    1, 1 ];
-        this.drawingConstructs.colours = [0, 0, 0,   0, 0, 0,   0, 0, 0,
-                                           0, 0, 0,   0, 0, 0,   0, 0, 0];
+        this.drawingConstructs.frame = [-1, -1,    
+                                         1, -1,    
+                                         1,  1,
+                                        -1, -1,  
+                                        -1,  1,    
+                                         1,  1 ];
+        this.drawingConstructs.colors = [0, 0, 0,   
+                                         0, 0, 0,   
+                                         0, 0, 0,   
+                                         0, 0, 0,   
+                                         0, 0, 0,   
+                                         0, 0, 0];
 
         // calculate sun's altitude curve (path in the sky) using day of year and longitude
         var xValues = this.linspace(-1, 1, this.state.solarElevationAngleArray.length)
         for (var i = 0; i < this.state.solarElevationAngleArray.length; i++) {
-            this.state.temp.push(xValues[i]) // x axis values
-            this.state.temp.push(this.state.solarElevationAngleArray[i]) // y axis values
+            this.state.xyValues.push(xValues[i]) // x axis values
+            this.state.xyValues.push(this.state.solarElevationAngleArray[i]) // y axis values
 
             this.drawingConstructs.altitudeCurveColors.push(0.5)
             this.drawingConstructs.altitudeCurveColors.push(0.5)
             this.drawingConstructs.altitudeCurveColors.push(0.5)
         }
-        console.log(this.state.temp)
 
         // create a single line for horizon in the middle of the screen
-        this.drawingConstructs.horison = [-1, 0, 24, 0]
+        console.log('sunrise: ' + this.state.sunRise)
+        console.log('sunset: ' + this.state.sunSet)
+        this.drawingConstructs.horison = [-1, this.state.sunRise, 1, this.state.sunRise]
         this.drawingConstructs.horisonColors = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
     }
 
@@ -323,15 +372,13 @@ class SolarGraph extends React.Component {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
         return buffer;
     }
-    
 
     draw() {
 
         // clear canvas
         let gl = this.drawingConstructs.gl;
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        console.log(this.drawingConstructs)
-        
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
         // set up attributes and uniforms for use with shaders
         let aPosition = gl.getAttribLocation(this.drawingConstructs.program, "aPosition");
         let aColor = gl.getAttribLocation(this.drawingConstructs.program, "aColor");
@@ -341,16 +388,16 @@ class SolarGraph extends React.Component {
         
         // define buffers for black background
         let vertex_buffer = this.create_buffer(gl, this.drawingConstructs.frame);
-        let colour_buffer = this.create_buffer(gl, this.drawingConstructs.colours);
+        let colour_buffer = this.create_buffer(gl, this.drawingConstructs.colors);
         
         // set altitude scale
-        gl.uniform1f(solarAltitudeScale, 10);
+        gl.uniform1f(solarAltitudeScale, 1);
     
         //set aspect ratio
         gl.uniform2f(aspectRatio, this.drawingConstructs.width / this.drawingConstructs.height, 1.0)
     
-        // set sun position
-        gl.uniform2f(solarPosition, (this.state.lst/this.state.solarElevationAngleArray.length) * 24, this.state.solarElevationAngle)
+        // set sun position 
+        gl.uniform2f(solarPosition, (this.state.lst - 12)/12, this.state.solarElevationAngle)
     
         // draw background
         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
@@ -364,7 +411,7 @@ class SolarGraph extends React.Component {
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     
         // draw altitude curve
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.create_buffer(gl, this.state.temp));
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.create_buffer(gl, this.state.xyValues));
         gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(aPosition);
     
@@ -373,7 +420,7 @@ class SolarGraph extends React.Component {
         gl.enableVertexAttribArray(aColor);
     
         //gl.drawArrays(gl.LINE_STRIP, 0, this.drawingConstructs.sun_altitude_curve.length / 2);
-        gl.drawArrays(gl.LINE_STRIP, 0,  this.state.temp.length / 2)
+        gl.drawArrays(gl.LINE_STRIP, 0,  this.state.xyValues.length / 2)
     
         // draw horison
         gl.bindBuffer(gl.ARRAY_BUFFER, this.create_buffer(gl, this.drawingConstructs.horison))
@@ -398,9 +445,7 @@ class SolarGraph extends React.Component {
 	render() {
         return (
           <>
-            <body class="m-0 h-fill w-full overflow-hidden rounded-xl">
-                <canvas class="overflow-hidden rounded-xl" id="canvas"/>
-            </body>
+            <canvas class="absolute h-92 w-92 overflow-hidden rounded-xl" id="canvas"/>
           </>
         );
       }
