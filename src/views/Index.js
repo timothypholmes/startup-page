@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import Clock from "../components/Clock.js";
 import Unsplash from "../components/Unsplash.js";
 import SearchBox from "../components/Search.js";
-import SolarGraph from "../components/SolarGraph.js";
+import SolarGraphNew from "../components/SolarGraphNew.js";
 import WeatherBox from "../components/Weather.js";
 import TDMarketData from "../components/TDMarketData.js";
 
@@ -69,7 +69,7 @@ export default function Index() {
               <li><a href="https://www.marketwatch.com">marketwatch</a></li>
             </ul>
           </div>
-          <div class="bg-blue3 text-black rounded-xl col-span-2 row-span-2 h-92 w-92 shadow-4xl"><SolarGraph/></div>
+          <div class="bg-blue3 text-black rounded-xl col-span-2 row-span-2 h-92 w-92 shadow-4xl"><SolarGraphNew /></div>
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl">
            <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
               <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">social</li>
