@@ -14,8 +14,10 @@
     "dayjs": "^1.10.7",
     "dir-glob": "^3.0.1",
     "fast-glob": "^3.2.6",
+    "fs": "^0.0.1-security",
     "immer": "^9.0.3",
     "patch-package": "^6.4.7",
+    "path": "^0.12.7",
     "react": "^17.0.2",
     "react-apexcharts": "^1.3.9",
     "react-data-grid": "^7.0.0-beta.8",
@@ -55,6 +57,7 @@
     "@babel/preset-react": "^7.16.7",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.6",
+    "raw-loader": "^4.0.2",
     "tailwindcss": "^3.0.18"
   }
 }
