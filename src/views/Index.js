@@ -20,7 +20,6 @@ import desert from "../assets/img/desert.mp4"
 export default function Index() {
   return (
     <>
-      {/*<section className="bg-off-white1 flex h-screen v-min-860-px h-min-200-px p-20"> grid-flow-row-dense  */}
       <section className="bg-off-white1 min-h-screen flex items-center justify-center pt-10 pb-10 font-helvetica">
         <div class="grid xl:grid-cols-7 md:grid-cols-5 sm:grid-cols-3 gap-y-6 gap-x-6 grid-flow-row-dense content-center font-">
 
