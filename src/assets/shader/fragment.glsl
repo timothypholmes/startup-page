@@ -1,11 +1,10 @@
 // fragment.glsl
 precision mediump int;
 precision highp float;
-uniform float altitude_scale;
-uniform vec2 aspectRatio;
+
 uniform vec2 solarPosition;
-varying vec4 vert_colour;
-varying vec2 vert_position;
+varying vec4 vertColor;
+varying vec2 vertPosition;
 
 float sunlight_scale(float distance, float radius, vec2 position){
     // blue surrounding around the sun
@@ -25,7 +24,7 @@ float sunlight_scale(float distance, float radius, vec2 position){
     }
 }
 
-float sun_scale(float distance, vec2 position){
+float sunScale(float distance, vec2 position){
     // intensity scale of main sun body
     if(position.y >= 0.0){
         // inverse square reduction
@@ -38,7 +37,7 @@ float sun_scale(float distance, vec2 position){
     }
 }
 
-float sun_fill(float distance, vec2 position){
+float sunFill(float distance, vec2 position){
     // remove sun's fill when below horizon leaving only circular outline
     if(position.y < 0.0 && distance <= 0.035){
         return 0.0;
@@ -104,11 +103,11 @@ float horison_scale(vec2 position, vec2 sun, float radius){
             }
         }
         
-        return (c / pow(distance, 2.0)) * horison_sunlight_scale(length(position - sun), 0.75 / aspectRatio.x, position);
+        return (c / pow(distance, 2.0)) * horison_sunlight_scale(length(position - sun), 0.75, position);
     }
 }
 
-float adjust_sunlight_radius(float default_radius, float sun_altitude){
+float adjustSunlightRadius(float default_radius, float sun_altitude){
     float night_cutoff_altitude = 0.3090169943749474; // represents 18 degrees below horizon
     
     if(sun_altitude < 0.0 - night_cutoff_altitude){
@@ -122,33 +121,33 @@ float adjust_sunlight_radius(float default_radius, float sun_altitude){
     return default_radius;
 }
 
-void main(void){
-    vec4 horison_colour;
-    vec4 sky_colour = vec4(0.529411765, 0.807843137, 0.980392157, 1);
-    vec4 sunlight_colour = vec4(1.0, 1.0, 1.0, 1.0);
-    vec4 sunrise_colour = vec4(0.953, 0.906, 0.427, 1.0);
-    vec4 sunset_colour = 1.2 * vec4(0.788, 0.106, 0.149, 1.0);
+void main() {
+    vec4 horisonColor;
+    vec4 skyColor = vec4(0.529411765, 0.807843137, 0.980392157, 1);
+    vec4 sunlightColor = vec4(1.0, 1.0, 1.0, 1.0);
+    vec4 sunriseColor = vec4(0.953, 0.906, 0.427, 1.0);
+    vec4 sunsetColor = 1.2 * vec4(0.788, 0.106, 0.149, 1.0);
     
     // distance from current pixel to sun's centre
-    float distance = length(solarPosition * aspectRatio - vert_position * aspectRatio);
+    float distance = length(solarPosition - vertPosition);
     
     // adjust sunlight radius: default above horizon, shrinks as sun gets lower below horizon
     // completely invisible above horizon when the sun is 18 degreees delow horizon (night time)
     // 0.8 is default radius
-    float radius = adjust_sunlight_radius(0.8, solarPosition.y / altitude_scale); 
+    float radius = adjustSunlightRadius(0.8, solarPosition.y); 
     
     // change horizon colour to sunrise (before solar noon), sunset (after solar noon)
     if(solarPosition.x < 0.0){
-        horison_colour = sunrise_colour;
+        horisonColor = sunriseColor;
     } else {
-        horison_colour = sunset_colour;
+        horisonColor = sunsetColor;
     }
     // fill sun above horizon
-    vec3 background = vert_colour.rgb * sun_fill(distance, vert_position * aspectRatio);
+    vec3 background = vertColor.rgb * sunFill(distance, vertPosition);
     // blue outline around the sun representing sky
-    vec3 sky = 1.0 * sky_colour.rgb * sunlight_scale(distance, radius, vert_position * aspectRatio);
+    vec3 sky = 1.0 * skyColor.rgb * sunlight_scale(distance, radius, vertPosition);
     // main sun
-    vec3 sun = sunlight_colour.rgb * sun_scale(distance, vert_position * aspectRatio);
+    vec3 sun = sunlightColor.rgb * sunScale(distance, vertPosition);
     // combine all colors to get final colour for this fragment
-    gl_FragColor = vec4(background + 0.8 * sky + 0.4 * sun + horison_scale(vert_position, solarPosition, radius) * horison_colour.rgb * 0.3, 1.0);
+    gl_FragColor = vec4(background + 0.8 * sky + 0.4 * sun + horison_scale(vertPosition, solarPosition, radius) * horisonColor.rgb * 0.3, 1.0);
 }

@@ -3,7 +3,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.txt$/i,
+        test: /\.(glsl|frag|vert)$/,
         use: 'raw-loader',
       },
     ],
