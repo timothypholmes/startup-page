@@ -27,7 +27,8 @@
     "react-scripts": "^5.0.0",
     "slash": "^4.0.0",
     "three": "^0.137.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "raw-loader": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -65,4 +66,5 @@
     "tailwindcss": "^3.0.18",
     "webpack": "^5.69.0"
   }
+  
 }
