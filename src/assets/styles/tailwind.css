@@ -507,6 +507,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   right: 12rem;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .col-span-1 {
   grid-column: span 1 / span 1;
 }
@@ -523,12 +527,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-row: span 2 / span 2;
 }
 
+.m-5 {
+  margin: 1.25rem;
+}
+
 .m-0 {
   margin: 0px;
 }
 
-.m-5 {
-  margin: 1.25rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .block {
@@ -559,12 +567,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 9rem;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-80 {
   height: 20rem;
+}
+
+.h-3 {
+  height: 0.75rem;
 }
 
 .min-h-full {
@@ -583,10 +591,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 15rem;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .w-36 {
   width: 9rem;
 }
@@ -597,6 +601,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-80 {
   width: 20rem;
+}
+
+.w-1 {
+  width: 0.25rem;
 }
 
 .w-auto {
@@ -631,6 +639,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   cursor: pointer;
 }
 
+.list-none {
+  list-style-type: none;
+}
+
 .grid-flow-row-dense {
   grid-auto-flow: row dense;
 }
@@ -656,10 +668,10 @@ Ensure the default browser behavior of the `hidden` attribute.
           column-gap: 1.5rem;
 }
 
-.space-x-16 > :not([hidden]) ~ :not([hidden]) {
+.space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
-  margin-right: calc(4rem * var(--tw-space-x-reverse));
-  margin-left: calc(4rem * calc(1 - var(--tw-space-x-reverse)));
+  margin-right: calc(2rem * var(--tw-space-x-reverse));
+  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-hidden {
@@ -687,9 +699,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(240 235 216 / var(--tw-bg-opacity));
 }
 
-.bg-blue3 {
+.bg-blue4 {
   --tw-bg-opacity: 1;
-  background-color: rgb(29 45 68 / var(--tw-bg-opacity));
+  background-color: rgb(13 19 33 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#8e412e\] {
@@ -707,6 +719,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-wolfram-icon {
   background-image: url('/src/assets/img/wolfram.svg');
+}
+
+.bg-stack-icon {
+  background-image: url('/src/assets/img/stack.svg');
 }
 
 .bg-wind-icon {
@@ -729,12 +745,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   object-fit: cover;
 }
 
-.p-20 {
-  padding: 5rem;
-}
-
-.pt-12 {
-  padding-top: 3rem;
+.pt-14 {
+  padding-top: 3.5rem;
 }
 
 .pt-8 {
@@ -755,6 +767,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .text-left {
@@ -824,6 +844,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .outline {
   outline-style: solid;
+}
+
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:block::before {
+  content: var(--tw-content);
+  display: block;
 }
 
 .focus\:border-red2:focus {
