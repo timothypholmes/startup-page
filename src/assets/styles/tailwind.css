@@ -668,10 +668,10 @@ Ensure the default browser behavior of the `hidden` attribute.
           column-gap: 1.5rem;
 }
 
-.space-x-16 > :not([hidden]) ~ :not([hidden]) {
+.space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
-  margin-right: calc(4rem * var(--tw-space-x-reverse));
-  margin-left: calc(4rem * calc(1 - var(--tw-space-x-reverse)));
+  margin-right: calc(2rem * var(--tw-space-x-reverse));
+  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-hidden {
@@ -719,6 +719,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-wolfram-icon {
   background-image: url('/src/assets/img/wolfram.svg');
+}
+
+.bg-stack-icon {
+  background-image: url('/src/assets/img/stack.svg');
 }
 
 .bg-wind-icon {
