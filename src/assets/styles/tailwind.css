@@ -682,8 +682,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 0.75rem;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .border {
   border-width: 1px;
+}
+
+.border-0 {
+  border-width: 0px;
 }
 
 .border-solid {
@@ -699,12 +707,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(240 235 216 / var(--tw-bg-opacity));
 }
 
-.bg-blue4 {
+.bg-blue3 {
   --tw-bg-opacity: 1;
-  background-color: rgb(13 19 33 / var(--tw-bg-opacity));
+  background-color: rgb(29 45 68 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#8e412e\] {
+.bg-red2 {
   --tw-bg-opacity: 1;
   background-color: rgb(142 65 46 / var(--tw-bg-opacity));
 }
@@ -743,6 +751,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .object-cover {
   object-fit: cover;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .pt-14 {
@@ -787,6 +799,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .align-middle {
   vertical-align: middle;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-3xl {
@@ -846,6 +863,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-style: solid;
 }
 
+.transition {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .before\:absolute::before {
   content: var(--tw-content);
   position: absolute;
@@ -864,6 +897,31 @@ Ensure the default browser behavior of the `hidden` attribute.
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.dark .dark\:border-4 {
+  border-width: 4px;
+}
+
+.dark .dark\:border-off-white2 {
+  --tw-border-opacity: 1;
+  border-color: rgb(244 236 226 / var(--tw-border-opacity));
+}
+
+.dark .dark\:bg-blue3 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 45 68 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-red1 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(186 111 77 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:shadow-none {
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media (min-width: 640px) {

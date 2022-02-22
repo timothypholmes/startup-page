@@ -14,6 +14,8 @@ import * as THREE from "three";
 // https://solarsena.com/solar-elevation-angle-altitude/
 // https://www.pveducation.org/pvcdrom/properties-of-sunlight/elevation-angle
 
+var BACKGOUND = 0x000000
+
 class SolarGraphNew extends React.Component {
     constructor(props) {
         super(props);
@@ -151,7 +153,7 @@ class SolarGraphNew extends React.Component {
 
     init() {
         this.sceneRender.scene = new THREE.Scene();
-        this.sceneRender.scene.background = new THREE.Color(0x0d1321);
+        this.sceneRender.scene.background = new THREE.Color(BACKGOUND);
 
         this.sceneRender.camera = new THREE.PerspectiveCamera(45, 326 / 316, 1, 1000);
         this.sceneRender.renderer = new THREE.WebGLRenderer({
@@ -201,7 +203,7 @@ class SolarGraphNew extends React.Component {
         // set horizon block
         const cube = new THREE.Mesh(
             new THREE.BoxGeometry( 100, 20, 0 ),
-            new THREE.MeshBasicMaterial( {color: 0x0d1321} )
+            new THREE.MeshBasicMaterial( {color: BACKGOUND} )
         )
         cube.position.set(0, -10, -1);
         this.sceneRender.scene.add(cube);
@@ -220,13 +222,13 @@ class SolarGraphNew extends React.Component {
     setStars() {
         // plot stars (only before sunrise or after sunset)        
         const starVertices = [];
-        for (let i = 0; i < 10000; i ++) {
+        for (let i = 0; i < 50000; i ++) {
 
             const x = THREE.MathUtils.randFloatSpread(1000);
             const y = THREE.MathUtils.randFloatSpread(1000);
             const z = THREE.MathUtils.randFloatSpread(1000);
 
-            starVertices.push(x, y, z);
+            starVertices.push(x, y, -1 * Math.abs(z));
         }
 
         const starGeometry = new THREE.BufferGeometry();

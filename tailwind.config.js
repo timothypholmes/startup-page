@@ -3,6 +3,7 @@
 
 module.exports = {
   mode: 'jit',
+  darkMode: 'class',
   content: [
     "./public/**/*.html",
     "./public/*.html",
