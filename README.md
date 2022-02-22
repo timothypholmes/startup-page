@@ -4,6 +4,14 @@ A custom startup page for your browser.
 
 ![preview](https://github.com/timothypholmes/startup-page/blob/master/preview.png)
 
+## Todo (future features)
+
+- [ ] Add light/dark mode
+- [ ] Replace TDAmeritrade API with
+- [ ] Fix solar chart axis
+- [ ] Add CMS for bookmarks
+- [ ] Make customizable on front end
+
 ## Getting started
 
 The weather feature of this page requires you to add an API Key. First create a `.env` file
