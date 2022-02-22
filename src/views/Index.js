@@ -3,22 +3,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-// compnents
-
-//import IndexNavbar from "components/Navbars/IndexNavbar.js";
-//import Footer from "components/Footers/Footer.js";
+// components
 import Clock from "../components/Clock.js";
 import Unsplash from "../components/Unsplash.js";
 import SearchBox from "../components/Search.js";
 import SolarGraphNew from "../components/SolarGraphNew.js";
 import WeatherBox from "../components/Weather.js";
 import TDMarketData from "../components/TDMarketData.js";
-
 import Toggle from '../components/ThemeToggle';
 import ThemeProvider from '../components/ThemeContext'
 
-// assests
+
+// assets
 import desert from "../assets/img/desert.mp4"
+
 
 export default function Index() {
   return (
