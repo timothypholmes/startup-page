@@ -2,7 +2,15 @@
 
 A custom startup page for your browser. 
 
-![preview](https://github.com/timothypholmes/startup-page/blob/master/preview.png)
+![preview-light](https://github.com/timothypholmes/startup-page/blob/master/preview-light.png) ![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/preview-dark.png)
+
+## Todo (future features)
+
+- [x] Add light/dark mode
+- [ ] Replace TDAmeritrade API with
+- [ ] Fix solar chart axis (and other various bugs)
+- [ ] Add CMS for bookmarks
+- [ ] Make customizable on front end
 
 ## Getting started
 
