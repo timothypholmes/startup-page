@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100px" src="./logo.png">
+  <img width="100px" src="./icon.oco">
 </p>
 
 <div align="center">
@@ -20,7 +20,7 @@
   - [About](#about)
   - [Features](#features)
   - [Todo Features](#Built-with)
-  - [Tools](#Tools)
+  - [Tech Stack](#Tech-Stack)
   - [Getting Started](#Getting-started)
   - [Installation](#Installation)
   - [Usage](#Usage)
@@ -43,9 +43,9 @@ A side project I created to use everyday. Started with just needing a search bar
 
 ## Tools
 
-- React
-- Tailwindcss
-- Vite
+- [react](https://reactjs.org) frontend framework
+- [tailwindcss](https://tailwindcss.com) css framework
+- [vite](https://vitejs.dev) javascript build tool
 
 ## Getting started
 
@@ -118,6 +118,6 @@ serve -s build
 
 ## API features
 
-`TDAmeritrade` - stock charts, option chains, account balance
-`openweather` - Temperature with weather emoji
-`unsplash` - Random photo squares
+- `tdameritrade` - stock charts, option chains, account balance
+- `openweather` - Temperature with weather emoji
+- `unsplash` - Random photo squares
