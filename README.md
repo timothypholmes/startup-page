@@ -1,16 +1,51 @@
-# Start Page
+<p align="center">
+  <img width="100px" src="./logo.png">
+</p>
 
-A custom startup page for your browser. 
+<div align="center">
+    <h1>Modular Grid Page</h1>
+    <b>modular grid start page for your browser</b>
+</div>
 
-![preview-light](https://github.com/timothypholmes/startup-page/blob/master/preview-light.png) ![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/preview-dark.png)
+#### Light Mode
+![preview-light](https://github.com/timothypholmes/startup-page/blob/master/preview-light.png) 
 
-## Todo (future features)
+
+#### Dark Mode
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/preview-dark.png)
+
+
+## Index
+- [Modular Grid Page](#)
+  - [About](#about)
+  - [Features](#features)
+  - [Todo Features](#Built-with)
+  - [Tools](#Tools)
+  - [Getting Started](#Getting-started)
+  - [Installation](#Installation)
+  - [Usage](#Usage)
+  - [Modules](#Modules)
+  - [API features](#API-features)
+
+## About
+
+A side project I created to use everyday. Started with just needing a search bar to quickly search on different sites and unfolded to experimenting with many different modules.
+
+## Features
+
+## Todo Features
 
 - [x] Add light/dark mode
 - [ ] Replace TDAmeritrade API with
-- [ ] Fix solar chart axis (and other various bugs)
+- [x] Fix solar chart axis (and other various bugs)
 - [ ] Add CMS for bookmarks
 - [ ] Make customizable on front end
+
+## Tools
+
+- React
+- Tailwindcss
+- Vite
 
 ## Getting started
 
@@ -34,9 +69,8 @@ REACT_APP_UNSPLASH_PHOTO_CATEGORY={PHOTO_CATEGORIES}
 BROWSER={PREF_BROWSER}
 ```
 
-## Dependencies 
-
 ## Installation
+
 1. Clone the repo in the directory of your choosing.
     ```sh
     git clone https://github.com/timothypholmes/startup-page.git
@@ -73,13 +107,17 @@ Or run it using:
 serve -s build
 ```
 
+## Modules
+
+- **solar graph** displays suns angular elevation, animated to show sunset and sunrise
+- **clock** displays time and day
+- **weather** current weather conditions and temperature using [openweather](https://openweathermap.org/api)
+- **images** displays a random sort of pictures using [unsplash](https://unsplash.com/developers)
+- **stockprice** displays intraday stock data using [tdameritrade](https://developer.tdameritrade.com/apis)
+- **bookmarks** displays list of bookmarks
+
 ## API features
 
 `TDAmeritrade` - stock charts, option chains, account balance
 `openweather` - Temperature with weather emoji
 `unsplash` - Random photo squares
-
-
-## Old Start Page Design
-
-![preview_old](https://github.com/timothypholmes/startup-page/blob/master/preview_old.png)

@@ -132,7 +132,7 @@ class SolarGraphNew extends React.Component {
         //this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
         //    + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle)) * -1
     }
 
     calcSolarAngleArray() {        
@@ -142,7 +142,7 @@ class SolarGraphNew extends React.Component {
         }
         for (var j = 0; j < this.state.lstArray.length; j++) {
             this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])))
+                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])) * -1)
         }
     }
 
@@ -259,6 +259,9 @@ class SolarGraphNew extends React.Component {
         var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
         var sunXPosition = this.state.lst
 
+        console.log(this.rad2deg(this.state.solarElevationAngle * amplitudeScale))
+        console.log(this.state.solarElevationAngle * amplitudeScale)
+
         // set sun fill
         if (sunYPosition < 0) {
             var sunGeometry = new THREE.TorusGeometry(radius, 0.1, 16, 100)
@@ -332,19 +335,17 @@ class SolarGraphNew extends React.Component {
         }
     }
 
-    componentDidMount() {
-        
-        //this.calcCurrentSolarPosition() // get sun position
+    componentDidMount() {        
+        this.calcCurrentSolarPosition() // get sun position
         this.calcSolarAngleArray()      // get sun trajectory 
+
+        console.log(this.state)
 
         // Setup
         this.init()
-
         this.setSolarElevationPlot()
         this.setHorizon()
-        //if (this.rad2deg(this.state.solarElevationAngle) != 9000) {
-            this.setStars()
-        //}
+        this.setStars()
         this.setSun()
 
         clearInterval(this.interval)
