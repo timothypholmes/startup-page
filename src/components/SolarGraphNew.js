@@ -19,13 +19,15 @@ var BACKGOUND = 0x000000
 class SolarGraphNew extends React.Component {
     constructor(props) {
         super(props);
+        this.updatePosition = this.updatePosition.bind(this);
 
         var now = new Date();
         
         // current state of the system
         this.state = {
-            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day #
-            latitude: this.deg2rad(41.881832),                    
+            latitude: '',  
+            longitude: '',  
+            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day #               
             lst: (((now.getHours() * 60) + now.getMinutes()) / 60),
             lstArray: this.linspace(0, 24, 10000),//1440),
             declinationAngle: 0,
@@ -37,7 +39,14 @@ class SolarGraphNew extends React.Component {
             sunSet: 0,
             xyValues: []
         }
-        
+
+        if (navigator.geolocation) { // get location
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.getLocation(position.coords.latitude, position.coords.longitude);
+            });
+        }
+
+        this.interval = setInterval(this.updatePosition(), 5000);
 
         this.sceneRender = {
             camera: null,
@@ -92,12 +101,15 @@ class SolarGraphNew extends React.Component {
             }
         `
     }
-    
+
+    updatePosition() {
+        //this.calcCurrentSolarPosition()
+        //this.setSun()
+    }
     
     calcCurrentSolarPosition() {
-
-        this.state.declinationAngle = -0.4091 * Math.cos(360/365 * (this.state.daysInYear + 10))
-        this.state.hourAngle = 0.26 * (this.state.lst - 12)
+        this.state.declinationAngle = -23.44 * Math.cos(360/365 * (this.state.daysInYear + 10))
+        this.state.hourAngle = this.deg2rad(15 * (this.state.lst - 12)) // in degrees
 
         var LSTM = this.deg2rad(15) * this.deg2rad(105)
         var B = 360/365 * (this.state.daysInYear - 81)
@@ -106,37 +118,32 @@ class SolarGraphNew extends React.Component {
 
         //var sunRiseTime = 12 - 1/0.26 * Math.acos((-Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
         //var sunSetTime = 12 + (1/0.26) * Math.acos((-1 * Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
-        var sunRiseTime = 12 - (1/0.26) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
-        var sunSetTime = 12 + (1/0.26) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
+        var sunRiseTime = 12 - (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
+        var sunSetTime = 12 + (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
 
-        var hourAngleSunRise = 0.26 * (sunRiseTime - 12)
-        var hourAngleSunSet = 0.26 * (sunSetTime - 12)
+        var hourAngleSunRise = 23.44 * (sunRiseTime - 12)
+        var hourAngleSunSet = 23.44 * (sunSetTime - 12)
 
         this.state.sunRise = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunRise))
         this.state.sunSet = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
 
+        //this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+        //    + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
     }
 
     calcSolarAngleArray() {        
-
-        this.state.declinationAngle = -0.4091 * Math.cos(360/365 * (this.state.daysInYear + 10))
+        this.state.declinationAngle = -23.44 * Math.cos(360/365 * (this.state.daysInYear + 10))
         for (var i = 0; i < this.state.lstArray.length; i++) {
-            this.state.hourAngleArray.push(0.26 * (this.state.lstArray[i] - 12))
+            this.state.hourAngleArray.push(this.deg2rad(15 * (this.state.lstArray[i] - 12)))
         }
         for (var j = 0; j < this.state.lstArray.length; j++) {
             this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
                 + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])))
         }
-    }
-    
-    getLocation() {
-        navigator.geolocation.getCurrentPosition(position => {
-            //const { this.state.latitude, this.longitude } = position.coords
-          });
     }
 
     linspace(start, stop, n) {
@@ -146,6 +153,11 @@ class SolarGraphNew extends React.Component {
           arr.push(start + (step * i));
         }
         return arr;
+    }
+
+    getLocation(latitude, longitude) {
+        this.state.latitude = this.deg2rad(latitude)
+        this.state.longitude = this.deg2rad(longitude)
     }
 
     deg2rad = deg => (deg * Math.PI) / 180.0;
@@ -162,7 +174,7 @@ class SolarGraphNew extends React.Component {
         })
         this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
         this.sceneRender.renderer.setSize(326, 316);
-        this.sceneRender.camera.position.set(12, -2, 28); // [x: solar noon y: None z: camera zoom]
+        this.sceneRender.camera.position.set(12, 0, 28); // [x: solar noon y: None z: camera zoom]
 
         const pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.set(5, 5, 5);
@@ -232,9 +244,9 @@ class SolarGraphNew extends React.Component {
         }
 
         const starGeometry = new THREE.BufferGeometry();
-        starGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(starVertices, 3 ));
+        starGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(starVertices, 4 ));
         const starMaterial = new THREE.PointsMaterial( { color: 0x888888 } );
-        const starPoints = new THREE.Points(starGeometry, starMaterial );
+        const starPoints = new THREE.Points(starGeometry, starMaterial);
         this.sceneRender.scene.add(starPoints); 
     }
 
@@ -244,9 +256,11 @@ class SolarGraphNew extends React.Component {
         var amplitudeScale = 0.15 // need to adjust the amplitude of solarElevationAngleArray (can also exclude this and change z-axis below)
         var radius = 1
         var sunScale = 0.5
+        var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
+        var sunXPosition = this.state.lst
 
         // set sun fill
-        if (this.rad2deg(this.state.solarElevationAngle * amplitudeScale) < 0) {
+        if (sunYPosition < 0) {
             var sunGeometry = new THREE.TorusGeometry(radius, 0.1, 16, 100)
         }
         else {
@@ -261,15 +275,15 @@ class SolarGraphNew extends React.Component {
                 fragmentShader: this.frag,
                 uniforms: {
                     sunPosition: {
-                        value: [this.state.lst, this.rad2deg(this.state.solarElevationAngle * amplitudeScale)]
+                        value: [sunXPosition, sunYPosition]
                     },
                 }
             })
         )
 
-        var solarTime = this.linspace(0, this.state.lst, 100)
+        var solarTime = this.linspace(0, sunXPosition, 100)
         var solarAngle = this.linspace(this.state.solarElevationAngleArray[0], this.state.solarElevationAngle , 100)
-        sun.position.set(this.state.lst, this.rad2deg(this.state.solarElevationAngle * amplitudeScale), 0);
+        sun.position.set(sunXPosition, sunYPosition, );
         sun.scale.set(radius * sunScale, radius * sunScale, radius * sunScale)
         this.sceneRender.scene.add(sun);
         //for (var i = 0; i < solarTime.length; i ++) {
@@ -288,14 +302,14 @@ class SolarGraphNew extends React.Component {
                 side: THREE.BackSide,
             })
         )
-        atmosphere.position.set(this.state.lst, this.rad2deg(this.state.solarElevationAngle * amplitudeScale), 0);
-        atmosphere.scale.set(radius * atmosphereScale, radius * atmosphereScale, -radius * atmosphereScale)
+        atmosphere.position.set(sunXPosition, sunYPosition, -3);
+        atmosphere.scale.set(radius * atmosphereScale, radius * atmosphereScale, 0)
         this.sceneRender.scene.add(atmosphere);
 
-        console.log(this.rad2deg(this.state.solarElevationAngle * amplitudeScale))
+
         //horison
-        if (this.rad2deg(this.state.solarElevationAngle * amplitudeScale) > - 1.5 & this.rad2deg(this.state.solarElevationAngle * amplitudeScale) < 1.5) {
-            if (this.state.lst < 12) {
+        if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
+            if (sunXPosition < 12) {
                 var horizonColor = new THREE.Vector4(0.953, 0.906, 0.427, 1.0);
             }
             else {
@@ -308,19 +322,19 @@ class SolarGraphNew extends React.Component {
                     vertexShader: this.vert3,
                     fragmentShader: this.frag3,
                     blending: THREE.AdditiveBlending,
-                    side: THREE.BackSide,
+                    //side: THREE.BackSide,
                     uniforms: {horizonColor: {value: horizonColor}}
                 })
             )
-            horizon.position.set(this.state.lst, 0, -5);
-            horizon.scale.set(7.5, 1.5, 0)
+            horizon.position.set(sunXPosition, 0, -3);
+            horizon.scale.set(10, 1.5, 0)
             this.sceneRender.scene.add(horizon);
         }
     }
 
     componentDidMount() {
-
-        this.calcCurrentSolarPosition() // get sun position
+        
+        //this.calcCurrentSolarPosition() // get sun position
         this.calcSolarAngleArray()      // get sun trajectory 
 
         // Setup
@@ -328,10 +342,12 @@ class SolarGraphNew extends React.Component {
 
         this.setSolarElevationPlot()
         this.setHorizon()
-        if (this.rad2deg(this.state.solarElevationAngle) != 0) {
+        //if (this.rad2deg(this.state.solarElevationAngle) != 9000) {
             this.setStars()
-        }
+        //}
         this.setSun()
+
+        clearInterval(this.interval)
 
         // render
         this.sceneRender.renderer.render(this.sceneRender.scene, this.sceneRender.camera)   
