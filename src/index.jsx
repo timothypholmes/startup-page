@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes} from "react-router-dom";
 import "./assets/styles/tailwind.css";
 
 // views without layouts
-import Index from "./views/Index.js";
+import Index from "./views/Index.jsx";
 
 ReactDOM.render(
   <BrowserRouter>
