@@ -1,14 +1,15 @@
 
 import React from "react";
 import * as THREE from "three";
+import { useFrame } from '@react-three/fiber'
 
 // import shaders
-//import glsl from '../assets/shader/glsl.js'
-//import vertex from '../assets/shader/vertex.glsl'
-//import fragmentShader from '../assets/shader/fragment.glsl'
-
-//loader.load('../assets/shader/vertex.glsl',function ( data ) {vertex =  data;},);
-//loader.load('plaid.vert',function ( data ) {avertex =  data;},);
+import atmosphereVertex from '../assets/shader/atmosphereVertex.glsl'
+import atmosphereFragment from '../assets/shader/atmosphereFragment.glsl'
+import horizonVertex from '../assets/shader/horizonVertex.glsl'
+import horizonFragment from '../assets/shader/horizonFragment.glsl'
+import sunVertex from '../assets/shader/sunVertex.glsl'
+import sunFragment from '../assets/shader/sunFragment.glsl'
 
 // Useful documents
 // https://solarsena.com/solar-elevation-angle-altitude/
@@ -16,9 +17,10 @@ import * as THREE from "three";
 
 var BACKGOUND = 0x000000
 
-class SolarGraphNew extends React.Component {
+class SolarGraph extends React.Component {
     constructor(props) {
         super(props);
+        this.animatePosition = this.animatePosition.bind(this);
         this.updatePosition = this.updatePosition.bind(this);
 
         var now = new Date();
@@ -27,8 +29,9 @@ class SolarGraphNew extends React.Component {
         this.state = {
             latitude: '',  
             longitude: '',  
-            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day #               
-            lst: (((now.getHours() * 60) + now.getMinutes()) / 60),
+            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day # 
+            currentlst: (((now.getHours() * 60) + now.getMinutes()) / 60),              
+            lst: 0,
             lstArray: this.linspace(0, 24, 10000),//1440),
             declinationAngle: 0,
             hourAngle: 0,
@@ -46,78 +49,46 @@ class SolarGraphNew extends React.Component {
             });
         }
 
-        this.interval = setInterval(this.updatePosition(), 5000);
-
         this.sceneRender = {
             camera: null,
             scene: null,
             renderer: null
         }
-
-        const glsl = x => x.toString();
-
-        this.vert = glsl`
-            void main() {
-                gl_Position = projectionMatrix * modelViewMatrix  * vec4(position, 1.0);
-            }
-        `
-        this.frag = glsl`
-            void main() {
-                vec4 background = vec4(1.0, 1.0, 1.0, 1.0);
-                gl_FragColor = background;
-            }
-        ` 
-
-        this.vert2 = glsl`
-            varying vec3 vertexNormal;
-            void main() {
-                vertexNormal = normal;
-                gl_Position = projectionMatrix * modelViewMatrix  * vec4(position, 1.0);
-            }
-        `
-
-        this.frag2 = glsl`
-            varying vec3 vertexNormal;
-            void main() {
-                float intensity = pow(0.025 - dot(vertexNormal, vec3(0.0, 0.0, 1.0)), 2.0);
-                gl_FragColor = vec4(0.529411765, 0.807843137, 0.980392157, 1) * intensity;
-            }
-        `
-
-        this.vert3 = glsl`
-        varying vec3 vertexNormal;
-        void main() {
-            vertexNormal = normal;
-            gl_Position = projectionMatrix * modelViewMatrix  * vec4(position, 1.0);
-        }
-    `
-
-        this.frag3 = glsl`
-            varying vec3 vertexNormal;
-            uniform vec4 horizonColor;
-            void main() {
-                float intensity = pow(0.025 - dot(vertexNormal, vec3(0.0, 0.0, 1.0)), 2.0);
-                gl_FragColor = horizonColor * intensity;
-            }
-        `
     }
 
-    updatePosition() {
-        //this.calcCurrentSolarPosition()
-        //this.setSun()
+    animatePosition(lst, startTime, amplitudeScale) {
+        if (lst < startTime) {
+            this.calcCurrentSolarPosition(lst) 
+            this.setState({
+                lst: lst
+            })
+            this.setSun(amplitudeScale)
+        }
+        else {
+            clearInterval(this.animate);
+        }
+    }
+
+    updatePosition(amplitudeScale) {
+        this.getCurrentlst() 
+        this.calcCurrentSolarPosition(this.state.currentlst) 
+        this.setSun(amplitudeScale)
+    }
+
+    getCurrentlst() {
+        var now = new Date();
+        this.currentlst = (((now.getHours() * 60) + now.getMinutes()) / 60)
     }
     
-    calcCurrentSolarPosition() {
+    calcCurrentSolarPosition(lst) {
         this.state.declinationAngle = -23.44 * Math.cos(360/365 * (this.state.daysInYear + 10))
-        this.state.hourAngle = this.deg2rad(15 * (this.state.lst - 12)) // in degrees
+        this.state.hourAngle = this.deg2rad(15 * (lst - 12)) // in degrees
 
         var LSTM = this.deg2rad(15) * this.deg2rad(105)
         var B = 360/365 * (this.state.daysInYear - 81)
         var EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B)
         var TC = 4 * (this.state.latitude - LSTM) + EoT
 
-        //var sunRiseTime = 12 - 1/0.26 * Math.acos((-Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
-        //var sunSetTime = 12 + (1/0.26) * Math.acos((-1 * Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))/(Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle)))
         var sunRiseTime = 12 - (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
         var sunSetTime = 12 + (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
 
@@ -129,10 +100,8 @@ class SolarGraphNew extends React.Component {
         this.state.sunSet = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
 
-        //this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-        //    + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle)) * -1
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
     }
 
     calcSolarAngleArray() {        
@@ -142,7 +111,7 @@ class SolarGraphNew extends React.Component {
         }
         for (var j = 0; j < this.state.lstArray.length; j++) {
             this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])) * -1)
+                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])))
         }
     }
 
@@ -164,15 +133,26 @@ class SolarGraphNew extends React.Component {
     rad2deg = rad => (rad * 180.0) / Math.PI;
 
     init() {
+
+        const canvasContainer = document.querySelector('canvas')
+
         this.sceneRender.scene = new THREE.Scene();
         this.sceneRender.scene.background = new THREE.Color(BACKGOUND);
 
-        this.sceneRender.camera = new THREE.PerspectiveCamera(45, 326 / 316, 1, 1000);
+        this.sceneRender.camera = new THREE.PerspectiveCamera(
+            45, 
+            326 / 316,
+            0.1, 
+            1000);
         this.sceneRender.renderer = new THREE.WebGLRenderer({
             canvas: document.querySelector('canvas'),
             antialias: true,
         })
+
+        this.sceneRender.renderer.setSize(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
         this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
+
+        //this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
         this.sceneRender.renderer.setSize(326, 316);
         this.sceneRender.camera.position.set(12, 0, 28); // [x: solar noon y: None z: camera zoom]
 
@@ -196,16 +176,16 @@ class SolarGraphNew extends React.Component {
         this.sceneRender.scene.add(cube);
     }
 
-    setSolarElevationPlot() {
+    setSolarElevationPlot(amplitudeScale) {
+
         // create a white solar day angle chart
-        var amplitudeScale = 0.15 // need to adjust the amplitude of solarElevationAngleArray (can also exclude this and change z-axis below)
         var points = [];
         for (var j = 0; j < this.state.lstArray.length; j++) {
             points.push( new THREE.Vector3(this.state.lstArray[j], this.rad2deg(this.state.solarElevationAngleArray[j] * amplitudeScale), 0));
         }
         var line = new THREE.Line(
             new THREE.BufferGeometry().setFromPoints(points), 
-            new THREE.LineBasicMaterial({ color: 0xf0ebd8, linewidth: 10, fog: true})
+            new THREE.LineBasicMaterial({ color: 0xf0ebd8, fog: true})
         );
         line.position.set(0, 0, 0);
         this.sceneRender.scene.add(line);
@@ -232,7 +212,7 @@ class SolarGraphNew extends React.Component {
     }
 
     setStars() {
-        // plot stars (only before sunrise or after sunset)        
+        // plot stars (only before sunrise or after sunset)    
         const starVertices = [];
         for (let i = 0; i < 50000; i ++) {
 
@@ -243,24 +223,24 @@ class SolarGraphNew extends React.Component {
             starVertices.push(x, y, -1 * Math.abs(z));
         }
 
+        //const starGeometry = new THREE.BufferGeometry();
         const starGeometry = new THREE.BufferGeometry();
-        starGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(starVertices, 4 ));
-        const starMaterial = new THREE.PointsMaterial( { color: 0x888888 } );
+        starGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(starVertices, 3 ));
+        const starMaterial = new THREE.PointsMaterial( { color: 0xDDDDDD } );
         const starPoints = new THREE.Points(starGeometry, starMaterial);
         this.sceneRender.scene.add(starPoints); 
     }
 
-    setSun() {
+    setSun(amplitudeScale) {
 
         // parameters
-        var amplitudeScale = 0.15 // need to adjust the amplitude of solarElevationAngleArray (can also exclude this and change z-axis below)
         var radius = 1
         var sunScale = 0.5
+        //var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
+        //var sunXPosition = this.state.lst
+        //var sunXPosition = x
         var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
-        var sunXPosition = this.state.lst
-
-        console.log(this.rad2deg(this.state.solarElevationAngle * amplitudeScale))
-        console.log(this.state.solarElevationAngle * amplitudeScale)
+        
 
         // set sun fill
         if (sunYPosition < 0) {
@@ -274,93 +254,108 @@ class SolarGraphNew extends React.Component {
         const sun = new THREE.Mesh(
             sunGeometry, // geometry
             new THREE.ShaderMaterial({
-                vertexShader: this.vert,
-                fragmentShader: this.frag,
+                vertexShader: sunVertex,
+                fragmentShader: sunFragment,
                 uniforms: {
                     sunPosition: {
-                        value: [sunXPosition, sunYPosition]
+                        value: [this.state.lst, sunYPosition]
                     },
                 }
             })
         )
-
-        var solarTime = this.linspace(0, sunXPosition, 100)
-        var solarAngle = this.linspace(this.state.solarElevationAngleArray[0], this.state.solarElevationAngle , 100)
-        sun.position.set(sunXPosition, sunYPosition, );
+        sun.position.set(this.state.lst, sunYPosition, 0);
         sun.scale.set(radius * sunScale, radius * sunScale, radius * sunScale)
         this.sceneRender.scene.add(sun);
-        //for (var i = 0; i < solarTime.length; i ++) {
-        //    sun.position.set(solarTime[i], this.rad2deg(solarAngle[i] * amplitudeScale), 0);
-        //    this.sceneRender.scene.add(sun);
-        //}
+        
 
         // atmosphere
         var atmosphereScale = 8
         const atmosphere = new THREE.Mesh(
             new THREE.SphereGeometry(radius, 32, 32), // geometry
             new THREE.ShaderMaterial({
-                vertexShader: this.vert2,
-                fragmentShader: this.frag2,
+                vertexShader: atmosphereVertex,
+                fragmentShader: atmosphereFragment,
                 blending: THREE.AdditiveBlending,
                 side: THREE.BackSide,
             })
         )
-        atmosphere.position.set(sunXPosition, sunYPosition, -3);
+        atmosphere.position.set(this.state.lst, sunYPosition, -3);
         atmosphere.scale.set(radius * atmosphereScale, radius * atmosphereScale, 0)
         this.sceneRender.scene.add(atmosphere);
 
 
-        //horison
-        if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
-            if (sunXPosition < 12) {
-                var horizonColor = new THREE.Vector4(0.953, 0.906, 0.427, 1.0);
-            }
-            else {
-                var horizonColor = new THREE.Vector4(0.788, 0.106, 0.149, 1.0);
-            }
+        // horison       
+        if (this.state.lst < 12) {
+            var horizonColor = new THREE.Vector4(0.953, 0.906, 0.427, 1.0);
+        }
+        else {
+            var horizonColor = new THREE.Vector4(0.788, 0.106, 0.149, 1.0);
+        }
 
-            const horizon = new THREE.Mesh(
-                new THREE.SphereGeometry(radius, 32, 32), // geometry
-                new THREE.ShaderMaterial({
-                    vertexShader: this.vert3,
-                    fragmentShader: this.frag3,
-                    blending: THREE.AdditiveBlending,
-                    //side: THREE.BackSide,
-                    uniforms: {horizonColor: {value: horizonColor}}
-                })
-            )
-            horizon.position.set(sunXPosition, 0, -3);
+        const horizon = new THREE.Mesh(
+            new THREE.SphereGeometry(radius, 32, 32), // geometry
+            new THREE.ShaderMaterial({
+                vertexShader: horizonVertex,
+                fragmentShader: horizonFragment,
+                blending: THREE.AdditiveBlending,
+                //side: THREE.BackSide,
+                uniforms: {horizonColor: {value: horizonColor}}
+            })
+        )
+
+        if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
+            horizon.position.set(this.state.lst, 0, -3);
             horizon.scale.set(10, 1.5, 0)
             this.sceneRender.scene.add(horizon);
         }
-    }
-
-    componentDidMount() {        
-        this.calcCurrentSolarPosition() // get sun position
-        this.calcSolarAngleArray()      // get sun trajectory 
-
-        console.log(this.state)
-
-        // Setup
-        this.init()
-        this.setSolarElevationPlot()
-        this.setHorizon()
-        this.setStars()
-        this.setSun()
-
-        clearInterval(this.interval)
-
+        
         // render
         this.sceneRender.renderer.render(this.sceneRender.scene, this.sceneRender.camera)   
+
+        // remove previous scene
+        this.sceneRender.scene.remove(sun);
+        this.sceneRender.scene.remove(atmosphere);
+        if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
+            this.sceneRender.scene.remove(horizon);
+        }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+        clearInterval(this.position);
+    }
+
+    componentDidMount() {  
+        var amplitudeScale = 0.10
+        var animateFlag = 0
+
+        this.calcSolarAngleArray()      // get sun trajectory 
+        
+        this.init()
+        this.setSolarElevationPlot(amplitudeScale)
+        this.setHorizon()
+        this.setStars()
+        
+        // animate and render
+        const startTime = this.state.currentlst // current time
+        var i = 0 
+        this.animate = setInterval(() => {
+            this.animatePosition(i += 0.1, startTime, amplitudeScale)
+        }, 10);
+
+        // update position every minute
+        this.position = setInterval(() => {
+            this.updatePosition(amplitudeScale)
+        }, 60000);
     }
 
 	render() {
         return (
           <>
-            <canvas class="absolute h-92 w-92 overflow-hidden rounded-xl" id="canvas"/>
+            <canvas class="flex w-full h-full rounded-xl" id="canvas"/>
           </>
         );
       }
 }
 
-export default SolarGraphNew
+export default SolarGraph
