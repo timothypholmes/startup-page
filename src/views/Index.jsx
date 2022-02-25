@@ -68,7 +68,7 @@ export default function Index() {
               <li><a href="https://www.marketwatch.com">marketwatch</a></li>
             </ul>
           </div>
-          <div class="bg-black text-black rounded-xl col-span-2 row-span-2 h-92 w-92 shadow-4xl dark:shadow-none"><SolarGraph /></div>
+          <div class="bg-black rounded-xl col-span-2 row-span-2 h-92 w-92 shadow-4xl dark:shadow-none"><SolarGraph /></div>
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
            <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
               <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">social</li>
@@ -79,7 +79,7 @@ export default function Index() {
           </div>
 
           {/* row 4 */}
-          <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
+          <div class="bg-blue3 rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
             <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
                 <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">r/</li>
                 <li><a href="https://www.reddit.com/r/startpages/">r/startpages</a></li>

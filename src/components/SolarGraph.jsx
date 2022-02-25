@@ -101,7 +101,7 @@ class SolarGraph extends React.Component {
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
 
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle)) *  Math.pow(-1, this.state.daysInYear + 1)
     }
 
     calcSolarAngleArray() {        
@@ -111,7 +111,7 @@ class SolarGraph extends React.Component {
         }
         for (var j = 0; j < this.state.lstArray.length; j++) {
             this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])))
+                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])) *  Math.pow(-1, this.state.daysInYear + 1))
         }
     }
 
@@ -140,8 +140,8 @@ class SolarGraph extends React.Component {
         this.sceneRender.scene.background = new THREE.Color(BACKGOUND);
 
         this.sceneRender.camera = new THREE.PerspectiveCamera(
-            45, 
-            326 / 316,
+            75, 
+            canvasContainer.offsetWidth / canvasContainer.offsetHeight,
             0.1, 
             1000);
         this.sceneRender.renderer = new THREE.WebGLRenderer({
@@ -153,8 +153,8 @@ class SolarGraph extends React.Component {
         this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
 
         //this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
-        this.sceneRender.renderer.setSize(326, 316);
-        this.sceneRender.camera.position.set(12, 0, 28); // [x: solar noon y: None z: camera zoom]
+        //this.sceneRender.renderer.setSize(326, 316);
+        this.sceneRender.camera.position.set(12, 0, 15); // [x: solar noon y: None z: camera zoom]
 
         const pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.set(5, 5, 5);
@@ -214,7 +214,7 @@ class SolarGraph extends React.Component {
     setStars() {
         // plot stars (only before sunrise or after sunset)    
         const starVertices = [];
-        for (let i = 0; i < 50000; i ++) {
+        for (let i = 0; i < 10000; i ++) {
 
             const x = THREE.MathUtils.randFloatSpread(1000);
             const y = THREE.MathUtils.randFloatSpread(1000);
@@ -304,6 +304,7 @@ class SolarGraph extends React.Component {
         )
 
         if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
+            var diffuse = 2/(2 * Math.pi)^(1/2) * Math.exp(-2 * Math.abs(sunYPosition)^2) 
             horizon.position.set(this.state.lst, 0, -3);
             horizon.scale.set(10, 1.5, 0)
             this.sceneRender.scene.add(horizon);
@@ -341,7 +342,7 @@ class SolarGraph extends React.Component {
         var i = 0 
         this.animate = setInterval(() => {
             this.animatePosition(i += 0.1, startTime, amplitudeScale)
-        }, 10);
+        }, 30);
 
         // update position every minute
         this.position = setInterval(() => {
