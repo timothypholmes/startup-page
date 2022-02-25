@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "@react-three/fiber": "^7.0.26",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^17.0.39",
     "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^1.2.0",
     "apexcharts": "^3.33.0",
     "axios": "^0.25.0",
     "chart.js": "^3.7.0",
@@ -23,21 +25,17 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.3.1",
+    "react-jsx": "^1.0.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "slash": "^4.0.0",
-    "three": "^0.137.5",
-    "vite": "^2.8.4"
+    "three": "^0.137.5"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "react-scripts build",
+    "start": "vite --open",
+    "build": "vite build",
     "preview": "vite preview",
-    "start": "react-scripts start",
-    "serve": "react-scripts build && serve -s build -p 8000",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
+    "serve": "vite build && serve -s dist -p 8000",
     "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css"
   },
   "eslintConfig": {
@@ -61,6 +59,8 @@
     "@babel/preset-react": "^7.16.7",
     "@vitejs/plugin-react-refresh": "^1.3.6",
     "autoprefixer": "^10.4.2",
-    "tailwindcss": "^3.0.18"
+    "tailwindcss": "^3.0.18",
+    "vite": "^2.8.4",
+    "vite-plugin-string": "^1.1.2"
   }
 }
