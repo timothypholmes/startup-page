@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { render } from 'react-dom';
 import Chart from "react-apexcharts";
 import axios from "axios";
-import dayjs from "dayjs";
 
 class TDMarketData extends Component {
     constructor(props) {
@@ -38,7 +36,7 @@ class TDMarketData extends Component {
     }
 
     getChartData() {
-        const consumerKey = process.env.REACT_APP_TD_CONSUMER_KEY; 
+        const consumerKey = import.meta.env.VITE_TD_CONSUMER_KEY; 
         const symbol = 'MSFT';
         const periodType = 'day';
         const period = '1';

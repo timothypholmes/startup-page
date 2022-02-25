@@ -13,7 +13,7 @@ class Unsplash extends Component {
 
     componentDidMount() {
 
-        const accessKey = process.env.REACT_APP_ACCESS_KEY; 
+        const accessKey = import.meta.env.VITE_ACCESS_KEY; 
         //const category = 'chicago';//process.env.REACT_APP_UNSPLASH_PHOTO_CATEGORY;
         var categoryArray = ['chicago', 'glacier', 'alaska', 'minimal', 'miami', 
                              'ocean', 'sea', 'california', 'new york', 'seattle',

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
-const key = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
-const zip = process.env.REACT_APP_OPEN_WEATHER_MAP_ZIP_CODE;
+const key = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY;
+const zip = import.meta.env.VITE_OPEN_WEATHER_MAP_ZIP_CODE;
 
 if (key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
