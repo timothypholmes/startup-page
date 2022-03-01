@@ -587,12 +587,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.w-36 {
-  width: 9rem;
-}
-
 .w-12 {
   width: 3rem;
+}
+
+.w-36 {
+  width: 9rem;
 }
 
 .w-80 {
@@ -708,6 +708,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(29 45 68 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#000000\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
 .bg-red2 {
   --tw-bg-opacity: 1;
   background-color: rgb(142 65 46 / var(--tw-bg-opacity));
@@ -797,9 +802,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   vertical-align: middle;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-3xl {
@@ -824,6 +829,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-off-white1 {
   --tw-text-opacity: 1;
   color: rgb(240 235 216 / var(--tw-text-opacity));
+}
+
+.text-off-white2 {
+  --tw-text-opacity: 1;
+  color: rgb(244 236 226 / var(--tw-text-opacity));
 }
 
 .underline {
