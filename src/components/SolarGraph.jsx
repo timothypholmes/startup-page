@@ -27,12 +27,12 @@ class SolarGraph extends React.Component {
         
         // current state of the system
         this.state = {
-            latitude: '',  
-            longitude: '',  
-            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day # 
+            latitude: 0,  
+            longitude: 0,  
+            daysInYear: 1,//Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day # 
             currentlst: (((now.getHours() * 60) + now.getMinutes()) / 60),              
             lst: 0,
-            lstArray: this.linspace(0, 24, 10000),//1440),
+            lstArray: this.linspace(0, 24, 1000),//1440),
             declinationAngle: 0,
             hourAngle: 0,
             hourAngleArray: [],
@@ -41,12 +41,6 @@ class SolarGraph extends React.Component {
             sunRise: 0,
             sunSet: 0,
             xyValues: []
-        }
-
-        if (navigator.geolocation) { // get location
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.getLocation(position.coords.latitude, position.coords.longitude);
-            });
         }
 
         this.sceneRender = {
@@ -81,7 +75,7 @@ class SolarGraph extends React.Component {
     }
     
     calcCurrentSolarPosition(lst) {
-        this.state.declinationAngle = -23.44 * Math.cos(360/365 * (this.state.daysInYear + 10))
+        this.state.declinationAngle = this.deg2rad(-23.44) * Math.cos(this.deg2rad(360/365 * (this.state.daysInYear + 10)))
         this.state.hourAngle = this.deg2rad(15 * (lst - 12)) // in degrees
 
         var LSTM = this.deg2rad(15) * this.deg2rad(105)
@@ -101,18 +95,21 @@ class SolarGraph extends React.Component {
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
 
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle)) *  Math.pow(-1, this.state.daysInYear + 1)
+            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
+
+        console.log(this.state)
     }
 
     calcSolarAngleArray() {        
-        this.state.declinationAngle = -23.44 * Math.cos(360/365 * (this.state.daysInYear + 10))
+        this.state.declinationAngle = this.deg2rad(-23.44) * Math.cos(this.deg2rad(360/365 * (this.state.daysInYear + 10)))
         for (var i = 0; i < this.state.lstArray.length; i++) {
             this.state.hourAngleArray.push(this.deg2rad(15 * (this.state.lstArray[i] - 12)))
         }
         for (var j = 0; j < this.state.lstArray.length; j++) {
-            this.state.solarElevationAngleArray.push(Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-                + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j])) *  Math.pow(-1, this.state.daysInYear + 1))
+            this.state.solarElevationAngleArray.push(Math.asin((Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))
+                + (Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j]))))
         }
+        console.log(this.state.solarElevationAngleArray)
     }
 
     linspace(start, stop, n) {
@@ -213,6 +210,7 @@ class SolarGraph extends React.Component {
 
     setStars() {
         // plot stars (only before sunrise or after sunset)    
+        
         const starVertices = [];
         for (let i = 0; i < 10000; i ++) {
 
@@ -229,6 +227,7 @@ class SolarGraph extends React.Component {
         const starMaterial = new THREE.PointsMaterial( { color: 0xDDDDDD } );
         const starPoints = new THREE.Points(starGeometry, starMaterial);
         this.sceneRender.scene.add(starPoints); 
+
     }
 
     setSun(amplitudeScale) {
@@ -303,7 +302,7 @@ class SolarGraph extends React.Component {
             })
         )
 
-        if (sunYPosition > - 1.5 & sunYPosition < 2.5) {
+        if (sunYPosition > - 1.5 & sunYPosition < 1.5) {
             var diffuse = 2/(2 * Math.pi)^(1/2) * Math.exp(-2 * Math.abs(sunYPosition)^2) 
             horizon.position.set(this.state.lst, 0, -3);
             horizon.scale.set(10, 1.5, 0)
@@ -327,7 +326,13 @@ class SolarGraph extends React.Component {
     }
 
     componentDidMount() {  
-        var amplitudeScale = 0.10
+        if (navigator.geolocation) { // get location
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.getLocation(position.coords.latitude, position.coords.longitude);
+            });
+        }
+        
+        var amplitudeScale = 0.1
         var animateFlag = 0
 
         this.calcSolarAngleArray()      // get sun trajectory 
@@ -353,7 +358,7 @@ class SolarGraph extends React.Component {
 	render() {
         return (
           <>
-            <canvas class="flex w-full h-full rounded-xl" id="canvas"/>
+            <canvas class="w-full h-full rounded-xl" id="canvas"/>
           </>
         );
       }
