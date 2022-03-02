@@ -14,6 +14,9 @@ module.exports = {
     "./public/**/*.js",
     "./public/*.js",
   ],
+  variants: {
+    opacity: ({ after }) => after(['disabled'])
+  },
   theme: {
     colors: {
       'off-white1': '#f0ebd8',
@@ -49,7 +52,7 @@ module.exports = {
         'sun-cloud-icon': "url('/src/assets/img/sun-cloud.svg')",
         'wind-icon': "url('/src/assets/img/wind.svg')",
         'humidity-icon': "url('/src/assets/img/humidity.svg')",
-      }
+      },
     },
   },
   variants: [

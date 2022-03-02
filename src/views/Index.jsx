@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React from "react";
-
+//import { HiMoon, HiSun } from "react-icons/hi";
 
 // components
 import Clock from "../components/Clock";
@@ -15,13 +15,14 @@ import ThemeProvider from "../components/ThemeContext";
 
 // assets
 import desert from "../assets/img/desert.mp4"
+import { RiStockLine, RiNewspaperLine } from "react-icons/ri";
 
 
 export default function Index() {
   return (
     <>
       <section className="bg-off-white1 dark:bg-blue3 min-h-screen flex items-center justify-center pt-10 pb-10 font-helvetica">
-        <div class="grid xl:grid-cols-7 md:grid-cols-5 sm:grid-cols-3 gap-y-6 gap-x-6 grid-flow-row-dense content-center">
+        <div class="grid xl:grid-cols-7 md:grid-cols-5 sm:grid-cols-3 xs:grid-cols-2 gap-y-6 gap-x-6 grid-flow-row-dense content-center">
 
           {/* row 1 */}
           <div class="overflow-hidden rounded-xl col-span-1 row-span-2 h-80 w-36 shadow-4xl dark:shadow-none">
@@ -43,7 +44,7 @@ export default function Index() {
             </ul>
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
-          <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><WeatherBox /></div>
+          <div class="bg-green2 dark:bg-green1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><WeatherBox /></div>
          
           {/* row 2 */}
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
@@ -55,7 +56,9 @@ export default function Index() {
               <li><a href="https://gist.github.com/timothypholmes">gists</a></li>
             </ul>
           </div>
-          <div class="bg-blue3 text-black rounded-xl col-span-3 row-span-2 h-80 w-auto shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><TDMarketData /></div>
+          <div class="bg-blue3 xs:hidden text-black rounded-xl col-span-3 row-span-2 h-80 w-auto shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
+            <TDMarketData />
+          </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
 
           {/* row 3 */}
