@@ -14,6 +14,7 @@ import sunFragment from '../assets/shader/sunFragment.glsl'
 // Useful documents
 // https://solarsena.com/solar-elevation-angle-altitude/
 // https://www.pveducation.org/pvcdrom/properties-of-sunlight/elevation-angle
+// https://planetcalc.com/4270/
 
 var BACKGOUND = 0x000000
 
@@ -41,6 +42,12 @@ class SolarGraph extends React.Component {
             sunRise: 0,
             sunSet: 0,
             xyValues: []
+        }
+
+        if (navigator.geolocation) { // get location
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.getLocation(position.coords.latitude, position.coords.longitude);
+            });
         }
 
         this.sceneRender = {
@@ -96,8 +103,6 @@ class SolarGraph extends React.Component {
 
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
-
-        console.log(this.state)
     }
 
     calcSolarAngleArray() {        
@@ -109,7 +114,6 @@ class SolarGraph extends React.Component {
             this.state.solarElevationAngleArray.push(Math.asin((Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle))
                 + (Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngleArray[j]))))
         }
-        console.log(this.state.solarElevationAngleArray)
     }
 
     linspace(start, stop, n) {
@@ -326,15 +330,9 @@ class SolarGraph extends React.Component {
     }
 
     componentDidMount() {  
-        if (navigator.geolocation) { // get location
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.getLocation(position.coords.latitude, position.coords.longitude);
-            });
-        }
-        
+
         var amplitudeScale = 0.1
         var animateFlag = 0
-
         this.calcSolarAngleArray()      // get sun trajectory 
         
         this.init()
