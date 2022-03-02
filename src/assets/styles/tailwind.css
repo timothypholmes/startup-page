@@ -466,10 +466,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-sepia:  ;
 }
 
-.absolute {
-  position: absolute;
-}
-
 .relative {
   position: relative;
 }
@@ -477,18 +473,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .sticky {
   position: -webkit-sticky;
   position: sticky;
-}
-
-.top-20 {
-  top: 5rem;
-}
-
-.right-4 {
-  right: 1rem;
-}
-
-.top-10 {
-  top: 2.5rem;
 }
 
 .-left-12 {
@@ -517,10 +501,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .row-span-2 {
   grid-row: span 2 / span 2;
-}
-
-.m-5 {
-  margin: 1.25rem;
 }
 
 .m-0 {
@@ -555,12 +535,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100%;
 }
 
-.h-36 {
-  height: 9rem;
-}
-
 .h-80 {
   height: 20rem;
+}
+
+.h-36 {
+  height: 9rem;
 }
 
 .h-3 {
@@ -585,10 +565,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-full {
   width: 100%;
-}
-
-.w-12 {
-  width: 3rem;
 }
 
 .w-36 {
@@ -708,6 +684,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(29 45 68 / var(--tw-bg-opacity));
 }
 
+.bg-green2 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(104 114 89 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#000000\] {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
@@ -732,14 +713,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-stack-icon {
   background-image: url('/src/assets/img/stack.svg');
-}
-
-.bg-wind-icon {
-  background-image: url('/src/assets/img/wind.svg');
-}
-
-.bg-humidity-icon {
-  background-image: url('/src/assets/img/humidity.svg');
 }
 
 .bg-center {
@@ -796,10 +769,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .text-center {
   text-align: center;
-}
-
-.align-middle {
-  vertical-align: middle;
 }
 
 .text-5xl {
@@ -859,6 +828,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   -moz-osx-font-smoothing: grayscale;
 }
 
+.opacity-50 {
+  opacity: 0.5;
+}
+
 .shadow-4xl {
   --tw-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   --tw-shadow-colored: 0px 20px 30px -10px var(--tw-shadow-color);
@@ -901,6 +874,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-offset: 2px;
 }
 
+.disabled\:opacity-100:disabled {
+  opacity: 1;
+}
+
 .dark .dark\:border-4 {
   border-width: 4px;
 }
@@ -913,6 +890,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .dark .dark\:bg-blue3 {
   --tw-bg-opacity: 1;
   background-color: rgb(29 45 68 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-green1 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(162 161 130 / var(--tw-bg-opacity));
 }
 
 .dark .dark\:bg-red1 {

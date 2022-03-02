@@ -1,4 +1,9 @@
 import React, {useState, useEffect} from "react";
+import { 
+  WiRain, WiSprinkle, WiCloudy, WiThunderstorm, WiStars, WiDaySunny,
+  WiSnowflakeCold, WiAlien, WiFog, WiRaindrops, WiDust, WiDayHaze,
+  WiTornado, WiNightClear, WiDayCloudy, WiNightCloudy, WiCloud, WiMoonWaxingCrescent3
+} from "react-icons/wi";
 
 const key = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY;
 const zip = import.meta.env.VITE_OPEN_WEATHER_MAP_ZIP_CODE;
@@ -10,7 +15,8 @@ class WeatherBox extends React.Component {
     super(props);
     this.state = {
       temperature: this.props.temperature,
-      location: this.props.location
+      location: this.props.location,
+      icon: this.props.icon,
     }
   }
 
@@ -23,32 +29,35 @@ class WeatherBox extends React.Component {
   }
 
   getWeather(data) {
-    var fahrenheit = Math.round(((parseFloat(data.main.temp)-273.15)*1.8)+32);
+    var fahrenheit = Math.round(((parseFloat(data.main.temp) - 273.15) * 1.8) + 32);
     this.setState({ location: data.name})
 
     let weather = [
-      { weather: 'Clear', icon_day: '☀️', icon_night: '🌔' },
-      { weather: 'Clouds', icon: '☁️' },
-      { weather: 'Drizzle', icon: '🌦️' },
-      { weather: 'Rain', icon: '🌧️' },
-      { weather: 'Thunderstorm', icon: '⛈️' },
-      { weather: 'Snow', icon: '❄️' },
-      { weather: 'Fog', icon: '🌫️' },
-      { weather: 'Mist', icon: '🌫️' },
-      { weather: 'Haze', icon: '🌫️' },
-      { weather: 'Tornado', icon: '🌫️' },
-      { weather: 'Dust', icon: '🌫️' }
+      { weather: 'Clear', icon_day: <WiDaySunny />, icon_night: <WiMoonWaxingCrescent3 /> },
+      { weather: 'Clouds', icon_few_day: <WiDayCloudy />, icon_few_night: <WiNightCloudy />,
+                           icon_scatter_day: <WiDayCloudy />, icon_scatter_night: <WiNightCloudy />,
+                           icon_broken: <WiCloud />, icon_overcast: <WiCloudy />, icon: <WiCloud />},
+      { weather: 'Drizzle', icon: <WiSprinkle /> },
+      { weather: 'Rain', icon: <WiRain /> },
+      { weather: 'Thunderstorm', icon: <WiThunderstorm /> },
+      { weather: 'Snow', icon: <WiSnowflakeCold /> },
+      { weather: 'Fog', icon: <WiFog /> },
+      { weather: 'Mist', icon: <WiRaindrops /> },
+      { weather: 'Haze', icon: <WiDayHaze /> },
+      { weather: 'Tornado', icon: <WiTornado /> },
+      { weather: 'Dust', icon: <WiDust /> }
     ]
   
     let icon = '';
     weather.forEach(element => {
       if (data.weather[0].main === 'Clear') {
           icon = this.isDay() ? element.icon_day : element.icon_night
-      } else if (data.weather[0].main === element.weather) {
+      } 
+      else if (data.weather[0].main === element.weather) {
           icon = element.icon;
       }
     });
-    this.setState({ temperature: fahrenheit + '\xB0 ' + icon})
+    this.setState({ temperature: fahrenheit + '\xB0 ', icon: icon})
   }
   
   isDay() {
@@ -57,27 +66,17 @@ class WeatherBox extends React.Component {
 
   componentDidMount() {
     this.fetchData();
+    console.log(this.state.icon)
   }
 
 	render() {
     return (
       <>
-      <div class="text-center align-middle translate-x-0 translate-y-0">
-        <h1 class="text-3xl m-5 text-off-white1">{this.state.temperature}</h1>
+      <div class="text-center items-center justify-center translate-x-0 translate-y-0">
+        <h1 class="text-3xl pt-5 text-off-white1">{this.state.temperature}</h1>
+        <p class="flex justify-center text-5xl text-off-white1">{this.state.icon}</p>
         <p class="text-xl text-off-white1">{this.state.location}</p>
       </div>
-      {/*
-      <div class="absolute top-20 right-4 pt-5 h-36 w-12">
-        <button class=" w-8 h-8">
-          <svg width="30" height="30" fill="black">
-            <path d="m 27.520124,39.633168 c -3.52016,0.181466 -6.958298,1.477664 -9.75,3.75 a 3.50035,3.50035 0 1 0 4.40625,5.4375 c 2.381218,-1.938218 5.958323,-2.67076 8.90625,-1.8125 2.080879,0.605827 4.310327,2.089143 6.96875,3.6875 2.690151,1.617433 6.022384,3.387319 10.0625,3.34375 3.817066,-0.04116 6.866571,-1.634409 9.375,-2.90625 l 0.15625,-0.09375 c 2.486447,-1.257482 4.633583,-2.1875 6.40625,-2.1875 1.772671,0 3.951052,0.930018 6.4375,2.1875 2.535638,1.28236 5.639394,2.958028 9.53125,3 4.040119,0.04357 7.372351,-1.726319 10.0625,-3.34375 2.658425,-1.598357 4.856615,-3.081672 6.9375,-3.6875 2.94791,-0.858257 6.525026,-0.125716 8.906246,1.8125 a 3.5091955,3.5091955 0 1 0 4.4375,-5.4375 c -4.25402,-3.462608 -10.01481,-4.627027 -15.281246,-3.09375 -3.554797,1.034942 -6.252987,2.980097 -8.625,4.40625 -2.340289,1.407081 -4.545799,2.363478 -6.375,2.34375 -1.767182,-0.01906 -3.922884,-0.978272 -6.4375,-2.25 -2.563808,-1.296606 -5.707051,-2.9375 -9.59375,-2.9375 -3.886697,0 -6.998693,1.640894 -9.5625,2.9375 -2.514619,1.27173 -4.701577,2.230945 -6.46875,2.25 -1.829204,0.01973 -4.034715,-0.936671 -6.375,-2.34375 -2.372011,-1.426153 -5.038957,-3.371307 -8.59375,-4.40625 -1.316611,-0.383318 -2.684095,-0.604187 -4.03125,-0.65625 -0.505183,-0.01952 -0.99712,-0.02592 -1.5,0 z m 0,17.1875 c -3.520159,0.181467 -6.958298,1.477665 -9.75,3.75 a 3.50035,3.50035 0 1 0 4.40625,5.40625 c 2.381218,-1.938217 5.958322,-2.639509 8.90625,-1.78125 2.080879,0.605827 4.310327,2.089143 6.96875,3.6875 2.690152,1.617434 6.022388,3.387314 10.0625,3.34375 3.891816,-0.04201 6.995595,-1.717631 9.53125,-3 2.486447,-1.257482 4.633584,-2.1875 6.40625,-2.1875 1.77267,0 3.951051,0.930017 6.4375,2.1875 2.535637,1.282361 5.639392,2.95803 9.53125,3 4.040075,0.04353 7.372335,-1.726309 10.0625,-3.34375 2.658425,-1.598357 4.856615,-3.081672 6.9375,-3.6875 2.94791,-0.858256 6.525026,-0.156965 8.906246,1.78125 a 3.50035,3.50035 0 1 0 4.4375,-5.40625 c -4.25402,-3.462607 -10.01481,-4.627024 -15.281246,-3.09375 -3.554797,1.034942 -6.252987,2.980097 -8.625,4.40625 -2.340273,1.407071 -4.545755,2.36346 -6.375,2.34375 -1.76718,-0.01906 -3.922883,-0.978271 -6.4375,-2.25 -2.563807,-1.296605 -5.70705,-2.9375 -9.59375,-2.9375 -3.886698,0 -6.998693,1.640894 -9.5625,2.9375 -2.514599,1.271721 -4.70153,2.230926 -6.46875,2.25 -1.829208,0.01972 -4.034716,-0.936672 -6.375,-2.34375 -2.372011,-1.426153 -5.038957,-3.371307 -8.59375,-4.40625 -1.316611,-0.383318 -2.684095,-0.604187 -4.03125,-0.65625 -0.505183,-0.01952 -0.99712,-0.02592 -1.5,0 z m 0,17.15625 c -3.520159,0.181467 -6.958298,1.47767 -9.75,3.75 a 3.50035,3.50035 0 1 0 4.40625,5.4375 c 2.381218,-1.938213 5.958321,-2.670759 8.90625,-1.8125 2.080878,0.605826 4.310325,2.089145 6.96875,3.6875 2.690156,1.617441 6.022389,3.387318 10.0625,3.34375 3.891876,-0.04195 6.995615,-1.717637 9.53125,-3 2.486446,-1.25748 4.63358,-2.1875 6.40625,-2.1875 1.772674,0 3.951052,0.93002 6.4375,2.1875 2.53564,1.282366 5.639386,2.958038 9.53125,3 4.040069,0.04353 7.372328,-1.726301 10.0625,-3.34375 2.658427,-1.598355 4.856616,-3.081673 6.9375,-3.6875 2.94791,-0.858256 6.525026,-0.125711 8.906246,1.8125 a 3.5091955,3.5091955 0 1 0 4.4375,-5.4375 c -4.25402,-3.462601 -10.01481,-4.627024 -15.281246,-3.09375 -3.554798,1.034941 -6.252989,2.980099 -8.625,4.40625 -2.340266,1.407071 -4.545749,2.36346 -6.375,2.34375 -1.767174,-0.01905 -3.922886,-0.978268 -6.4375,-2.25 -2.563808,-1.296604 -5.707054,-2.9375 -9.59375,-2.9375 -3.886694,0 -6.998692,1.640896 -9.5625,2.9375 -2.514619,1.271735 -4.70159,2.230951 -6.46875,2.25 -1.829209,0.01973 -4.03472,-0.936671 -6.375,-2.34375 -2.372009,-1.426151 -5.038956,-3.371308 -8.59375,-4.40625 -1.316611,-0.383318 -2.684096,-0.604187 -4.03125,-0.65625 -0.505183,-0.01952 -0.99712,-0.02592 -1.5,0 z"/>
-          
-          </svg>    
-        </button>
-        <button class=" top-10 bg-wind-icon bg-no-repeat w-8 h-8"/>
-        <button class=" top-20 bg-humidity-icon bg-no-repeat w-8 h-8"/>
-      </div>
-      */}
       </>
     );
   }
