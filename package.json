@@ -29,7 +29,8 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "slash": "^4.0.0",
-    "three": "^0.137.5"
+    "three": "^0.137.5",
+    "twitter-api-v2": "^1.11.0"
   },
   "scripts": {
     "start": "vite --open",
