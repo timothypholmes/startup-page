@@ -1,13 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { 
-  WiRain, WiSprinkle, WiCloudy, WiThunderstorm, WiStars, WiDaySunny,
-  WiSnowflakeCold, WiAlien, WiFog, WiRaindrops, WiDust, WiDayHaze,
-  WiTornado, WiNightClear, WiDayCloudy, WiNightCloudy, WiCloud, WiMoonWaxingCrescent3
-} from "react-icons/wi";
+import { TwitterApi } from 'twitter-api-v2';
 
-const key = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY;
-const zip = import.meta.env.VITE_OPEN_WEATHER_MAP_ZIP_CODE;
-
+const key = import.meta.env.VITE_TWITTER_BEARER_TOKEN;
 if (key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
 class WeatherBox extends React.Component {
@@ -36,7 +30,7 @@ class WeatherBox extends React.Component {
       { weather: 'Clear', icon_day: <WiDaySunny />, icon_night: <WiMoonWaxingCrescent3 /> },
       { weather: 'Clouds', icon_few_day: <WiDayCloudy />, icon_few_night: <WiNightCloudy />,
                            icon_scatter_day: <WiDayCloudy />, icon_scatter_night: <WiNightCloudy />,
-                           icon_broken: <WiCloud />, icon_overcast: <WiCloudy />, icon: <WiCloud /> },
+                           icon_broken: <WiCloud />, icon_overcast: <WiCloudy />, icon: <WiCloud />},
       { weather: 'Drizzle', icon: <WiSprinkle /> },
       { weather: 'Rain', icon: <WiRain /> },
       { weather: 'Thunderstorm', icon: <WiThunderstorm /> },
@@ -51,10 +45,10 @@ class WeatherBox extends React.Component {
     let icon = '';
     weather.forEach(element => {
       if (data.weather[0].main === 'Clear') {
-        icon = this.isDay() ? element.icon_day : element.icon_night
+          icon = this.isDay() ? element.icon_day : element.icon_night
       } 
       else if (data.weather[0].main === element.weather) {
-        icon = element.icon;
+          icon = element.icon;
       }
     });
     this.setState({ temperature: fahrenheit + '\xB0 ', icon: icon})
@@ -64,8 +58,9 @@ class WeatherBox extends React.Component {
     return ((new Date()).getHours() >= 6 && (new Date()).getHours() < 18);
   }
 
+  //async componentDidMount() {
   componentDidMount() {
-    this.fetchData();
+
   }
 
 	render() {

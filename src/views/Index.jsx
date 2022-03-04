@@ -11,6 +11,7 @@ import WeatherBox from "../components/Weather";
 import TDMarketData from "../components/TDMarketData";
 import Toggle from "../components/ThemeToggle";
 import ThemeProvider from "../components/ThemeContext";
+import Twitter from "../components/Twitter";
 
 
 // assets
