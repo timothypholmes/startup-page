@@ -44,10 +44,14 @@ class SolarGraph extends React.Component {
             xyValues: []
         }
 
-        if (navigator.geolocation) { // get location
+        if (import.meta.env.VITE_LAT) {
+            this.getLocation(import.meta.env.VITE_LAT, import.meta.env.VITE_LON);
+        } else if (navigator.geolocation) { // get location
             navigator.geolocation.getCurrentPosition((position) => {
                 this.getLocation(position.coords.latitude, position.coords.longitude);
             });
+        } else {
+            console.log('Geolocation is not supported by this browser.');
         }
 
         this.sceneRender = {
