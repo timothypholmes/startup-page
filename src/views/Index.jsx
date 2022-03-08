@@ -58,7 +58,7 @@ export default function Index() {
             </ul>
           </div>
           <div class="bg-blue3 xs:hidden text-black rounded-xl col-span-3 row-span-2 h-80 w-auto shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
-            <TDMarketData />
+            <Twitter />
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
 

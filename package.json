@@ -37,6 +37,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "serve": "vite build && serve -s dist -p 8000",
+    "proxy": "http://localhost:3001",
     "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css",
     "build:css": "postcss src/styles/index.css -o /src/assets/styles/tailwind.css"
   },
