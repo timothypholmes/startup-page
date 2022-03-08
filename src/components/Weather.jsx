@@ -66,6 +66,7 @@ class WeatherBox extends React.Component {
 
   componentDidMount() {
     this.fetchData();
+    //console.log(this.state.icon)
   }
 
 	render() {
