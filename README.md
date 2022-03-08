@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100px" src="./icon.ico">
+  <img width="100px" src="./src/assets/preview/icon.ico">
 </p>
 
 <div align="center">
@@ -8,11 +8,11 @@
 </div>
 
 #### Light Mode
-![preview-light](https://github.com/timothypholmes/startup-page/blob/master/preview-light.png) 
+![preview-light](https://github.com/timothypholmes/startup-page/blob/master/src/assets/preview/preview-light.png) 
 
 
 #### Dark Mode
-![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/preview-dark.png)
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/src/assets/preview/master/preview-dark.png)
 
 
 ## Index
@@ -36,7 +36,7 @@ A side project I created to use everyday. Started with just needing a search bar
 ## Todo Features
 
 - [x] Add light/dark mode
-- [ ] Replace TDAmeritrade API with
+- [ ] Replace TDAmeritrade API with other financial API
 - [x] Fix solar chart axis (and other various bugs)
 - [ ] Add CMS for bookmarks
 - [ ] Make customizable on front end

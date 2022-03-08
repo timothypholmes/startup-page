@@ -86,7 +86,7 @@ class SolarGraph extends React.Component {
     }
     
     calcCurrentSolarPosition(lst) {
-        this.state.declinationAngle = this.deg2rad(-23.44) * Math.cos(this.deg2rad(360/365 * (this.state.daysInYear + 10)))
+        this.state.declinationAngle = 0.39795 * Math.cos(this.deg2rad(0.98563 * (this.state.daysInYear - 173)))
         this.state.hourAngle = this.deg2rad(15 * (lst - 12)) // in degrees
 
         var LSTM = this.deg2rad(15) * this.deg2rad(105)
@@ -94,23 +94,23 @@ class SolarGraph extends React.Component {
         var EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B)
         var TC = 4 * (this.state.latitude - LSTM) + EoT
 
-        var sunRiseTime = 12 - (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
-        var sunSetTime = 12 + (1/23.44) * Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle)) - TC/60
+        var sunRiseTime = Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle))// - TC/60
+        var sunSetTime = Math.acos(-Math.tan(this.state.latitude) * Math.tan(this.state.declinationAngle))// - TC/60
 
-        var hourAngleSunRise = 23.44 * (sunRiseTime - 12)
-        var hourAngleSunSet = 23.44 * (sunSetTime - 12)
+        this.state.sunRise = this.deg2rad(23.44 * (sunRiseTime - 12))
+        this.state.sunSet = this.deg2rad(23.44 * (sunSetTime - 12))
 
-        this.state.sunRise = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunRise))
-        this.state.sunSet = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
-            + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
+        //this.state.sunRise = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+        //    + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunRise))
+        //this.state.sunSet = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
+        //    + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(hourAngleSunSet))
 
         this.state.solarElevationAngle = Math.asin(Math.sin(this.state.latitude) * Math.sin(this.state.declinationAngle) 
             + Math.cos(this.state.latitude) * Math.cos(this.state.declinationAngle) * Math.cos(this.state.hourAngle))
     }
 
     calcSolarAngleArray() {        
-        this.state.declinationAngle = this.deg2rad(-23.44) * Math.cos(this.deg2rad(360/365 * (this.state.daysInYear + 10)))
+        this.state.declinationAngle = 0.39795 * Math.cos(this.deg2rad(0.98563 * (this.state.daysInYear - 173)))
         for (var i = 0; i < this.state.lstArray.length; i++) {
             this.state.hourAngleArray.push(this.deg2rad(15 * (this.state.lstArray[i] - 12)))
         }
@@ -205,12 +205,11 @@ class SolarGraph extends React.Component {
         cube.position.set(0, -10, -1);
         this.sceneRender.scene.add(cube);
 
-
         // create a white horizon line
         var solarLineMaterial = new THREE.LineBasicMaterial( { color: 0xf0ebd8} )
         const solarLinePoints = []
-        solarLinePoints.push( new THREE.Vector3( 0, 0, 0 ) )
-        solarLinePoints.push( new THREE.Vector3( 24, 0, 0 ) )
+        solarLinePoints.push( new THREE.Vector3( 0, this.state.sunRise, 0 ) )
+        solarLinePoints.push( new THREE.Vector3( 24, this.state.sunSet, 0 ) )
         var solarLineGeometry = new THREE.BufferGeometry().setFromPoints(solarLinePoints)
         var solarLine = new THREE.Line(solarLineGeometry, solarLineMaterial)
         this.sceneRender.scene.add(solarLine)
@@ -243,9 +242,7 @@ class SolarGraph extends React.Component {
         // parameters
         var radius = 1
         var sunScale = 0.5
-        //var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
-        //var sunXPosition = this.state.lst
-        //var sunXPosition = x
+        var sunXPosition = this.state.lst
         var sunYPosition = this.rad2deg(this.state.solarElevationAngle * amplitudeScale)
         
 
@@ -265,16 +262,15 @@ class SolarGraph extends React.Component {
                 fragmentShader: sunFragment,
                 uniforms: {
                     sunPosition: {
-                        value: [this.state.lst, sunYPosition]
+                        value: [sunXPosition, sunYPosition]
                     },
                 }
             })
         )
-        sun.position.set(this.state.lst, sunYPosition, 0);
+        sun.position.set(sunXPosition, sunYPosition, 0);
         sun.scale.set(radius * sunScale, radius * sunScale, radius * sunScale)
         this.sceneRender.scene.add(sun);
         
-
         // atmosphere
         var atmosphereScale = 8
         const atmosphere = new THREE.Mesh(
@@ -286,17 +282,17 @@ class SolarGraph extends React.Component {
                 side: THREE.BackSide,
             })
         )
-        atmosphere.position.set(this.state.lst, sunYPosition, -3);
+        atmosphere.position.set(sunXPosition, sunYPosition, -3);
         atmosphere.scale.set(radius * atmosphereScale, radius * atmosphereScale, 0)
         this.sceneRender.scene.add(atmosphere);
 
 
         // horison       
-        if (this.state.lst < 12) {
-            var horizonColor = new THREE.Vector4(0.953, 0.906, 0.427, 1.0);
+        if (sunXPosition < 12) {
+            var horizonColor = new THREE.Vector4(0.953, 0.906, 0.427, 0.7 * Math.abs(sunXPosition));
         }
         else {
-            var horizonColor = new THREE.Vector4(0.788, 0.106, 0.149, 1.0);
+            var horizonColor = new THREE.Vector4(0.788, 0.106, 0.149, 1);
         }
 
         const horizon = new THREE.Mesh(
@@ -310,12 +306,13 @@ class SolarGraph extends React.Component {
             })
         )
 
-        if (sunYPosition > - 1.5 & sunYPosition < 1.5) {
-            var diffuse = 2/(2 * Math.pi)^(1/2) * Math.exp(-2 * Math.abs(sunYPosition)^2) 
-            horizon.position.set(this.state.lst, 0, -3);
-            horizon.scale.set(10, 1.5, 0)
+        if (sunYPosition >= -1.5 & sunYPosition < 0) {
+            horizon.position.set(sunXPosition, 0, -3);
+            var diffuse = Math.log(0.5 - sunYPosition) + 1;
+            horizon.scale.set(8.5, diffuse, 0)
             this.sceneRender.scene.add(horizon);
         }
+
         
         // render
         this.sceneRender.renderer.render(this.sceneRender.scene, this.sceneRender.camera)   
