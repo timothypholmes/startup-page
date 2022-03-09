@@ -1,6 +1,8 @@
 {
   "name": "start-page",
   "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@react-three/fiber": "^7.0.26",
@@ -30,6 +32,7 @@
     "react-scripts": "^5.0.0",
     "slash": "^4.0.0",
     "three": "^0.137.5",
+    "twit": "^2.2.11",
     "twitter-api-v2": "^1.11.0"
   },
   "scripts": {
@@ -37,7 +40,6 @@
     "build": "vite build",
     "preview": "vite preview",
     "serve": "vite build && serve -s dist -p 8000",
-    "proxy": "http://localhost:3001",
     "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css",
     "build:css": "postcss src/styles/index.css -o /src/assets/styles/tailwind.css"
   },
