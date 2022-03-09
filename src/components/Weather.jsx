@@ -21,7 +21,7 @@ class WeatherBox extends React.Component {
   }
 
   fetchData(lat, lon) {
-    return fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + key + '&units=' + unit)
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=${unit}`)
       .then(response => response.json())
       .then(data => {
         this.getWeather(data)
@@ -56,7 +56,15 @@ class WeatherBox extends React.Component {
         icon = element.icon;
       }
     });
-    this.setState({ temperature: Math.round(data.main.temp) + '\xB0 ', icon: icon})
+
+    if (data.sys.country === "US") {
+      var temperature = String(Math.round(data.main.temp * 9 / 5 - 459.67)) + '\xB0 F'
+    }
+    else {
+      var temperature = String(Math.round(data.main.temp - 273.15)) + '\xB0 C'
+    }
+
+    this.setState({ temperature: temperature, icon: icon})
   }
   
   isDay() {
