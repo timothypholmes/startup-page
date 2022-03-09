@@ -11,7 +11,7 @@ import WeatherBox from "../components/Weather";
 import TDMarketData from "../components/TDMarketData";
 import Toggle from "../components/ThemeToggle";
 import ThemeProvider from "../components/ThemeContext";
-import Twitter from "../components/Twitter";
+import News from "../components/News";
 
 
 // assets
@@ -57,8 +57,8 @@ export default function Index() {
               <li><a href="https://gist.github.com/timothypholmes">gists</a></li>
             </ul>
           </div>
-          <div class="bg-blue3 xs:hidden text-black rounded-xl col-span-3 row-span-2 h-80 w-auto shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
-            <TDMarketData />
+          <div class="overflow-hidden flex bg-blue3 xs:hidden text-white rounded-xl col-span-3 row-span-2 h-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
+            <News />
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
 
@@ -72,7 +72,7 @@ export default function Index() {
               <li><a href="https://www.marketwatch.com">marketwatch</a></li>
             </ul>
           </div>
-          <div class="bg-[#000000] rounded-xl col-span-2 row-span-2 h-92 w-92 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SolarGraph /></div>
+          <div class="bg-[#000000] rounded-xl col-span-2 row-span-2 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SolarGraph /></div>
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
            <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
               <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">social</li>
