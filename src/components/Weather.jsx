@@ -6,7 +6,7 @@ import {
 } from "react-icons/wi";
 
 const key = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY;
-const zip = import.meta.env.VITE_OPEN_WEATHER_MAP_ZIP_CODE;
+const unit = import.meta.env.VITE_OPEN_WEATHER_MAP_UNIT;
 
 if (key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
@@ -20,8 +20,8 @@ class WeatherBox extends React.Component {
     }
   }
 
-  fetchData() {
-    return fetch('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + key)  
+  fetchData(lat, lon) {
+    return fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + key + '&units=' + unit)
       .then(response => response.json())
       .then(data => {
         this.getWeather(data)
@@ -29,7 +29,6 @@ class WeatherBox extends React.Component {
   }
 
   getWeather(data) {
-    var fahrenheit = Math.round(((parseFloat(data.main.temp) - 273.15) * 1.8) + 32);
     this.setState({ location: data.name})
 
     let weather = [
@@ -57,7 +56,7 @@ class WeatherBox extends React.Component {
         icon = element.icon;
       }
     });
-    this.setState({ temperature: fahrenheit + '\xB0 ', icon: icon})
+    this.setState({ temperature: Math.round(data.main.temp) + '\xB0 ', icon: icon})
   }
   
   isDay() {
@@ -65,8 +64,15 @@ class WeatherBox extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.icon)
+    if(import.meta.env.VITE_LAT) {
+      this.fetchData(import.meta.env.VITE_LAT, import.meta.env.VITE_LON);
+    } else if(navigator.geolocation) { // get location
+      navigator.geolocation.getCurrentPosition((position) => {
+          this.fetchData(position.coords.latitude, position.coords.longitude);
+      });
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
   }
 
 	render() {
