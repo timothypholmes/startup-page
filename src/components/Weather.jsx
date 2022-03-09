@@ -26,7 +26,6 @@ class WeatherBox extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.getWeather(data)
-        console.log(data)
     });
   }
 

@@ -57,8 +57,8 @@ export default function Index() {
               <li><a href="https://gist.github.com/timothypholmes">gists</a></li>
             </ul>
           </div>
-          <div class="overflow-hidden flex bg-blue3 xs:hidden text-white rounded-xl col-span-3 row-span-2 h-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
-            <News />
+          <div class="overflow-hidden flex bg-blue3 xs:hidden rounded-xl col-span-3 row-span-2 h-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
+            <TDMarketData />
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
 
