@@ -503,6 +503,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-row: span 2 / span 2;
 }
 
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 .m-0 {
   margin: 0px;
 }
@@ -523,20 +531,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: grid;
 }
 
-.h-8 {
-  height: 2rem;
+.h-80 {
+  height: 20rem;
 }
 
-.h-5 {
-  height: 1.25rem;
+.h-24 {
+  height: 6rem;
 }
 
 .h-full {
   height: 100%;
 }
 
-.h-80 {
-  height: 20rem;
+.h-8 {
+  height: 2rem;
+}
+
+.h-5 {
+  height: 1.25rem;
 }
 
 .h-36 {
@@ -547,6 +559,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 0.75rem;
 }
 
+.max-h-full {
+  max-height: 100%;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -555,16 +571,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 100vh;
 }
 
+.w-\[30\.5rem\] {
+  width: 30.5rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-48 {
+  width: 12rem;
+}
+
+.w-72 {
+  width: 18rem;
+}
+
 .w-8 {
   width: 2rem;
 }
 
 .w-60 {
   width: 15rem;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .w-36 {
@@ -577,10 +605,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-1 {
   width: 0.25rem;
-}
-
-.w-auto {
-  width: auto;
 }
 
 .min-w-full {
@@ -640,6 +664,12 @@ Ensure the default browser behavior of the `hidden` attribute.
           column-gap: 1.5rem;
 }
 
+.space-y-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0px * var(--tw-space-y-reverse));
+}
+
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));
@@ -648,6 +678,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .rounded-xl {
@@ -735,6 +769,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 3.5rem;
 }
 
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
 .pt-8 {
   padding-top: 2rem;
 }
@@ -759,16 +801,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 1.25rem;
 }
 
-.pt-1 {
-  padding-top: 0.25rem;
-}
-
 .text-left {
   text-align: left;
 }
 
 .text-center {
   text-align: center;
+}
+
+.text-\[14px\] {
+  font-size: 14px;
 }
 
 .text-5xl {
