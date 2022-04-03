@@ -30,7 +30,7 @@ class SolarGraph extends React.Component {
         this.state = {
             latitude: 0,  
             longitude: 0,  
-            daysInYear: 1,//Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day # 
+            daysInYear: Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)), // current day # 
             currentlst: (((now.getHours() * 60) + now.getMinutes()) / 60),              
             lst: 0,
             lstArray: this.linspace(0, 24, 1000),//1440),
@@ -54,6 +54,7 @@ class SolarGraph extends React.Component {
             console.log('Geolocation is not supported by this browser.');
         }
 
+
         this.sceneRender = {
             camera: null,
             scene: null,
@@ -61,6 +62,7 @@ class SolarGraph extends React.Component {
         }
     }
 
+    
     animatePosition(lst, startTime, amplitudeScale) {
         if (lst < startTime) {
             this.calcCurrentSolarPosition(lst) 
