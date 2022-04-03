@@ -17,7 +17,7 @@ class Unsplash extends Component {
         //const category = 'chicago';//process.env.REACT_APP_UNSPLASH_PHOTO_CATEGORY;
         var categoryArray = ['chicago', 'glacier', 'alaska', 'minimal', 'miami', 
                              'ocean', 'sea', 'california', 'new york', 'seattle',
-                             'olympic national park', 'mt. rainier national park']
+                             'olympic national park', 'mt. rainier national park', 'aircraft', 'f35']
         var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
         var category = categoryArray[categoryIndex];
 
