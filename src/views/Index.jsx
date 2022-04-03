@@ -85,9 +85,9 @@ export default function Index() {
           {/* row 4 */}
           <div class="bg-blue3 rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
             <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-                <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">r/</li>
+                <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">other</li>
                 <li><a href="https://www.reddit.com/r/startpages/">r/startpages</a></li>
-                <li><a href="https://www.reddit.com/r/unixporn/">r/unixporn</a></li>
+                <li><a href="https://www.mercari.com">rmercari</a></li>
                 <li><a href="https://www.reddit.com/r/stocks/">r/stonks</a></li>
             </ul>
           </div>

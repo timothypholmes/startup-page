@@ -37,7 +37,7 @@ class TDMarketData extends Component {
 
     getChartData() {
         const consumerKey = import.meta.env.VITE_TD_CONSUMER_KEY; 
-        const symbol = 'MSFT';
+        const symbol = 'AAPL';
         const periodType = 'day';
         const period = '1';
         const frequencyType = 'minute';
@@ -66,6 +66,15 @@ class TDMarketData extends Component {
         })
         .catch(err => {
             console.log(err);
+        });
+
+        fetch(`https://www.bloomberg.com/markets/api/bulk-time-series/price/GOLD%3AUS?timeFrame=1_DAY`)
+        .then((response) => response.json())
+        .then(data => {this.setState({posts: data.articles})
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err);
         });
         
         this.setState({
