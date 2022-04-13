@@ -104,7 +104,7 @@ class WeatherBox extends React.Component {
       <>
       <div class="text-center items-center justify-center translate-x-0 translate-y-0">
         <h1 title={this.state.desc} class="text-3xl pt-5 text-off-white1">{this.state.temperature}</h1>
-        <a class="flex justify-center text-5xl text-off-white1">
+        <a class="flex justify-center text-5xl text-off-white1" href="https://embed.windy.com">
           <span class="text-grey group-hover:text-blue-500">{this.state.icon}</span>
         </a>
         <p class="text-xl text-off-white1">{this.state.location}</p>
