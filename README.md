@@ -12,7 +12,7 @@
 
 
 #### Dark Mode
-![preview-dark](https://github.com/timothypholmes/startup-page/blob/src/assets/preview/master/preview-dark.png)
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/src/assets/preview/preview-dark.png?raw=true)
 
 
 ## Index
