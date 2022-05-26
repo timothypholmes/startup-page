@@ -52,6 +52,14 @@ A side project I created to use everyday. Started with just needing a search bar
 The weather feature of this page requires you to add an API Key. First create a `.env` file
 in the root of the project directory. Then add this variable to the file with the API Key. 
 
+Run the command 
+
+```
+cp .env.example .env
+```
+
+to copy the .env template and add your credentials. Or copy the following below into your local .env file:
+
 ```
 # open weather map API
 VITE_OPEN_WEATHER_MAP_API_KEY={YOUR_KEY}
