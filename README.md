@@ -8,11 +8,11 @@
 </div>
 
 #### Light Mode
-![preview-light](https://github.com/timothypholmes/startup-page/blob/master/src/assets/preview/preview-light.png) 
+![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-light.png) 
 
 
 #### Dark Mode
-![preview-dark](https://github.com/timothypholmes/startup-page/blob/master/src/assets/preview/preview-dark.png?raw=true)
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-dark.png?raw=true)
 
 
 ## Index
