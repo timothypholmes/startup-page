@@ -119,8 +119,8 @@ class TDMarketData extends Component {
                 },
                 xaxis: {
                   type: 'category',
-                  labels: candle_array.datetime,
                   labels: {
+                    candle_array: candle_array.datetime,
                     show: true,
                     rotate: -45,
                     rotateAlways: false,
@@ -147,7 +147,6 @@ class TDMarketData extends Component {
                 },
                 yaxis: {
                     type: 'category',
-                    //labels: candle_array.datetime,
                     labels: {
                       show: true,
                       rotateAlways: false,

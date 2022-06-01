@@ -15,7 +15,7 @@ module.exports = {
     "./public/*.js",
   ],
   variants: {
-    opacity: ({ after }) => after(['disabled'])
+    opacity: ({ after }) => after(['disabled']),
   },
   theme: {
     colors: {
@@ -55,18 +55,4 @@ module.exports = {
       },
     },
   },
-  variants: [
-    "responsive",
-    "group-hover",
-    "focus-within",
-    "first",
-    "last",
-    "odd",
-    "even",
-    "hover",
-    "focus",
-    "active",
-    "visited",
-    "disabled",
-  ],
 };
