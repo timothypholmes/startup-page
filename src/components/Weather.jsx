@@ -18,6 +18,7 @@ class WeatherBox extends React.Component {
       location: this.props.location,
       icon: this.props.icon,
       desc: this.props.desc,
+      link: this.props.link,
     }
   }
 
@@ -80,7 +81,10 @@ class WeatherBox extends React.Component {
         var temperature = String(Math.round(data.main.temp - 273.15)) + '\xB0 C'
       }
     }
-    this.setState({ temperature: temperature, icon: icon, desc: data.main.description})
+
+    let link = "https://darksky.net/forecast/" + String(import.meta.env.VITE_LAT) + "," +  String(import.meta.env.VITE_LON) + "/us12/en";
+    console.log(link);
+    this.setState({ temperature: temperature, icon: icon, desc: data.main.description, link: link})
   }
   
   isDay() {
@@ -104,7 +108,7 @@ class WeatherBox extends React.Component {
       <>
       <div class="text-center items-center justify-center translate-x-0 translate-y-0">
         <h1 title={this.state.desc} class="text-3xl pt-5 text-off-white1">{this.state.temperature}</h1>
-        <a class="flex justify-center text-5xl text-off-white1" href="https://embed.windy.com">
+        <a class="flex justify-center text-5xl text-off-white1" href={this.state.link}>
           <span class="text-grey group-hover:text-blue-500">{this.state.icon}</span>
         </a>
         <p class="text-xl text-off-white1">{this.state.location}</p>
