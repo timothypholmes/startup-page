@@ -119,8 +119,10 @@ open on new window)
 Or run it using:
 
 ```
-serve -s build
+serve -s dist -p 8000
 ```
+
+This calls the dist folder created by the `vite build` process. The `-p` flag runs the static site on port 8000.
 
 ## Modules
 
