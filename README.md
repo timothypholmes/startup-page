@@ -8,11 +8,11 @@
 </div>
 
 #### Light Mode
-![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-light.png) 
+![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/new-preview-light.png) 
 
 
 #### Dark Mode
-![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-dark.png?raw=true)
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/new-preview-dark.png?raw=true)
 
 
 ## Index
@@ -176,3 +176,17 @@ This calls the dist folder created by the `vite build` process. The `-p` flag ru
 - `tdameritrade` - stock charts, option chains, account balance
 - `openweather` - Temperature with weather emoji
 - `unsplash` - Random photo squares
+
+
+
+## Old version
+
+Includes the TDAmeritrade component:
+
+#### Light Mode
+![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-light.png) 
+
+
+#### Dark Mode
+![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-dark.png?raw=true)
+

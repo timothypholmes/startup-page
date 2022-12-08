@@ -141,16 +141,16 @@ class SolarGraph extends React.Component {
 
     init() {
 
-        const canvasContainer = document.querySelector('canvas')
+        const canvasContainer = document.getElementById('container')
 
         this.sceneRender.scene = new THREE.Scene();
         this.sceneRender.scene.background = new THREE.Color(BACKGOUND);
 
         this.sceneRender.camera = new THREE.PerspectiveCamera(
-            75, 
+            108, 
             canvasContainer.offsetWidth / canvasContainer.offsetHeight,
-            0.1, 
-            1000);
+            0.01, 
+            500);
         this.sceneRender.renderer = new THREE.WebGLRenderer({
             canvas: document.querySelector('canvas'),
             antialias: true,
@@ -158,9 +158,6 @@ class SolarGraph extends React.Component {
 
         this.sceneRender.renderer.setSize(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
         this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
-
-        //this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
-        //this.sceneRender.renderer.setSize(326, 316);
         this.sceneRender.camera.position.set(12, 0, 8); // [x: solar noon y: None z: camera zoom]
 
         const pointLight = new THREE.PointLight(0xffffff);
@@ -360,7 +357,7 @@ class SolarGraph extends React.Component {
         return (
             <>
                 <div id="container">
-                    <canvas class="w-full h-full rounded-xl" id="canvas"/>
+                    <canvas height="300" class="w-full h-full rounded-xl" id="canvas"/>
                 </div>
             </>
         );
