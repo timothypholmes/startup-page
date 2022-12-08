@@ -17,6 +17,7 @@ import Windy from "../components/Windy";
 
 // assets
 import desert from "../assets/img/desert.mp4"
+import chicago from "../assets/img/chicago.mp4"
 import { RiStockLine, RiNewspaperLine } from "react-icons/ri";
 
 

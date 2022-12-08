@@ -161,7 +161,7 @@ class SolarGraph extends React.Component {
 
         //this.sceneRender.renderer.setPixelRatio(window.devicePixelRatio);
         //this.sceneRender.renderer.setSize(326, 316);
-        this.sceneRender.camera.position.set(12, 0, 15); // [x: solar noon y: None z: camera zoom]
+        this.sceneRender.camera.position.set(12, 0, 8); // [x: solar noon y: None z: camera zoom]
 
         const pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.set(5, 5, 5);
@@ -358,9 +358,11 @@ class SolarGraph extends React.Component {
 
 	render() {
         return (
-          <>
-            <canvas class="w-full h-full rounded-xl" id="canvas"/>
-          </>
+            <>
+                <div id="container">
+                    <canvas class="w-full h-full rounded-xl" id="canvas"/>
+                </div>
+            </>
         );
       }
 }

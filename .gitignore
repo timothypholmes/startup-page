@@ -27,6 +27,8 @@ chrome-user-data
 .env
 dist
 
+*.mp4
+
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
 packages/react-devtools-extensions/chrome/*.crx
