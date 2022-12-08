@@ -17,6 +17,7 @@ import Windy from "../components/Windy";
 
 // assets
 import desert from "../assets/img/desert.mp4"
+import chicago from "../assets/img/chicago.mp4"
 import { RiStockLine, RiNewspaperLine } from "react-icons/ri";
 
 
@@ -29,12 +30,12 @@ export default function Index() {
           {/* row 1 */}
           <div class="overflow-hidden rounded-xl col-span-1 row-span-2 h-80 w-36 shadow-4xl dark:shadow-none">
             <div class="sticky rounded-xl overflow-hidden h-80 w-36 border-0 dark:border-4 dark:border-off-white2"> 
-              <video class="relative object-cover min-h-full max-w-xl -left-12" src={desert} type="video/mp4" autoPlay muted loop/>
+              <video class="relative object-cover min-h-full max-w-xl -left-12" src={chicago} type="video/mp4" autoPlay muted loop/>
             </div>
           </div>
           <div class="rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none">
             <div class="sticky rounded-xl overflow-hidden h-36 w-36 border-0 dark:border-4 dark:border-off-white2"> 
-              <video class="relative object-cover min-h-full max-w-sm right-48" src={desert} type="video/mp4" autoPlay muted loop/>
+              <video class="relative object-cover min-h-full max-w-sm right-48" src={chicago} type="video/mp4" autoPlay muted loop/>
             </div>
           </div>
           <div class="bg-blue3 text-black rounded-xl col-span-2 h-36 w-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SearchBox /></div>
