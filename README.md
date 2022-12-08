@@ -49,8 +49,7 @@ A side project I created to use everyday. Started with just needing a search bar
 
 ## Getting started
 
-The weather feature of this page requires you to add an API Key. First create a `.env` file
-in the root of the project directory. Then add this variable to the file with the API Key. 
+The weather feature of this page requires you to add an API Key. See how a `.env` key is created below. To setup try running the `setup.sh` script. If this script does not work trying working through the instructions below.
 
 ### Setting credentials and info
 
