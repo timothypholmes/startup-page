@@ -14,10 +14,11 @@ import ThemeProvider from "../components/ThemeContext";
 import News from "../components/News";
 import Windy from "../components/Windy";
 
+// list
+import Example from "../assets/lists/list.example";
 
 // assets
 import desert from "../assets/img/desert.mp4"
-import chicago from "../assets/img/chicago.mp4"
 import { RiStockLine, RiNewspaperLine } from "react-icons/ri";
 
 
@@ -40,12 +41,7 @@ export default function Index() {
           </div>
           <div class="bg-blue3 text-black rounded-xl col-span-2 h-36 w-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SearchBox /></div>
           <div class="bg-blue3 rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2 overflow-y-auto">
-            <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-              <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">news</li>
-              <li class=""><a href="https://news.ycombinator.com/">hacker news</a></li>
-              <li><a href="https://medium.com">medium</a></li>
-              <li><a href="https://12ft.io">12ft</a></li>
-            </ul>
+            <Example />
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
           <div class="bg-green2 dark:bg-green1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><WeatherBox /></div>
@@ -53,12 +49,7 @@ export default function Index() {
           {/* row 2 */}
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2 overflow-y-auto">
-           <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-              <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">work</li>
-              <li><a href="https://stackoverflow.com">stackoverflow</a></li>
-              <li><a href="https://github.com">github</a></li>
-              <li><a href="https://gist.github.com/timothypholmes">gists</a></li>
-            </ul>
+            <Example />
           </div>
           <div class="overflow-hidden rounded-xl col-span-3 row-span-2 h-80 shadow-4xl dark:shadow-none ">
             <Windy />
@@ -67,33 +58,16 @@ export default function Index() {
 
           {/* row 3 */}
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2 overflow-y-auto">
-           <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-              <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">finance</li>
-              <li><a href="https://secure.tdameritrade.com/">tdameritrade</a></li>
-              <li><a href="https://tradingeconomics.com/calendar">calendar</a></li>
-              <li><a href="https://finviz.com">screener</a></li> 
-            </ul>
+            <Example />
           </div>
           <div class="bg-[#000000] rounded-xl col-span-2 row-span-2 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SolarGraph /></div>
           <div class="bg-blue3 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2 overflow-y-auto">
-           <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-              <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center scroll-smooth">social</li>
-              <li><a href="https://www.reddit.com">reddit</a></li>
-              <li><a href="https://www.youtube.com">youtube</a></li>
-              <li><a href="https://www.linkedin.com">linkedin</a></li>
-              <li><a href="https://twitter.com/home">twitter</a></li>
-              <li><a href="https://tweetdeck.twitter.com">tweetdeck</a></li>
-            </ul>
+            <Example />
           </div>
 
           {/* row 4 */}
           <div class="bg-blue3 rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2 overflow-y-auto">
-            <ul class=" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2">
-                <li class="font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center">other</li>
-                <li><a href="https://www.reddit.com/r/startpages/">r/startpages</a></li>
-                <li><a href="https://www.mercari.com">mercari</a></li>
-                <li><a href="https://www.google.com/maps/">maps</a></li>
-            </ul>
+            <Example />
           </div>
           <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash /></div>
           <div class="flex items-center justify-center bg-blue3 text-white rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">

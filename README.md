@@ -52,6 +52,8 @@ A side project I created to use everyday. Started with just needing a search bar
 The weather feature of this page requires you to add an API Key. First create a `.env` file
 in the root of the project directory. Then add this variable to the file with the API Key. 
 
+### Setting credentials and info
+
 Run the command 
 
 ```
@@ -83,6 +85,43 @@ VITE_NEWS_API_KEY={YOUR_NEWS_API_KEY}
 # browser preference 
 BROWSER={PREF_BROWSER}
 ```
+
+### Setting bookmark lists
+
+Run the command 
+
+```
+for i in {1..5}; echo "import React from \"react\"; 
+
+class List$i extends React.Component {
+  render() {
+    return(
+      <>
+        <ul class=\" text-left text-off-white1 m-0 pl-5 pt-1 before:block before:absolute left-0 w-1 h-3 border-solid border-teal-600 relative list-none mb-2\">
+            <li class=\"font-black text-lg underline underline-offset-4 decoration-2 decoration-off-white1 text-center\">example</li>
+            <li class=\"\"><a href=\"https://news.ycombinator.com/\">example</a></li>
+        </ul>
+      </>
+    );
+  }
+}
+
+export default List$i" > src/assets/lists/list$i.jsx
+```
+
+to copy down the example into the 5 different bookmark boxes. From here import the lists under the example list in the `Index.js` file as shown:
+
+```
+// list
+import Example from "../assets/lists/list.example";
+import List1 from "../assets/lists/list1.jsx";
+import List2 from "../assets/lists/list2.jsx";
+import List3 from "../assets/lists/list3.jsx";
+import List4 from "../assets/lists/list4.jsx";
+import List5 from "../assets/lists/list5.jsx";
+```
+
+and finally replace the `<Example />` with the appropriate list component in each row of the `Index.js` file.
 
 ## Installation
 
