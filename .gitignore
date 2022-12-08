@@ -29,6 +29,10 @@ dist
 
 *.mp4
 
+# ignore bookmark lists
+src/assets/lists/*.jsx
+!src/assets/lists/*.example.jsx
+
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
 packages/react-devtools-extensions/chrome/*.crx
