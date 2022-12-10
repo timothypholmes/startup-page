@@ -271,7 +271,7 @@ class SolarGraph extends React.Component {
         this.sceneRender.scene.add(sun);
         
         // atmosphere
-        var atmosphereScale = 8
+        var atmosphereScale = 5
         const atmosphere = new THREE.Mesh(
             new THREE.SphereGeometry(radius, 32, 32), // geometry
             new THREE.ShaderMaterial({
@@ -282,7 +282,13 @@ class SolarGraph extends React.Component {
             })
         )
         atmosphere.position.set(sunXPosition, sunYPosition, -3);
-        atmosphere.scale.set(radius * atmosphereScale, radius * atmosphereScale, 0)
+        if (sunYPosition >= -1.5) {
+            atmosphere.scale.set(
+                (radius * atmosphereScale) + (sunYPosition), 
+                (radius * atmosphereScale) + (sunYPosition),
+                0.01
+            )
+        }
         this.sceneRender.scene.add(atmosphere);
 
 
@@ -295,7 +301,7 @@ class SolarGraph extends React.Component {
         }
 
         const horizon = new THREE.Mesh(
-            new THREE.SphereGeometry(radius, 32, 32), // geometry
+            new THREE.SphereGeometry(0.17 * Math.abs(sunXPosition), 32, 32), // geometry
             new THREE.ShaderMaterial({
                 vertexShader: horizonVertex,
                 fragmentShader: horizonFragment,
@@ -305,14 +311,21 @@ class SolarGraph extends React.Component {
             })
         )
 
+        // sunrise and sunset
         if (sunYPosition >= -1.5 & sunYPosition < 0) {
             horizon.position.set(sunXPosition, 0, -3);
-            var diffuse = Math.log(0.5 - sunYPosition) + 1;
+            // sunrise fade in
+            if (sunYPosition >= -1.5 & sunXPosition < 12) {
+                var diffuse = Math.log(0.5 - sunYPosition) + 1;
+            }
+            // sunset fade out
+            if (sunYPosition >= -1.5 & sunXPosition > 12) {
+                var diffuse = Math.log(0.5 - sunYPosition) - 1;
+            }
             horizon.scale.set(8.5, diffuse, 0)
             this.sceneRender.scene.add(horizon);
         }
 
-        
         // render
         this.sceneRender.renderer.render(this.sceneRender.scene, this.sceneRender.camera)   
 
@@ -357,7 +370,7 @@ class SolarGraph extends React.Component {
         return (
             <>
                 <div id="container">
-                    <canvas height="300" class="w-full h-full rounded-xl" id="canvas"/>
+                    <canvas height="300" width="300" class="w-full h-full rounded-xl" id="canvas"/>
                 </div>
             </>
         );
