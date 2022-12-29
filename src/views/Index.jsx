@@ -17,6 +17,7 @@ import News from "../components/News";
 import Windy from "../components/Windy";
 import Bookmark from "../components/Bookmark";
 
+
 // assets
 import desert from "../assets/img/desert.mp4"
 import { RiStockLine, RiNewspaperLine } from "react-icons/ri";
