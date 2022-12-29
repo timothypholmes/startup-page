@@ -12,17 +12,6 @@ class News extends React.Component {
   }
 
   async fetchData() {
-    /* old api
-    await fetch(`https://newsdata.io/api/1/news?apikey=${import.meta.env.VITE_NEWS_DATA_API_KEY}&q=us&country=us&language=en&category=business,politics,world`)
-    .then((response) => response.json())
-    .then(data => {this.setState({posts: data.results})
-      //for (var i = 0; i < data.results.length; i++) {
-      //  this.setState({posts: data.results[i]})
-      //}
-      //console.log(data)
-    })
-    */
-
     await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
     .then((response) => response.json())
     .then(data => {this.setState({posts: data.articles})
