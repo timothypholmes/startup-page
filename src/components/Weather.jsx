@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { 
   WiRain, WiSprinkle, WiCloudy, WiThunderstorm, WiStars, WiDaySunny,
   WiSnowflakeCold, WiAlien, WiFog, WiRaindrops, WiDust, WiDayHaze,
