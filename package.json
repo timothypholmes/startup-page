@@ -1,7 +1,8 @@
 {
   "name": "start-page",
   "version": "0.1.0",
-  "private": true,
+  "homepage": ".",
+  "private": false,
   "proxy": "http://localhost:3000",
   "dependencies": {
     "@react-three/fiber": "^7.0.29",
