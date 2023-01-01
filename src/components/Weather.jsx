@@ -4,11 +4,8 @@ import {
   WiSnowflakeCold, WiAlien, WiFog, WiRaindrops, WiDust, WiDayHaze,
   WiTornado, WiNightClear, WiDayCloudy, WiNightCloudy, WiCloud, WiMoonWaxingCrescent3
 } from "react-icons/wi";
+import config from "../config";
 
-const key = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY;
-const unit = import.meta.env.VITE_OPEN_WEATHER_MAP_UNIT;
-
-if (key==='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
 
 class WeatherBox extends React.Component {
   constructor(props) {
@@ -22,7 +19,7 @@ class WeatherBox extends React.Component {
     }
   }
 
-  fetchData(lat, lon) {
+  fetchData(lat, lon, key, unit) {
     return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=${unit}`)
       .then(response => response.json())
       .then(data => {
@@ -73,17 +70,14 @@ class WeatherBox extends React.Component {
       icon = weatherIcon.icon
     }
 
-    if (! import.meta.env.VITE_OPEN_WEATHER_MAP_UNIT) { 
-      if (data.sys.country === "US") {
-        var temperature = String(Math.round(data.main.temp * 9 / 5 - 459.67)) + '\xB0 F'
-      }
-      else {
-        var temperature = String(Math.round(data.main.temp - 273.15)) + '\xB0 C'
-      }
+    if (data.sys.country === "US") {
+      var temperature = String(Math.round(data.main.temp)) + '\xB0 F'
+    }
+    else {
+      var temperature = String(Math.round(data.main.temp)) + '\xB0 C'
     }
 
-    let link = "https://darksky.net/forecast/" + String(import.meta.env.VITE_LAT) + "," +  String(import.meta.env.VITE_LON) + "/us12/en";
-    console.log(link);
+    let link = `https://darksky.net/forecast/${String(config.latitude)},${String(config.longitude)}/us12/en`;
     this.setState({ temperature: temperature, icon: icon, desc: data.main.description, link: link})
   }
   
@@ -92,11 +86,14 @@ class WeatherBox extends React.Component {
   }
 
   componentDidMount() {
-    if (import.meta.env.VITE_LAT) {
-      this.fetchData(import.meta.env.VITE_LAT, import.meta.env.VITE_LON);
+    const unit = config.units;
+    const key = config.openWeatherCredential;
+
+    if (config.latitude) {
+      this.fetchData(config.latitude, config.longitude, key, unit);
     } else if(navigator.geolocation) { // get location
       navigator.geolocation.getCurrentPosition((position) => {
-          this.fetchData(position.coords.latitude, position.coords.longitude);
+          this.fetchData(position.coords.latitude, position.coords.longitude, key, unit);
       });
     } else {
       console.log('Geolocation is not supported by this browser.');
@@ -108,7 +105,7 @@ class WeatherBox extends React.Component {
       <>
       <div class="text-center items-center justify-center translate-x-0 translate-y-0">
         <h1 title={this.state.desc} class="text-3xl pt-5 text-off-white1">{this.state.temperature}</h1>
-        <a class="flex justify-center text-5xl text-off-white1" href={this.state.link}>
+        <a class="flex justify-center text-5xl text-off-white1" href="">
           <span class="text-grey group-hover:text-blue-500">{this.state.icon}</span>
         </a>
         <p class="text-xl text-off-white1">{this.state.location}</p>

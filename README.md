@@ -14,18 +14,17 @@
 #### Dark Mode
 ![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/new-preview-dark.png?raw=true)
 
-
-## Index
-- [Modular Grid Page](#)
-  - [About](#about)
-  - [Features](#features)
-  - [Todo Features](#Built-with)
-  - [Tech Stack](#Tech-Stack)
-  - [Getting Started](#Getting-started)
-  - [Installation](#Installation)
-  - [Usage](#Usage)
-  - [Modules](#Modules)
-  - [API features](#API-features)
+- [About](#about)
+- [Installation](#installation)
+  * [Configure](#configure)
+    + [Config file](#config-file)
+- [Usage](#usage)
+- [API features](#api-features)
+- [Tools](#tools)
+- [Old version](#old-version)
+    + [Light Mode](#light-mode-1)
+    + [Dark Mode](#dark-mode-1)
+- [Developer](#developer)
 
 ## About
 
@@ -42,25 +41,21 @@ A minimal home page for a browser called Modular Grid Page. Modular Grid Page is
     ./setup.sh
     ```
 
-This will copy the example configuration file and .env file. If the `setup.sh` script fails, try running each step manually:
+This will copy the example configuration file where api and preferences are stored. If the `setup.sh` script fails, try running each step manually:
 
-1. Copy the enviorment file with:
-```sh
-cp .env.example .env
-```
-2. Copy the config file with:
+1. Copy the config file with:
 ```sh
 cp src/config/index.example.js src/config/index.js
 ```
-3. Install dependencies:
+2. Install dependencies:
 ```sh
 npm install
 ```
-4. Build site:
+3. Build site:
 ```sh
 npm run build
 ```
-5. Serve site:
+4. Serve site:
 ```sh
 serve -s dist -p 8000
 ```
@@ -69,13 +64,10 @@ serve -s dist -p 8000
 
 This project will still need more input from the user before it is ready to be used. 
 
-#### Env file
-
-The `.env` folder is located in the root of the project. The site may not run without the correct API keys. This site uses the `.env.` file to store API keys. The weather box will not work unless `VITE_OPEN_WEATHER_MAP_API_KEY` is added in the enviorment folder. For the images to work a unsplashed api key is needed. In the enviorment file add `VITE_ACCESS_KEY` and `VITE_SECRET_KEY` for unsplashed access. 
 
 #### Config file
 
-The config file is located under `src/config/index.js` The config file is where the screen can be configured to the users preferences. Bookmarks can be added under bookmark and unsplashed categories can be added under unsplash. More configurations are being added and cleaned up (as of 12/31/2022).
+The config file is located under `src/config/index.js`. There are two required credentials needed for APIs. The config file is where the screen can be configured to the users preferences. Bookmarks can be added under bookmark and unsplashed categories can be added under unsplash. More configurations are being added and cleaned up (as of 1/1/2023).
 
 ## Usage
 
@@ -92,6 +84,12 @@ npm run build
 ```
 
 To host the site run:
+
+```
+npm run serve
+```
+
+This will rebuild ans serve the site or
 
 ```
 serve -s dist -p 8000
@@ -114,7 +112,7 @@ This calls the dist folder created by the `vite build` process. The `-p` flag ru
 
 ## Old version
 
-Includes the TDAmeritrade component:
+Includes the old TDAmeritrade component:
 
 #### Light Mode
 ![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-light.png) 
@@ -123,3 +121,14 @@ Includes the TDAmeritrade component:
 #### Dark Mode
 ![preview-dark](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/preview-dark.png?raw=true)
 
+
+## Developer
+
+To deploy to github pages update the `base` in the `vite.config.js` file. Then run the command:
+
+```sh
+npm run deploy
+```
+
+Additional notes:
+- 

@@ -48,8 +48,8 @@ class SolarGraph extends React.Component {
       xyValues: []
     }
 
-    if (import.meta.env.VITE_LAT) {
-      this.getLocation(import.meta.env.VITE_LAT, import.meta.env.VITE_LON);
+    if ( config.latitude ) {
+      this.getLocation(config.latitude, config.longitude);
     } else if (navigator.geolocation) { // get location
       navigator.geolocation.getCurrentPosition((position) => {
         this.getLocation(position.coords.latitude, position.coords.longitude);
