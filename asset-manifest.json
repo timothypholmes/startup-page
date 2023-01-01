@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/startup-page/static/css/main.599f1493.chunk.css",
+    "main.js": "/startup-page/static/js/main.c7f35fa6.chunk.js",
+    "main.js.map": "/startup-page/static/js/main.c7f35fa6.chunk.js.map",
+    "runtime-main.js": "/startup-page/static/js/runtime-main.03ce0252.js",
+    "runtime-main.js.map": "/startup-page/static/js/runtime-main.03ce0252.js.map",
+    "static/js/2.da607e80.chunk.js": "/startup-page/static/js/2.da607e80.chunk.js",
+    "static/js/2.da607e80.chunk.js.map": "/startup-page/static/js/2.da607e80.chunk.js.map",
+    "index.html": "/startup-page/index.html",
+    "static/css/main.599f1493.chunk.css.map": "/startup-page/static/css/main.599f1493.chunk.css.map",
+    "static/js/2.da607e80.chunk.js.LICENSE.txt": "/startup-page/static/js/2.da607e80.chunk.js.LICENSE.txt",
+    "static/media/atmosphereFragment.56cdffb5.glsl": "/startup-page/static/media/atmosphereFragment.56cdffb5.glsl",
+    "static/media/atmosphereVertex.6ef57d6a.glsl": "/startup-page/static/media/atmosphereVertex.6ef57d6a.glsl",
+    "static/media/desert.78eb002a.mp4": "/startup-page/static/media/desert.78eb002a.mp4",
+    "static/media/tailwind.css": "/startup-page/static/media/wolfram.63c3d747.svg",
+    "static/media/horizonFragment.f7706e4d.glsl": "/startup-page/static/media/horizonFragment.f7706e4d.glsl",
+    "static/media/horizonVertex.6ef57d6a.glsl": "/startup-page/static/media/horizonVertex.6ef57d6a.glsl",
+    "static/media/sunFragment.679ec746.glsl": "/startup-page/static/media/sunFragment.679ec746.glsl",
+    "static/media/sunVertex.e519aa0a.glsl": "/startup-page/static/media/sunVertex.e519aa0a.glsl"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.03ce0252.js",
+    "static/js/2.da607e80.chunk.js",
+    "static/css/main.599f1493.chunk.css",
+    "static/js/main.c7f35fa6.chunk.js"
+  ]
+}
