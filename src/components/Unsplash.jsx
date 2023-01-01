@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import config from "../config";
 
 class Unsplash extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Unsplash extends Component {
   
   componentDidMount() {
     
-    const accessKey = import.meta.env.VITE_ACCESS_KEY; 
+    const accessKey = config.unsplashCredential;
     var categoryArray = this.props.search;
     var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
     var category = categoryArray[categoryIndex];

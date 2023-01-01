@@ -2,6 +2,7 @@ var config = {
   
   latitude: 41.881832,
   longitude: -87.623177,
+  units: "imperial", // metric, standard
 
   bookmark: [
     {
@@ -95,6 +96,10 @@ var config = {
     animal: ['elephant', 'monkey', 'lion', 'bear', 'owl', 'giraffe'],
     countries: ['japan', 'chile', 'angola', 'namibia', 'mauritius', 'botswana', 'tanzania']
   },
+
+  // credentials
+  unsplashCredential: "",
+  openWeatherCredential: "",
   
   style: {
     background: 'bg-[#F2F2F2]',
