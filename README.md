@@ -7,6 +7,10 @@
     <b>modular grid start page for your browser</b>
 </div>
 
+<div align="center">
+   <form action="https://timothypholmes.github.io/startup-page/" method="get" target="_blank"><button type="submit">Demo Page</button></form>
+</div>
+
 #### Light Mode
 ![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/new-preview-light.png) 
 
@@ -108,7 +112,6 @@ This calls the dist folder created by the `vite build` process. The `-p` flag ru
 - [react](https://reactjs.org) frontend framework
 - [tailwindcss](https://tailwindcss.com) css framework
 - [vite](https://vitejs.dev) javascript build tool
-
 
 ## Old version
 

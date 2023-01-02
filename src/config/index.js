@@ -121,6 +121,11 @@ var config = {
   unsplashCredential: "",
   openWeatherCredential: "",
   
+  style: {
+    background: 'bg-[#F2F2F2]',
+    navBackground: 'bg-[#F2F2F2]',
+    underline: 'decoration-blue-500'
+  }
 }
 
 export default config

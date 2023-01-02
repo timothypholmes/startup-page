@@ -39,14 +39,14 @@ export default function Index() {
           </div>
           <div class="bg-blue3 text-black rounded-xl col-span-2 h-36 w-80 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><SearchBox /></div>
           <Bookmark title={ config.bookmark[0].title } content={ config.bookmark[0].content } />
-          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.city }/></div>
+          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.box1 }/></div>
           <div class="bg-green2 dark:bg-green1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><WeatherBox /></div>
           
           {/* row 2 */}
-          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.states }/></div>
+          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.box2 }/></div>
           <Bookmark title={ config.bookmark[1].title } content={ config.bookmark[1].content } />
           <div class="overflow-hidden rounded-xl col-span-3 row-span-2 h-80 shadow-4xl dark:shadow-none "><Windy /></div>
-          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.nature }/></div>
+          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.box3 }/></div>
 
           {/* row 3 */}
           <Bookmark title={ config.bookmark[2].title } content={ config.bookmark[2].content } />
@@ -55,13 +55,13 @@ export default function Index() {
 
           {/* row 4 */}
           <Bookmark title={ config.bookmark[4].title } content={ config.bookmark[4].content } />
-          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.manMade }/></div>
+          <div class="bg-off-white1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.box4 }/></div>
           <div class="flex items-center justify-center bg-blue3 text-white rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2">
             <ThemeProvider>
               <Toggle />
             </ThemeProvider>
           </div>
-          <div class="text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.countries }/></div>
+          <div class="text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none"><Unsplash search={ config.unsplash.box5 }/></div>
           <div class="bg-red2 dark:bg-red1 text-black rounded-xl col-span-1 h-36 w-36 shadow-4xl dark:shadow-none border-0 dark:border-4 dark:border-off-white2"><Clock /></div>
 
         </div>
