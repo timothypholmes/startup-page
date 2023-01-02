@@ -19,8 +19,10 @@
     "deploy": "npm run build:tailwind && npm run build && gh-pages -d dist",
     "start": "vite --open",
     "build": "vite build",
+    "build:local": "vite build --base \"/\"",
+    "build:vercel": "vite build --base \"/\"",
     "preview": "vite preview",
-    "serve": "vite build && serve -s dist -p 8000",
+    "serve": "vite build --base \"/\" && serve -s dist -p 8000",
     "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css",
     "build:css": "postcss src/styles/index.css -o /src/assets/styles/tailwind.css"
   },
