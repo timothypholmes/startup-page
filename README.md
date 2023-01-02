@@ -7,8 +7,7 @@
     <b>modular grid start page for your browser</b>
 </div>
 
-[<kbd> <br>Demo Page<br> </kbd>][KBD]
-[KBD]: https://timothypholmes.github.io/startup-page/
+[![Demo Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://timothypholmes.github.io/startup-page/)
 
 #### Light Mode
 ![preview-light](https://github.com/timothypholmes/startup-page/blob/main/src/assets/preview/new-preview-light.png) 
