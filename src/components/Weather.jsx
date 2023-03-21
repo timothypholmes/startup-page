@@ -29,7 +29,6 @@ class WeatherBox extends React.Component {
   }
 
   getWeather(data) {
-    console.log("DATA...", data)
     this.setState({ location: data.name})
 
     let weather = [
