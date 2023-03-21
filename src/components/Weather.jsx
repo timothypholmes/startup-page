@@ -5,6 +5,7 @@ import {
   WiTornado, WiNightClear, WiDayCloudy, WiNightCloudy, WiCloud, WiMoonWaxingCrescent3
 } from "react-icons/wi";
 import config from "../config";
+import API_CONFIG from "../config/api_config";
 
 
 class WeatherBox extends React.Component {
@@ -28,6 +29,7 @@ class WeatherBox extends React.Component {
   }
 
   getWeather(data) {
+    console.log("DATA...", data)
     this.setState({ location: data.name})
 
     let weather = [
@@ -87,7 +89,7 @@ class WeatherBox extends React.Component {
 
   componentDidMount() {
     const unit = config.units;
-    const key = config.openWeatherCredential;
+    const key = API_CONFIG.openWeatherCredential;
 
     if (config.latitude) {
       this.fetchData(config.latitude, config.longitude, key, unit);

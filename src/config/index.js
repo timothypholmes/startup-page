@@ -1,8 +1,8 @@
 var config = {
   
-  latitude: 41.881832,
-  longitude: -87.623177,
-  units: "imperial", // metric, standard
+  latitude: import.meta.env.VITE_LATITUDE,
+  longitude: import.meta.env.VITE_LONGITUDE,
+  units: "metric", // metric, standard
 
   bookmark: [
     {
@@ -32,23 +32,31 @@ var config = {
         {
           name: "github",
           url: "https://github.com"
+        },
+        {
+          name: "bitbucket",
+          url: "https://bitbucket.com"
+        },
+        {
+          name: "gmail",
+          url: "https://gmail.com"
         }
       ]
     },
     {
-      title: 'finance',
+      title: 'life',
       content: [
         {
-          name: "tdameritrade",
-          url: "https://secure.tdameritrade.com/"
+          name: "hotstar",
+          url: "https://hotstar.com/"
         },
         {
-          name: "options",
-          url: "https://secure.tdameritrade.com/trade/options"
+          name: "axis",
+          url: "https://axisbank.com"
         },
         {
-          name: "stocks/etfs",
-          url: "https://secure.tdameritrade.com/trade"
+          name: "kite",
+          url: "https://kite.com"
         },
         {
           name: "marketwatch",
@@ -116,11 +124,6 @@ var config = {
     box5: ['japan', 'chile', 'angola', 'namibia', 'mauritius', 'botswana', 'tanzania'],
     box6: ['elephant', 'monkey', 'lion', 'bear', 'owl', 'giraffe']
   },
-
-  // credentials
-  unsplashCredential: "",
-  openWeatherCredential: "",
-  
   style: {
     background: 'bg-[#F2F2F2]',
     navBackground: 'bg-[#F2F2F2]',

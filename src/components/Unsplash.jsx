@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import config from "../config";
+import API_CONFIG from "../config/api_config";
 
 class Unsplash extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Unsplash extends Component {
   
   componentDidMount() {
     
-    const accessKey = config.unsplashCredential;
+    const accessKey = API_CONFIG.unsplashCredential;
     var categoryArray = this.props.search;
     var categoryIndex = Math.floor(Math.random() * categoryArray.length); 
     var category = categoryArray[categoryIndex];
@@ -27,9 +28,10 @@ class Unsplash extends Component {
         Authorization: "Client-ID " + accessKey,
       },
     }).then(res => {
+      console.log(res)
       var totalFound = res.data.results.length;
       var randNum = Math.floor(Math.random() * totalFound)
-      var full=res.data.results[randNum].urls.raw;
+      var full=res.data.results[randNum].urls.small;
       this.setState({ photos: full });
     }).catch(err => {
       console.log(err);

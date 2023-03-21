@@ -6,8 +6,7 @@ node_modules
 
 # config files
 .env
-src/config/index.js
-
+!example.env
 # media files
 *.mp4
 !desert.mp4

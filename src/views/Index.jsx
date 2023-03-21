@@ -3,6 +3,7 @@ import React from "react";
 
 // import config file
 import config from "../config/"
+import API_CONFIG from "../config/api_config";
 
 // components
 import Clock from "../components/Clock";
