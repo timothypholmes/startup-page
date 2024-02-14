@@ -7,7 +7,7 @@
     "@react-three/fiber": "^7.0.29",
     "@vitejs/plugin-react": "^1.2.0",
     "apexcharts": "^3.33.0",
-    "axios": "^0.25.0",
+    "axios": "^1.6.0",
     "dayjs": "^1.10.7",
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
