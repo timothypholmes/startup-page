@@ -4,8 +4,9 @@ import {
   WiSnowflakeCold, WiAlien, WiFog, WiRaindrops, WiDust, WiDayHaze,
   WiTornado, WiNightClear, WiDayCloudy, WiNightCloudy, WiCloud, WiMoonWaxingCrescent3
 } from "react-icons/wi";
-import config from "../config";
 
+import { readSettings } from './readSettings';
+const settings = readSettings();
 
 class WeatherBox extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class WeatherBox extends React.Component {
       var temperature = String(Math.round(data.main.temp)) + '\xB0 C'
     }
 
-    let link = `https://darksky.net/forecast/${String(config.latitude)},${String(config.longitude)}/us12/en`;
+    let link = `https://darksky.net/forecast/${String(settings.latitude)},${String(settings.longitude)}/us12/en`;
     this.setState({ temperature: temperature, icon: icon, desc: data.main.description, link: link})
   }
   
@@ -86,11 +87,11 @@ class WeatherBox extends React.Component {
   }
 
   componentDidMount() {
-    const unit = config.units;
-    const key = config.openWeatherCredential;
+    const unit = settings.units;
+    const key = settings.openWeatherCredential;
 
-    if (config.latitude) {
-      this.fetchData(config.latitude, config.longitude, key, unit);
+    if (settings.latitude) {
+      this.fetchData(settings.latitude, settings.longitude, key, unit);
     } else if(navigator.geolocation) { // get location
       navigator.geolocation.getCurrentPosition((position) => {
           this.fetchData(position.coords.latitude, position.coords.longitude, key, unit);
