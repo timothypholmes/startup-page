@@ -1,4 +1,5 @@
-import config from "../config";
+import { readSettings } from '../components/readSettings';
+const settings = readSettings();
 
 export function getLocation() {
 
@@ -10,10 +11,10 @@ export function getLocation() {
       }
       return currPosition
     });
-  } else if (config.latitude) {
+  } else if (settings.latitude) {
     var currPosition = {
-      latitude: config.latitude,
-      longitude: config.longitude
+      latitude: settings.latitude,
+      longitude: settings.longitude
     }
     return currPosition
   } else {

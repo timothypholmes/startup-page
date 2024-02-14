@@ -25,6 +25,7 @@ module.exports = {
       'blue2': '#3e5c76',
       'blue3': '#1d2d44',
       'blue4': '#0d1321',
+      'blue5': '#222733',
       'green1': '#a2a182',
       'green2': '#687259',
       'tan': '#e6cebc',

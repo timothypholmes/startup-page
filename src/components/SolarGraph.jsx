@@ -10,7 +10,8 @@ import horizonFragment from '../assets/shader/horizonFragment.glsl'
 import sunVertex from '../assets/shader/sunVertex.glsl'
 import sunFragment from '../assets/shader/sunFragment.glsl'
 
-import config from "../config";
+import { readSettings } from './readSettings';
+const settings = readSettings();
 
 // Useful documents
 // https://solarsena.com/solar-elevation-angle-altitude/
@@ -44,8 +45,8 @@ class SolarGraph extends React.Component {
       starField: 0
     }
 
-    if ( config.latitude ) {
-      this.getLocation(config.latitude, config.longitude);
+    if ( settings.latitude ) {
+      this.getLocation(settings.latitude, settings.longitude);
     } else if (navigator.geolocation) { // get location
       navigator.geolocation.getCurrentPosition((position) => {
         this.getLocation(position.coords.latitude, position.coords.longitude);
